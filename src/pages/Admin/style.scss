@@ -1,0 +1,13 @@
+.admin {
+  display: flex;
+  > button {
+    // display: none !important;
+  }
+  height: 100vh;
+  ul {
+    height: 100%;
+  }
+}
+#admin {
+  display: flex;
+}
