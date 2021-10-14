@@ -29,6 +29,8 @@ import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
 import ListOrder from './pages/Admin/ListOrder';
 import OrderDetail from './pages/Admin/ListOrder/OrderDetail/OrderDetail';
 import NotFound from './components/NotFound/NotFound';
+import About from './pages/User/About/index';
+import ListComment from './pages/Admin/ListComment';
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
           <DefaultLayout exact path="/profile" component={Profile} />
           <DefaultLayout exact path="/success/:id" component={Success} />
           <DefaultLayout exact path="/notfound" component={NotFound} />
+          <DefaultLayout exact path="/about" component={About} />
 
           <PaymentLayout exact path="/infoPayment" component={Information} />
           <PaymentLayout exact path="/shipping" component={Shipping} />
@@ -55,6 +58,7 @@ function App() {
           <PrivateLayout exact path="/admin/listUser" component={ListUser} />
           <PrivateLayout exact path="/admin/listOrder" component={ListOrder} />
           <PrivateLayout exact path="/admin/listOrder/:id" component={OrderDetail} />
+          <PrivateLayout exact path="/admin/listComment" component={ListComment} />
           <PrivateLayout exact path="/admin/products" component={ProductsAdmin}></PrivateLayout>
           <PrivateLayout
             exact

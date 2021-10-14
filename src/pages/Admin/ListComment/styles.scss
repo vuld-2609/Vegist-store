@@ -1,0 +1,39 @@
+.comment {
+  width: 100%;
+}
+
+.comment__wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.comment__table {
+  margin-top: 30px;
+}
+
+.commment__icon {
+  font-size: 2.4rem;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.commment__icon--reply:hover {
+  color: #1890ff;
+}
+
+.commment__icon--delete:hover {
+  color: #fd3b3b;
+}
+
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.ant-table-cell {
+  height: 54.6px !important;
+}
+
+.ant-table-row {
+  height: 63.4px !important;
+}
