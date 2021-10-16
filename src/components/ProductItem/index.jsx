@@ -5,10 +5,8 @@ import history from '../../until/history';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addCart, getCartData } from '../../redux/actions';
-import decode from 'jwt-decode';
 import Star from '../Star';
 import './styles.scss';
 
@@ -28,12 +26,12 @@ const ProductItem = ({ data, addCart }) => {
       const productItem = { id, name, price: newPrice, img, amount: 1 };
       const cartData = JSON.parse(localStorage.getItem('CartData'));
       if (cartData.length) {
-        const findItem = cartData.find(item => item.id === id);
+        const findItem = cartData.find((item) => item.id === id);
         if (findItem) {
-          const indexItem = cartData.findIndex(item => item.id === id);
+          const indexItem = cartData.findIndex((item) => item.id === id);
           cartData.splice(indexItem, 1, {
             ...findItem,
-            amount: parseInt(findItem.amount) + 1
+            amount: parseInt(findItem.amount) + 1,
           });
           arrData = [...cartData];
         } else arrData = [...cartData, productItem];
@@ -46,7 +44,7 @@ const ProductItem = ({ data, addCart }) => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       });
     }
   };
@@ -57,7 +55,7 @@ const ProductItem = ({ data, addCart }) => {
   return (
     <div className="product-item">
       <div className="product-item__img">
-        <a href="" className="rotate-img">
+        <a href="#" className="rotate-img">
           {img && (
             <>
               <img src={img[0]} alt="anh" />
@@ -110,10 +108,10 @@ const ProductItem = ({ data, addCart }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addCart: params => dispatch(addCart(params)),
-    getCartData: params => dispatch(getCartData(params))
+    addCart: (params) => dispatch(addCart(params)),
+    getCartData: (params) => dispatch(getCartData(params)),
   };
 };
 export default connect(null, mapDispatchToProps)(ProductItem);

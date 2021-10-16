@@ -3,9 +3,10 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import history from '../../until/history';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { all, call } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
+import axiosClient from '../config/axiosClient';
 
 import {
   CREATE_ACCOUNT,
@@ -31,49 +32,49 @@ import {
   DELETE_USER_SUCCESS,
   EDIT_USER,
   EDIT_USER_FAIL,
-  EDIT_USER_SUCCESS
+  EDIT_USER_SUCCESS,
 } from '../constants';
 const apiURL = process.env.REACT_APP_API_URL;
 
-const success = value => toast.success(`🦄 ${value}`);
-const error = value => toast.error(`🦄 ${value}`);
+const success = (value) => toast.success(`🦄 ${value}`);
+const error = (value) => toast.error(`🦄 ${value}`);
 
 function* editUserSaga(action) {
   try {
-    const { id, first, last, name, role, phone, address } = action.payload;
+    const { id, first, last, name, phone, address } = action.payload;
     const response = yield axios.patch(`${apiURL}/userList/${id}`, {
       last,
       first,
       phone,
       address,
-      name
+      name,
     });
     const data = response.data;
     success('Modify user success !');
     yield put({
       type: EDIT_USER_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: EDIT_USER_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
 function* deleteUserSaga(action) {
   try {
-    const { id, page, limit } = action.payload;
-    const resCheck = yield axios.delete(`${apiURL}/userList/${id}`);
+    const { id } = action.payload;
+    yield axios.delete(`${apiURL}/userList/${id}`);
     success('Delete user success !');
     yield put({
       type: DELETE_USER_SUCCESS,
-      payload: []
+      payload: [],
     });
   } catch (error) {
     yield put({
       type: DELETE_USER_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -89,20 +90,20 @@ function* getListUserSaga(action) {
           ...(page && { _page: page }),
           ...(limit && { _limit: limit }),
           ...{ _sort: 'id', _order: 'desc' },
-          ...(search && { q: search })
-        }
+          ...(search && { q: search }),
+        },
       }),
-      axios.get(`${apiURL}/userList?role=user`)
+      axios.get(`${apiURL}/userList?role=user`),
     ]);
     const data = [response.data, resCheck.data.length];
     yield put({
       type: GET_LIST_USER_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: GET_LIST_USER_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -115,18 +116,18 @@ function* createUserByAdminSaga(action) {
       const hashedPassword = yield bcrypt.hash(password, 12);
       const response = yield axios.post(`${apiURL}/userList`, {
         ...action.payload,
-        password: hashedPassword
+        password: hashedPassword,
       });
       const data = response.data;
       success('Create user success !');
       yield put({
         type: CREATE_USER_BY_ADMIN_SUCCESS,
-        payload: data
+        payload: data,
       });
     } else {
       error('An error has occurred !');
       yield put({
-        type: CREATE_USER_BY_ADMIN_FAIL
+        type: CREATE_USER_BY_ADMIN_FAIL,
       });
     }
   } catch (error) {
@@ -134,7 +135,7 @@ function* createUserByAdminSaga(action) {
 
     yield put({
       type: CREATE_USER_BY_ADMIN_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -148,11 +149,11 @@ function* createAccountSaga(action) {
       const response = yield axios.post(`${apiURL}/userList`, {
         ...action.payload,
         password: hashedPassword,
-        role: 'user'
+        role: 'user',
       });
       const data = response.data;
       const token = jwt.sign({ id: data.id }, 'register', {
-        expiresIn: '1h'
+        expiresIn: '1h',
       });
       toast.success('🦄 Đăng ký thành công !', {
         position: 'top-right',
@@ -161,7 +162,7 @@ function* createAccountSaga(action) {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       });
       localStorage.setItem(
         'profile',
@@ -170,13 +171,13 @@ function* createAccountSaga(action) {
           first,
           last,
           role: data.role,
-          token
+          token,
         })
       );
       history.push('/');
       yield put({
         type: CREATE_ACCOUNT_SUCCESS,
-        payload: data
+        payload: data,
       });
     } else {
       toast.error('🦄 Đăng ký thất bại!', {
@@ -186,11 +187,11 @@ function* createAccountSaga(action) {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       });
       yield put({
         type: CREATE_ACCOUNT_FAIL,
-        payload: []
+        payload: [],
       });
     }
   } catch (error) {
@@ -201,11 +202,11 @@ function* createAccountSaga(action) {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
     yield put({
       type: CREATE_ACCOUNT_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -216,12 +217,12 @@ function* getInfoSaga(action) {
     const data = response.data[0];
     yield put({
       type: GET_INFO_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: GET_INFO_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -233,7 +234,7 @@ function* loginSaga(action) {
     const isPasswordCorrect = yield bcrypt.compare(password, data[0].password);
     if (data.length > 0 && isPasswordCorrect) {
       const token = jwt.sign({ id: data[0].id }, 'login', {
-        expiresIn: '1h'
+        expiresIn: '1h',
       });
       toast.success('🦄 Đăng nhập thành công !', {
         position: 'top-right',
@@ -242,7 +243,7 @@ function* loginSaga(action) {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       });
 
       localStorage.setItem(
@@ -252,7 +253,7 @@ function* loginSaga(action) {
           first: data[0].first,
           last: data[0].last,
           role: data[0].role,
-          token
+          token,
         })
       );
 
@@ -262,7 +263,7 @@ function* loginSaga(action) {
 
       yield put({
         type: GET_USER_ACCOUNT_SUCCESS,
-        payload: data
+        payload: data,
       });
     } else {
       toast.error('🦄 Đăng nhập thất bại !', {
@@ -272,10 +273,10 @@ function* loginSaga(action) {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       });
       yield put({
-        type: GET_USER_ACCOUNT_FAIL
+        type: GET_USER_ACCOUNT_FAIL,
       });
     }
   } catch (error) {
@@ -286,11 +287,11 @@ function* loginSaga(action) {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
     yield put({
       type: GET_USER_ACCOUNT_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -302,19 +303,19 @@ function* editProfileSaga(action) {
       first,
       phone,
       address,
-      password
+      password,
     });
     const data = response.data;
 
     localStorage.setItem('profile', JSON.stringify({ ...data, password: '', token: token }));
     yield put({
       type: EDIT_PROFILE_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: EDIT_PROFILE_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }

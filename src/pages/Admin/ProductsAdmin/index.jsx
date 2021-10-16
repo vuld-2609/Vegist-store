@@ -19,7 +19,7 @@ const ListUser = ({
   getSidebar,
   sidebarData,
   totalProduct,
-  getTotalProducts
+  getTotalProducts,
 }) => {
   const { t } = useTranslation();
   const [current, setCurrent] = useState(1);
@@ -27,7 +27,6 @@ const ListUser = ({
   const [search, setSearch] = useState('');
   const [searchKey, setSearchKey] = useState();
   const typingTimeoutRef = useRef(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.title = 'Vegist | Quản lý sản phẩm';
@@ -39,14 +38,14 @@ const ListUser = ({
       page: current,
       limit: 10,
       searchKey: searchKey,
-      sortId: true
+      sortId: true,
     });
     getTotalProducts({ searchKey: searchKey });
   }, [current, searchKey, isDeleted]);
 
   const { Search } = Input;
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const valueInput = e.target.value;
     setSearch(valueInput);
 
@@ -71,10 +70,10 @@ const ListUser = ({
         setIsDeleted(!isDeleted);
         deleteProduct({ id: data.id });
       },
-      onCancel() {}
+      onCancel() {},
     });
   }
-  const handelChangePage = page => {
+  const handelChangePage = (page) => {
     setCurrent(page);
   };
   const renderLocationProduct = () => {
@@ -137,12 +136,12 @@ const ListUser = ({
                         <td>
                           {
                             sidebarData?.categoryData?.find(
-                              itemCategory => (itemCategory.id = item.categoryId)
+                              (itemCategory) => (itemCategory.id = item.categoryId)
                             ).name
                           }
                         </td>
                         <td>
-                          {sidebarData?.tagsData?.find(itemTag => (itemTag.id = item.tagId)).name}
+                          {sidebarData?.tagsData?.find((itemTag) => (itemTag.id = item.tagId)).name}
                         </td>
                         <td>
                           <button
@@ -194,22 +193,22 @@ const ListUser = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { deleteProduct, productsData, totalProduct } = state.productReducer;
   const { sidebarData } = state.categoryReducer;
   return {
     deleteProduct,
     productsData,
     sidebarData,
-    totalProduct
+    totalProduct,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getProducts: params => dispatch(getProducts(params)),
-    getTotalProducts: params => dispatch(getTotalProducts(params)),
-    deleteProduct: params => dispatch(deleteProduct(params)),
-    getSidebar: params => dispatch(getSidebar(params))
+    getProducts: (params) => dispatch(getProducts(params)),
+    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
+    deleteProduct: (params) => dispatch(deleteProduct(params)),
+    getSidebar: (params) => dispatch(getSidebar(params)),
   };
 };
 

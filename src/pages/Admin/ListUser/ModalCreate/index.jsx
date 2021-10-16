@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import bcrypt from 'bcryptjs';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { createUserByAdmin } from '../../../../redux/actions';
 import { regexPhone } from '../../../../Constant';
 
-import { Modal, Button, Input, Select } from 'antd';
+import { Modal, Button, Select } from 'antd';
 import './style.scss';
-import { useEffect } from 'react';
 
-const ModalCreate = ({ createUserByAdmin, setIsDeleted }) => {
+const ModalCreate = ({ createUserByAdmin }) => {
   const { t } = useTranslation();
-  const success = value => toast.success(`🦄 ${value}`);
+  const success = (value) => toast.success(`🦄 ${value}`);
   const { Option } = Select;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,11 +30,11 @@ const ModalCreate = ({ createUserByAdmin, setIsDeleted }) => {
     setIsModalVisible(false);
   };
 
-  const handleSubmitAdd = value => {
+  const handleSubmitAdd = (value) => {
     createUserByAdmin({
       ...value,
       name: value.first + ' ' + value.last,
-      role: selectRole
+      role: selectRole,
     });
     setIsModalVisible(false);
   };
@@ -59,7 +57,7 @@ const ModalCreate = ({ createUserByAdmin, setIsDeleted }) => {
               email: '',
               address: '',
               phone: '',
-              password: ''
+              password: '',
             }}
             enableReinitialize
             validationSchema={Yup.object({
@@ -70,7 +68,7 @@ const ModalCreate = ({ createUserByAdmin, setIsDeleted }) => {
               address: Yup.string().max(50, t('userList.validate.address')),
               password: Yup.string()
                 .required(t('validate.password.required'))
-                .min(8, t('validate.password.regex'))
+                .min(8, t('validate.password.regex')),
             })}
             onSubmit={(value, { resetForm }) => {
               handleSubmitAdd(value);
@@ -165,15 +163,15 @@ const ModalCreate = ({ createUserByAdmin, setIsDeleted }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { listUser } = state.accountReducer;
   return {
-    listUser
+    listUser,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createUserByAdmin: params => dispatch(createUserByAdmin(params))
+    createUserByAdmin: (params) => dispatch(createUserByAdmin(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCreate);

@@ -12,6 +12,7 @@ import { addCart, getCartData } from '../../../redux/actions';
 
 const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
   const { t } = useTranslation();
+  // eslint-disable-next-line no-unused-vars
   const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -23,7 +24,7 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
 
   const handleCalculateToTal = () => {
     let total = 0;
-    cartData?.cartData?.forEach(element => {
+    cartData?.cartData?.forEach((element) => {
       total = total + parseInt(element.price * element.amount);
     });
 
@@ -32,7 +33,7 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
   const handleDeleteCart = (id, type) => {
     let arrProduct = JSON.parse(localStorage.getItem('CartData'));
     if (type === 'single') {
-      let indexId = arrProduct.findIndex(item => item.id === id);
+      let indexId = arrProduct.findIndex((item) => item.id === id);
       arrProduct.splice(indexId, 1);
     } else arrProduct = [];
     addCart({ user: infoUser.email, cartData: arrProduct });
@@ -60,7 +61,7 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
                 </div>
                 <table className="cart__table">
                   <tbody className="cart__product--list">
-                    {cartData?.cartData?.map(item => (
+                    {cartData?.cartData?.map((item) => (
                       <CartItem
                         data={item}
                         handleDeleteCart={handleDeleteCart}
@@ -104,11 +105,11 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
                     <p>{t('cart.Country')}</p>
                     <Select defaultValue="vi" style={{ width: '100%' }}>
                       <Option value="vi">
-                        <img src={VietNam} className="header__language--img" />
+                        <img src={VietNam} alt="VietNam" className="header__language--img" />
                         <span>Viet Nam</span>
                       </Option>
                       <Option value="en">
-                        <img src={English} className="header__language--img" />
+                        <img src={English} alt="English" className="header__language--img" />
                         <span>England</span>
                       </Option>
                     </Select>
@@ -164,19 +165,19 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { cartData, addCartData } = state.cartReducer;
 
   return {
     cartData,
-    addCartData
+    addCartData,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getCartData: params => dispatch(getCartData(params)),
-    addCart: params => dispatch(addCart(params))
+    getCartData: (params) => dispatch(getCartData(params)),
+    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

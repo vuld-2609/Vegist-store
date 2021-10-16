@@ -14,6 +14,6 @@ export default function* mySaga() {
     fork(accountSaga),
     fork(productDetailSaga),
     fork(cartSaga),
-    fork(paymentSaga),
+    fork(paymentSaga)
   ]);
 }

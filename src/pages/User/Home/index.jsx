@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Tabs } from 'antd';
 import { connect } from 'react-redux';
 import Slide from './Slide';
@@ -10,18 +10,18 @@ const dataSlide = [
   {
     img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider1-min.jpg?v=1593257108',
     title: ['Fresh Fruits ', ' & vegetable'],
-    thumbnail: 'Summer Vege sale'
+    thumbnail: 'Summer Vege sale',
   },
   {
     img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider2.jpg?v=1593431537',
     title: ['Prod Of Indian  ', '100% Pacaging'],
-    thumbnail: 'Organic Indian Masala'
+    thumbnail: 'Organic Indian Masala',
   },
   {
     img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider3-min.jpg?v=1593257113',
     title: ['Fresh for your', ' heath'],
-    thumbnail: 'Top Selling!'
-  }
+    thumbnail: 'Top Selling!',
+  },
 ];
 
 const { TabPane } = Tabs;
@@ -98,7 +98,7 @@ function Home({ getProductHome, productHome, getCategory, categoryData }) {
           className="countdown__container"
           style={{
             backgroundImage:
-              "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/dealbanner-min.jpg?v=1593257102')"
+              "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/dealbanner-min.jpg?v=1593257102')",
           }}
         >
           <div className="countdown__content">
@@ -195,7 +195,7 @@ function Home({ getProductHome, productHome, getCategory, categoryData }) {
           className="  shopify__wrapper"
           style={{
             backgroundImage:
-              "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/banner3-min.jpg?v=1593256888')"
+              "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/banner3-min.jpg?v=1593256888')",
           }}
         >
           <div className=" shopify__container wrapper">
@@ -230,19 +230,19 @@ function Home({ getProductHome, productHome, getCategory, categoryData }) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { productHome } = state.productReducer;
   const { categoryData } = state.categoryReducer;
 
   return {
     productHome,
-    categoryData
+    categoryData,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getProductHome: params => dispatch(getProductHome(params)),
-    getCategory: params => dispatch(getCategory(params))
+    getProductHome: (params) => dispatch(getProductHome(params)),
+    getCategory: (params) => dispatch(getCategory(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

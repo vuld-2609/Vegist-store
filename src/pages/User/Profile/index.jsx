@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Col, Collapse, Row, Button, Input, Form as FormAnt, Table, Tag, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Col, Collapse, Row, Button, Input, Form as FormAnt } from 'antd';
 import { BsPencilSquare } from 'react-icons/bs';
 import bcrypt from 'bcryptjs';
 import { useTranslation } from 'react-i18next';
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { editProfile, getInfo, getBill } from '../../../redux/actions';
 import * as Yup from 'yup';
@@ -16,7 +15,6 @@ const { Panel } = Collapse;
 
 function Profile(prop) {
   const { editProfile, infoUser, getInfo, userDataEdited, getBill, billData } = prop;
-  console.log('Profile -> billData', billData);
   const { t } = useTranslation();
 
   const [userEdited, setUserEdited] = useState({});
@@ -24,8 +22,8 @@ function Profile(prop) {
   const [isShowChangePw, setIsShowChangePw] = useState(false);
   const [isPayment, setIsPayment] = useState(true);
 
-  const success = value => toast.success(`🦄 ${value}`);
-  const error = value => toast.error(`🦄 ${value}`);
+  const success = (value) => toast.success(`🦄 ${value}`);
+  const error = (value) => toast.error(`🦄 ${value}`);
 
   useEffect(() => {
     document.title = 'Vegist | Trang Thông tin cá nhân';
@@ -33,7 +31,7 @@ function Profile(prop) {
     getInfo({ email: user.email });
     getBill({
       user: user.email,
-      isPayment: true
+      isPayment: true,
     });
   }, [userDataEdited]);
 
@@ -41,18 +39,18 @@ function Profile(prop) {
     setUserEdited(infoUser);
   }, [infoUser, userDataEdited]);
 
-  const handleSubmitInfo = value => {
+  const handleSubmitInfo = (value) => {
     editProfile({
       ...value,
       id: infoUser.id,
-      token: JSON.parse(localStorage.getItem('profile')).token
+      token: JSON.parse(localStorage.getItem('profile')).token,
     });
     setUserEdited(value);
     setEditable(!editable);
     success('Successful change of information !');
   };
 
-  const handleSubmitPassword = async values => {
+  const handleSubmitPassword = async (values) => {
     const isPasswordCorrect = await bcrypt.compare(values.passwordInner, infoUser.password);
 
     const hashedPassword = await bcrypt.hash(values.passwordNew, 12);
@@ -60,7 +58,7 @@ function Profile(prop) {
       editProfile({
         id: infoUser.id,
         password: hashedPassword,
-        token: JSON.parse(localStorage.getItem('profile')).token
+        token: JSON.parse(localStorage.getItem('profile')).token,
       });
       success('Change password successfully !');
       setIsShowChangePw(false);
@@ -79,26 +77,26 @@ function Profile(prop) {
       title: t('Profile.account.first'),
       content: `${userEdited?.first + ' ' + userEdited?.last}`,
       type: 'name',
-      last: 'last'
+      last: 'last',
     },
     {
       id: 2,
       title: 'Email',
       content: `${userEdited?.email}`,
-      type: 'email'
+      type: 'email',
     },
     {
       id: 3,
       title: t('Profile.account.address'),
       content: `${userEdited?.address ? userEdited.address : 'Empty'}`,
-      type: 'address'
+      type: 'address',
     },
     {
       id: 4,
       title: t('Profile.account.phone'),
       content: `${userEdited?.phone ? userEdited.phone : 'Empty'}`,
-      type: 'phone'
-    }
+      type: 'phone',
+    },
   ];
 
   return (
@@ -157,12 +155,12 @@ function Profile(prop) {
                               rules={[
                                 {
                                   required: true,
-                                  message: t('validate.password.required')
+                                  message: t('validate.password.required'),
                                 },
                                 {
                                   min: 8,
-                                  message: t('validate.password.regex')
-                                }
+                                  message: t('validate.password.regex'),
+                                },
                               ]}
                               hasFeedback
                             >
@@ -176,11 +174,11 @@ function Profile(prop) {
                               rules={[
                                 {
                                   required: true,
-                                  message: t('validate.password.required')
+                                  message: t('validate.password.required'),
                                 },
                                 {
                                   min: 8,
-                                  message: t('validate.password.regex')
+                                  message: t('validate.password.regex'),
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(rule, value) {
@@ -189,8 +187,8 @@ function Profile(prop) {
                                     }
 
                                     return Promise.resolve();
-                                  }
-                                })
+                                  },
+                                }),
                               ]}
                               hasFeedback
                             >
@@ -206,7 +204,7 @@ function Profile(prop) {
                               rules={[
                                 {
                                   required: true,
-                                  message: t('validate.password.required')
+                                  message: t('validate.password.required'),
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(rule, value) {
@@ -215,8 +213,8 @@ function Profile(prop) {
                                     }
 
                                     return Promise.reject(t('Profile.confirm_pwNew'));
-                                  }
-                                })
+                                  },
+                                }),
                               ]}
                             >
                               <Input.Password />
@@ -254,7 +252,7 @@ function Profile(prop) {
                           last: userEdited?.last,
                           email: userEdited?.email,
                           address: userEdited?.address,
-                          phone: userEdited?.phone
+                          phone: userEdited?.phone,
                         }}
                         enableReinitialize
                         validationSchema={Yup.object({
@@ -265,9 +263,9 @@ function Profile(prop) {
                           phone: Yup.string().matches(
                             /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
                             'Invalid phone number !'
-                          )
+                          ),
                         })}
-                        onSubmit={value => handleSubmitInfo(value)}
+                        onSubmit={(value) => handleSubmitInfo(value)}
                       >
                         <Form>
                           {arrProfile.map((item, index) => {
@@ -417,7 +415,7 @@ function Profile(prop) {
     </>
   );
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { editProfile, infoUser, userList, userDataEdited } = state.accountReducer;
   const { billData } = state.paymentReducer;
 
@@ -426,14 +424,14 @@ const mapStateToProps = state => {
     infoUser,
     userDataEdited,
     userList,
-    billData
+    billData,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    editProfile: params => dispatch(editProfile(params)),
-    getInfo: params => dispatch(getInfo(params)),
-    getBill: params => dispatch(getBill(params))
+    editProfile: (params) => dispatch(editProfile(params)),
+    getInfo: (params) => dispatch(getInfo(params)),
+    getBill: (params) => dispatch(getBill(params)),
   };
 };
 

@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Admin from '../pages/Admin';
 
 function PrivateLayout({ component: Component, role, ...props }) {
@@ -18,7 +15,7 @@ function PrivateLayout({ component: Component, role, ...props }) {
   return (
     <Route
       {...props}
-      render={routerProps => (
+      render={(routerProps) => (
         <>
           <div className="main">
             <div id="admin">

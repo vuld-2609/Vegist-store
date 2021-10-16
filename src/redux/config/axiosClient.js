@@ -1,16 +1,16 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
-import { baseUrl } from '../constants';
+const apiURL = 'http://localhost:5000';
 
 const axiosClient = axios.create({
   headers: { 'content-type': 'application/json' },
   // headers: { 'content-type': 'multipart/form-data' },
-  paramsSerializer: params => queryString.stringify(params),
-  baseURL: baseUrl
+  paramsSerializer: (params) => queryString.stringify(params),
+  baseURL: apiURL,
 });
 
-axiosClient.interceptors.request.use(async config => {
+axiosClient.interceptors.request.use(async (config) => {
   const token = localStorage.getItem('token');
   const currentConfig = config;
 
@@ -21,7 +21,7 @@ axiosClient.interceptors.request.use(async config => {
   return currentConfig;
 });
 
-axiosClient.interceptors.response.use(response => {
+axiosClient.interceptors.response.use((response) => {
   if (response && response.data) {
     return response.data;
   }

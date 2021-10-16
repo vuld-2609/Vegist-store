@@ -5,16 +5,15 @@ import {
   getInfo,
   createComment,
   getComment,
-  getBill
+  getBill,
 } from '../../../redux/actions';
-import { AiFillHeart, AiOutlineIdcard } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { GiShoppingBag } from 'react-icons/gi';
 import Slide from '../Home/Slide';
 import { FaTruckMoving, FaMoneyBillWave } from 'react-icons/fa';
-import ImgCrop from 'antd-img-crop';
 import {
   Row,
   Col,
@@ -29,7 +28,7 @@ import {
   Form,
   Radio,
   InputNumber,
-  Pagination
+  Pagination,
 } from 'antd';
 import moment from 'moment';
 
@@ -47,23 +46,23 @@ const ProductDetail = ({
   listComment,
   countComment,
   billData,
-  getBill
+  getBill,
 }) => {
   console.log('billData', billData);
   const product = productDetail.product;
   const sales = product?.oldPrice && Math.ceil((1 - product.newPrice / product.oldPrice) * 100);
   const rate = product?.rate;
   const productId = match.params.id;
+  // eslint-disable-next-line no-unused-vars
   const [info, setInfo] = useState(JSON.parse(localStorage.getItem('profile')));
   const [rateValue, setRateValue] = useState();
   const [isShowFormComment, setIsShowFormComment] = useState(false);
-  const [isPayment, setIsPayment] = useState(true);
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
 
-  const success = value => toast(`🦄 ${value}`);
-  const error = value => toast.error(`🦄 ${value}`);
+  const success = (value) => toast(`🦄 ${value}`);
+  const error = (value) => toast.error(`🦄 ${value}`);
 
   useEffect(() => {
     getProductDetail(productId);
@@ -74,7 +73,7 @@ const ProductDetail = ({
     getComment({
       id: productId,
       page: current,
-      limit: 10
+      limit: 10,
     });
     // eslint-disable-next-line
   }, [listComment, current, productId]);
@@ -83,7 +82,7 @@ const ProductDetail = ({
     document.title = 'Vegist | Trang Chi tiết';
     getBill({
       user: info?.email,
-      isPayment: true
+      isPayment: true,
     });
   }, [productId]);
   const { Panel } = Collapse;
@@ -100,21 +99,21 @@ const ProductDetail = ({
       id: 1,
       icon: <FaTruckMoving />,
       name: 'DELIVERY INFO',
-      content: 'From then, delivery is generally within 2-10 days, depending on your location.'
+      content: 'From then, delivery is generally within 2-10 days, depending on your location.',
     },
     {
       id: 2,
       icon: <FaMoneyBillWave />,
       name: '30 DAYS RETURNS',
       content:
-        "Not the right fit? No worries. We'll arrange pick up and a full refund within 7 days including the delivery fee."
+        "Not the right fit? No worries. We'll arrange pick up and a full refund within 7 days including the delivery fee.",
     },
     {
       id: 3,
       icon: <GiShoppingBag />,
       name: '10 YEAR WARRANTY',
-      content: 'Quality comes first and our products are designed to last.'
-    }
+      content: 'Quality comes first and our products are designed to last.',
+    },
   ];
   const description = [
     {
@@ -122,30 +121,30 @@ const ProductDetail = ({
       title: 'More detail',
       content: [
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.'
-      ]
+        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.',
+      ],
     },
     {
       id: 2,
       title: 'Key Specification',
       content: [
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.'
-      ]
-    }
+        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.',
+      ],
+    },
   ];
 
-  const handleSubmitForm = value => {};
-  const handleSubmitFormComment = value => {
+  const handleSubmitForm = (value) => {};
+  const handleSubmitFormComment = (value) => {
     if (info) {
-      if (billData?.cartData?.findIndex(item => item.id == productId) !== -1) {
+      if (billData?.cartData?.findIndex((item) => item.id == productId) !== -1) {
         createComment({
           ...value,
           idUser: infoUser.id,
           idProduct: productId,
           name: `${infoUser.first + infoUser.last}`,
           datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-          rate: rateValue
+          rate: rateValue,
         });
         success('Thanks for your comment !');
         setIsShowFormComment(false);
@@ -346,15 +345,15 @@ const ProductDetail = ({
                       <div className="review__content--form">
                         <Form onFinish={handleSubmitFormComment}>
                           <p>{t('productDetail.Review__rating')}</p>
-                          <Rate onChange={value => handleChangRate(value)} />
+                          <Rate onChange={(value) => handleChangRate(value)} />
                           <p>{t('productDetail.Review__title')}</p>
                           <Form.Item
                             name="title"
                             rules={[
                               {
                                 required: true,
-                                message: t('productDetail.Review__validate.title')
-                              }
+                                message: t('productDetail.Review__validate.title'),
+                              },
                             ]}
                           >
                             <Input />
@@ -365,8 +364,8 @@ const ProductDetail = ({
                             rules={[
                               {
                                 max: 1000,
-                                message: t('productDetail.Review__validate.content')
-                              }
+                                message: t('productDetail.Review__validate.content'),
+                              },
                             ]}
                           >
                             <Input.TextArea />
@@ -385,7 +384,7 @@ const ProductDetail = ({
                     header={`${countComment} replies`}
                     itemLayout="horizontal"
                     dataSource={comments}
-                    renderItem={item => (
+                    renderItem={(item) => (
                       <li>
                         <Comment
                           author={item.name}
@@ -418,7 +417,7 @@ const ProductDetail = ({
                       total={countComment}
                       defaultCurrent={1}
                       current={current}
-                      onChange={page => {
+                      onChange={(page) => {
                         setCurrent(page);
                         window.scrollTo(0, 0);
                       }}
@@ -450,7 +449,7 @@ const ProductDetail = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { productDetail, comments, listComment, countComment } = state.productDetailReducer;
   const { infoUser } = state.accountReducer;
   const { billData } = state.paymentReducer;
@@ -460,16 +459,16 @@ const mapStateToProps = state => {
     comments,
     listComment,
     countComment,
-    billData
+    billData,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getProductDetail: params => dispatch(getProductDetail(params)),
-    getInfo: params => dispatch(getInfo(params)),
-    createComment: params => dispatch(createComment(params)),
-    getComment: params => dispatch(getComment(params)),
-    getBill: params => dispatch(getBill(params))
+    getProductDetail: (params) => dispatch(getProductDetail(params)),
+    getInfo: (params) => dispatch(getInfo(params)),
+    createComment: (params) => dispatch(createComment(params)),
+    getComment: (params) => dispatch(getComment(params)),
+    getBill: (params) => dispatch(getBill(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

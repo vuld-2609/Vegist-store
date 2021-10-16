@@ -13,7 +13,7 @@ const navbarData = [
   {
     id: 1,
     name: 'Home',
-    path: '/'
+    path: '/',
   },
   {
     id: 2,
@@ -28,13 +28,13 @@ const navbarData = [
           'Snack Foods',
           'organics Nut Gifts',
           'Non-Dairy',
-          'Delicius Chiken Hotdogs'
-        ]
+          'Delicius Chiken Hotdogs',
+        ],
       },
       {
         id: 2,
         name: 'MixedFruits',
-        data: ['Oranges', 'Ghee Beverages', 'Ranch Salad', 'Fresh avocado', 'Fresh blueberry']
+        data: ['Oranges', 'Ghee Beverages', 'Ranch Salad', 'Fresh avocado', 'Fresh blueberry'],
       },
       {
         id: 3,
@@ -44,8 +44,8 @@ const navbarData = [
           'fifts Mixed Fruits',
           'Fresh organic',
           'West Indian Onionsalad',
-          'Vegetable tomato'
-        ]
+          'Vegetable tomato',
+        ],
       },
       {
         id: 4,
@@ -55,10 +55,10 @@ const navbarData = [
           'fresh green orange',
           'blackberry 100% organic',
           'Vegetable Italian Salad',
-          'Special Corn Noodels'
-        ]
-      }
-    ]
+          'Special Corn Noodels',
+        ],
+      },
+    ],
   },
   {
     id: 3,
@@ -68,52 +68,53 @@ const navbarData = [
       {
         id: 1,
         name: 'Bestseller',
-        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner4_560x350_crop_center.jpg?v=1595936653'
+        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner4_560x350_crop_center.jpg?v=1595936653',
       },
       {
         id: 2,
         name: 'Special Product',
-        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner6_560x350_crop_center.jpg?v=1595936651'
+        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner6_560x350_crop_center.jpg?v=1595936651',
       },
       {
         id: 3,
         name: 'Featured Product',
-        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner5_19e6fd2c-70b2-459d-b4d5-d7680262856a_560x350_crop_center.jpg?v=1595936691'
-      }
-    ]
+        img: 'https://cdn.shopify.com/s/files/1/0412/8151/9765/collections/banner5_19e6fd2c-70b2-459d-b4d5-d7680262856a_560x350_crop_center.jpg?v=1595936691',
+      },
+    ],
   },
   {
     id: 4,
     name: 'About Us',
-    path: '/about'
+    path: '/about',
   },
   {
     id: 5,
     name: "Faq's",
-    path: "/faq's"
+    path: "/faq's",
   },
   {
     id: 6,
     name: 'Blogs',
-    path: '/blogs'
+    path: '/blogs',
   },
 
   {
     id: 7,
     name: 'Login',
-    path: '/login'
+    path: '/login',
   },
 
   {
     id: 8,
     name: 'Register',
-    path: '/register'
-  }
+    path: '/register',
+  },
 ];
 
 const Navbar = ({ setShowNavbar, showNavbar }) => {
   const location = useLocation();
   const { t } = useTranslation();
+  // eslint-disable-next-line no-unused-vars
   const [isActive, setIsActive] = useState(1);
   const [isActiveMobile, setIsActiveMobile] = useState({});
   const handelNavbarClick = (id, path) => {
@@ -121,7 +122,7 @@ const Navbar = ({ setShowNavbar, showNavbar }) => {
     history.push(path);
     if (window.innerWidth < 992) {
       setIsActiveMobile({
-        idParentNavbar: id
+        idParentNavbar: id,
       });
     }
   };
@@ -130,7 +131,7 @@ const Navbar = ({ setShowNavbar, showNavbar }) => {
     setShowNavbar(false);
     setIsActiveMobile({});
   };
-  const renderNavbar = data => {
+  const renderNavbar = (data) => {
     return data.map((item, index) => (
       <li
         key={`navbar__item-${item.id}`}
@@ -175,7 +176,7 @@ const Navbar = ({ setShowNavbar, showNavbar }) => {
                       onClick={() =>
                         setIsActiveMobile({
                           ...isActiveMobile,
-                          idChildrenNavbar: itemDropdown.id
+                          idChildrenNavbar: itemDropdown.id,
                         })
                       }
                     >

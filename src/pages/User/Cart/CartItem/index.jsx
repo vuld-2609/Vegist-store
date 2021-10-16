@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FaTrash } from 'react-icons/fa';
-import { Modal, Input } from 'antd';
+import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import './styles.scss';
 import { addCart } from '../../../../redux/actions';
-const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart }) => {
+const CartItem = ({ data, addCart, handleDeleteCart }) => {
   const { confirm } = Modal;
   const { t } = useTranslation();
   const [valueInput, setValueInput] = useState(data.amount);
+  // eslint-disable-next-line no-unused-vars
   const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  const contentModal = data => (
+  const contentModal = (data) => (
     <div className="modal">
       <div className="modal__img">
         <img src={data.img[0]} alt="modal"></img>
@@ -39,7 +40,7 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
       },
       onCancel() {
         setValueInput(30);
-      }
+      },
     });
   };
 
@@ -54,12 +55,12 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
       },
       onCancel() {
         setValueInput(1);
-      }
+      },
     });
   };
   const updateCart = (data, value) => {
     const cartData = JSON.parse(localStorage.getItem('CartData'));
-    const indexItem = cartData.findIndex(item => item.id === data.id);
+    const indexItem = cartData.findIndex((item) => item.id === data.id);
     cartData.splice(indexItem, 1, { ...data, amount: value });
     addCart({ user: infoUser.email, cartData });
   };
@@ -82,7 +83,7 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
     }
   };
 
-  const handleIncreaseInput = data => {
+  const handleIncreaseInput = (data) => {
     let value = parseInt(valueInput + 1);
     setValueInput(value);
     if (value > 30) {
@@ -90,7 +91,7 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
     } else updateCart(data, value);
   };
 
-  const handleDecreaseInput = data => {
+  const handleDecreaseInput = (data) => {
     let value = parseInt(valueInput - 1);
     setValueInput(value);
     if (value <= 0) {
@@ -124,7 +125,7 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
               value={valueInput}
               className=""
               type="number"
-              onChange={e => handleChangeInput(e, data)}
+              onChange={(e) => handleChangeInput(e, data)}
             ></input>
             <button className="" onClick={() => handleIncreaseInput(data)}>
               +
@@ -140,16 +141,16 @@ const CartItem = ({ data, setCartData, addCart, addCartData, handleDeleteCart })
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { addCartData } = state.cartReducer;
 
   return {
-    addCartData
+    addCartData,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addCart: params => dispatch(addCart(params))
+    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -14,7 +14,7 @@ import {
   createProduct,
   getSidebar,
   updateProduct,
-  getProductDetail
+  getProductDetail,
 } from '../../../../../redux/actions';
 import history from '../../../../../until/history';
 import { toast } from 'react-toastify';
@@ -27,7 +27,7 @@ const AddProductAdmin = ({
   createProduct,
   getProductDetail,
   updateProduct,
-  productDetail
+  productDetail,
 }) => {
   const productId = match.params.id;
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ const AddProductAdmin = ({
     }
   }, []);
 
-  const handleCreateProduct = values => {
+  const handleCreateProduct = (values) => {
     createProduct({ ...values, newPrice: parseInt(values.newPrice) });
     toast.success('🦄 Thêm sản phẩm thành công !', {
       position: 'top-right',
@@ -50,16 +50,16 @@ const AddProductAdmin = ({
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
     history.push('/admin/products');
   };
 
-  const handleEditProduct = values => {
+  const handleEditProduct = (values) => {
     const data = {
       id: productId,
       ...values,
-      newPrice: parseInt(values.newPrice)
+      newPrice: parseInt(values.newPrice),
     };
     updateProduct({ ...data });
     toast.success('🦄 Cập nhật sản phẩm thành công !', {
@@ -69,7 +69,7 @@ const AddProductAdmin = ({
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
     history.push('/admin/products');
   };
@@ -97,7 +97,7 @@ const AddProductAdmin = ({
                 newPrice:
                   location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.newPrice : '',
                 oldPrice:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.newPrice : ''
+                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.newPrice : '',
                 // image: null,
               }}
               validationSchema={Yup.object({
@@ -117,12 +117,12 @@ const AddProductAdmin = ({
                 ...(location.pathname.indexOf(`edit`) !== -1 && {
                   oldPrice: Yup.string()
                     .required(t('validate.price.required'))
-                    .matches(/(^(1|2|3|4|5|6|7|8|9)+[0-9]{4,8}$)/, t('validate.price.regex'))
-                })
+                    .matches(/(^(1|2|3|4|5|6|7|8|9)+[0-9]{4,8}$)/, t('validate.price.regex')),
+                }),
 
                 // image: Yup.object().required(t("validate.image.required")),
               })}
-              onSubmit={values => {
+              onSubmit={(values) => {
                 if (location.pathname !== `/admin/products/edit/${productId}`)
                   handleCreateProduct(values);
                 else handleEditProduct(values);
@@ -172,17 +172,17 @@ const AddProductAdmin = ({
                         <Field
                           name="categoryId"
                           id="categoryId"
-                          render={FieldProps => (
+                          render={(FieldProps) => (
                             <Select
                               {...FieldProps.field}
                               style={{ width: '100%' }}
                               className="form__control--select"
                               placeholder={t('admin.products.Select product line')}
-                              onChange={value =>
+                              onChange={(value) =>
                                 FieldProps.form.setFieldValue(FieldProps.field.name, value)
                               }
                             >
-                              {sidebarData?.categoryData?.map(item => (
+                              {sidebarData?.categoryData?.map((item) => (
                                 <Option key={item.id} value={item.id}>
                                   {item.name}
                                 </Option>
@@ -217,13 +217,13 @@ const AddProductAdmin = ({
                         <Field
                           name="origin"
                           id="origin"
-                          render={FieldProps => (
+                          render={(FieldProps) => (
                             <Select
                               {...FieldProps.field}
                               style={{ width: '100%' }}
                               className="form__control--select"
                               placeholder={t('admin.products.Select...')}
-                              onChange={value =>
+                              onChange={(value) =>
                                 FieldProps.form.setFieldValue(FieldProps.field.name, value)
                               }
                             >
@@ -257,17 +257,17 @@ const AddProductAdmin = ({
                           name="tagId"
                           id="tagId"
                           type="select"
-                          render={FieldProps => (
+                          render={(FieldProps) => (
                             <Select
                               {...FieldProps.field}
                               style={{ width: '100%' }}
                               className="form__control--select"
                               placeholder={t('admin.products.Select tag')}
-                              onChange={value =>
+                              onChange={(value) =>
                                 FieldProps.form.setFieldValue(FieldProps.field.name, value)
                               }
                             >
-                              {sidebarData?.tagsData?.map(item => (
+                              {sidebarData?.tagsData?.map((item) => (
                                 <Option value={item.id}>{item.name}</Option>
                               ))}
                             </Select>
@@ -294,10 +294,10 @@ const AddProductAdmin = ({
                               name="image"
                               id="image"
                               type="select"
-                              render={FieldProps => (
+                              render={(FieldProps) => (
                                 <Upload
                                   {...FieldProps.field}
-                                  onChange={value =>
+                                  onChange={(value) =>
                                     FieldProps.form.setFieldValue(FieldProps.field.name, value)
                                   }
                                 >
@@ -363,19 +363,19 @@ const AddProductAdmin = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { sidebarData } = state.categoryReducer;
   const { productDetail } = state.productDetailReducer;
 
   return { sidebarData, productDetail };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getSidebar: params => dispatch(getSidebar(params)),
-    createProduct: params => dispatch(createProduct(params)),
-    updateProduct: params => dispatch(updateProduct(params)),
-    getProductDetail: params => dispatch(getProductDetail(params))
+    getSidebar: (params) => dispatch(getSidebar(params)),
+    createProduct: (params) => dispatch(createProduct(params)),
+    updateProduct: (params) => dispatch(updateProduct(params)),
+    getProductDetail: (params) => dispatch(getProductDetail(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddProductAdmin);

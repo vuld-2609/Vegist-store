@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProductItem from '../../../../components/ProductItem';
-import history from '../../../../until/history';
 import './style.scss';
 import { Col, Row } from 'antd';
 import useWindowDimensions from '../../../../until/width';
@@ -29,7 +28,7 @@ const Slide = ({ data, type, xl, lg, md, sm, xs }) => {
     swipe: true,
     arrows: true,
     autoplaySpeed: 4000,
-    cssEase: 'ease-in-out'
+    cssEase: 'ease-in-out',
   };
 
   const slideShow = (item, index) => {
@@ -65,7 +64,7 @@ const Slide = ({ data, type, xl, lg, md, sm, xs }) => {
     );
   };
 
-  const slideProduct = data => {
+  const slideProduct = (data) => {
     let tempArr = [];
     for (let i = 0; i < data?.length; i += 2) {
       const carouselContent = data.slice(i, i + 2);
@@ -74,7 +73,7 @@ const Slide = ({ data, type, xl, lg, md, sm, xs }) => {
     }
     return tempArr.map((element, index) => (
       <Col sm={24} key={`col-${element.id}-${index}`}>
-        {element.map(item => (
+        {element.map((item) => (
           <Row key={`row-${item.id}`}>
             <Col sm={24} className="slide-product__col">
               <ProductItem data={item}> </ProductItem>
