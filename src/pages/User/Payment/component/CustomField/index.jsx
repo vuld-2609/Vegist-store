@@ -1,7 +1,6 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Checkbox, Input } from 'antd';
-import * as Yup from 'yup';
+import { Field, ErrorMessage } from 'formik';
+import { Input } from 'antd';
 import './styles.scss';
 const CustomField = ({ name, type, label }) => {
   return (

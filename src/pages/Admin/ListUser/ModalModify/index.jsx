@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import bcrypt from 'bcryptjs';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { editUser } from '../../../../redux/actions';
 import { FaEdit } from 'react-icons/fa';
 import { regexPhone } from '../../../../Constant';
-import { Modal, Button, Input, Select, Spin } from 'antd';
+import { Modal, Button, Select } from 'antd';
 import './style.scss';
-import { useEffect } from 'react';
 
-const ModalModify = ({ editUser, userEdit, item, isLoadingEdit, setLoading }) => {
+const ModalModify = ({ editUser, item }) => {
   const { t } = useTranslation();
-  const success = value => toast.success(`🦄 ${value}`);
   const { Option } = Select;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -33,12 +29,12 @@ const ModalModify = ({ editUser, userEdit, item, isLoadingEdit, setLoading }) =>
     setIsModalVisible(false);
   };
 
-  const handleSubmitAdd = value => {
+  const handleSubmitAdd = (value) => {
     editUser({
       ...value,
       id: item.id,
       name: value.first + ' ' + value.last,
-      role: selectRole
+      role: selectRole,
     });
     setIsModalVisible(false);
   };
@@ -59,14 +55,14 @@ const ModalModify = ({ editUser, userEdit, item, isLoadingEdit, setLoading }) =>
               first: item.first,
               last: item.last,
               address: item.address,
-              phone: item.phone
+              phone: item.phone,
             }}
             enableReinitialize
             validationSchema={Yup.object({
               first: Yup.string().required(t('validate.first')).max(20, t('Profile.max')),
               last: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
               phone: Yup.string().matches(regexPhone, 'Invalid phone number !'),
-              address: Yup.string().max(50, t('userList.validate.address'))
+              address: Yup.string().max(50, t('userList.validate.address')),
             })}
             onSubmit={(value, { resetForm }) => {
               handleSubmitAdd(value);
@@ -141,16 +137,16 @@ const ModalModify = ({ editUser, userEdit, item, isLoadingEdit, setLoading }) =>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { userEdit, isLoadingEdit } = state.accountReducer;
   return {
     userEdit,
-    isLoadingEdit
+    isLoadingEdit,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    editUser: params => dispatch(editUser(params))
+    editUser: (params) => dispatch(editUser(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalModify);

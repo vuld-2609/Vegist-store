@@ -9,6 +9,7 @@ import './styles.scss';
 const InfoCart = ({ getCartData, cartData }) => {
   const location = useLocation();
   const { t } = useTranslation();
+  // eslint-disable-next-line no-unused-vars
   const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
   useEffect(() => {
     getCartData({ user: infoUser.email });

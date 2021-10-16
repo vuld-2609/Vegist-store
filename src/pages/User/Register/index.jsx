@@ -5,19 +5,19 @@ import { useTranslation } from 'react-i18next';
 
 import { createAccount } from '../../../redux/actions';
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 
-const Register = prop => {
+const Register = (prop) => {
   document.title = 'Vegist | Trang Đăng kí';
   const { t } = useTranslation();
-  const { createAccount, userList, user } = prop;
+  const { createAccount } = prop;
   const [form] = Form.useForm();
-  const handleSubmitForm = values => {
+  const handleSubmitForm = (values) => {
     createAccount({
       ...values,
-      name: values.first + ' ' + values.last
+      name: values.first + ' ' + values.last,
     });
   };
   return (
@@ -30,7 +30,7 @@ const Register = prop => {
                 form={form}
                 name="register"
                 className="form-register"
-                onFinish={values => handleSubmitForm(values)}
+                onFinish={(values) => handleSubmitForm(values)}
                 scrollToFirstError
               >
                 <div className="register__title">
@@ -43,8 +43,8 @@ const Register = prop => {
                     {
                       required: true,
                       message: t('validate.first'),
-                      whitespace: true
-                    }
+                      whitespace: true,
+                    },
                   ]}
                 >
                   <Input placeholder="First name" />
@@ -55,8 +55,8 @@ const Register = prop => {
                     {
                       required: true,
                       message: t('validate.last'),
-                      whitespace: true
-                    }
+                      whitespace: true,
+                    },
                   ]}
                 >
                   <Input placeholder="Last name" />
@@ -66,12 +66,12 @@ const Register = prop => {
                   rules={[
                     {
                       type: 'email',
-                      message: t('validate.email.regex')
+                      message: t('validate.email.regex'),
                     },
                     {
                       required: true,
-                      message: t('validate.email.required')
-                    }
+                      message: t('validate.email.required'),
+                    },
                   ]}
                 >
                   <Input placeholder="Email" />
@@ -81,12 +81,12 @@ const Register = prop => {
                   rules={[
                     {
                       min: 8,
-                      message: t('validate.password.regex')
+                      message: t('validate.password.regex'),
                     },
                     {
                       required: true,
-                      message: t('validate.password.required')
-                    }
+                      message: t('validate.password.required'),
+                    },
                   ]}
                   hasFeedback
                 >
@@ -124,16 +124,16 @@ const Register = prop => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { user, userList } = state.accountReducer;
   return {
     user,
-    userList
+    userList,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createAccount: params => dispatch(createAccount(params))
+    createAccount: (params) => dispatch(createAccount(params)),
   };
 };
 

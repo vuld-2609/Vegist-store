@@ -19,7 +19,7 @@ const Success = ({ match, getBill, billData }) => {
 
   const handleCalculateToTal = () => {
     let total = 0;
-    billData?.cartData?.forEach((element) => {
+    billData?.cartData?.forEach(element => {
       total = total + parseInt(element.price * element.amount);
     });
 
@@ -83,7 +83,7 @@ const Success = ({ match, getBill, billData }) => {
                   <h3>{t('success.Products purchased')}:</h3>
                 </div>
                 <table className="success__cart--content">
-                  {billData?.cartData?.map((item) => (
+                  {billData?.cartData?.map(item => (
                     <tr
                       className="success__cart--item"
                       onClick={() => history.push(`/product/${item.id}`)}
@@ -119,15 +119,15 @@ const Success = ({ match, getBill, billData }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { billData } = state.paymentReducer;
 
   return { billData };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getBill: (params) => dispatch(getBill(params)),
+    getBill: params => dispatch(getBill(params))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Success);

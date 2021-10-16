@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import {
   AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
-  MailOutlined
+  MailOutlined,
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 import history from '../../until/history';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import './style.scss';
 const Admin = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.scss';
 import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
@@ -9,14 +9,14 @@ import { getProducts, getTotalProducts } from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
   { title: 'Best Selling', value: 'bestSelling' },
   { title: 'Price, low to high', value: 'priceLowToHigh' },
   { title: 'Price, high to low', value: 'priceHighToLow' },
-  { title: 'Date, new to old', value: 'date' }
+  { title: 'Date, new to old', value: 'date' },
 ];
 
 const Products = ({ getProducts, productsData, getTotalProducts, totalProduct }) => {
@@ -30,26 +30,26 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
     category: [],
     price: [],
     tag: null,
-    sort: null
+    sort: null,
   });
 
   if (width >= 1200) {
     window.scrollTo({
       top: 430,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   } else if (width >= 992) {
     window.scrollTo({
       top: 380,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   } else {
     window.scrollTo({
       top: 340,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
@@ -60,7 +60,7 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
       category: filterProducts.category,
       price: filterProducts.price,
       tag: filterProducts.tag,
-      sort: filterProducts.sort
+      sort: filterProducts.sort,
     });
   }, [filterProducts, currentPage]);
 
@@ -70,18 +70,18 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
       category: filterProducts.category,
       price: filterProducts.price,
       tag: filterProducts.tag,
-      sort: filterProducts.sort
+      sort: filterProducts.sort,
     });
   }, [filterProducts, currentPage]);
 
-  const handelChangePage = page => {
+  const handelChangePage = (page) => {
     setCurrentPage(page);
   };
 
-  const handelChangeSort = value => {
+  const handelChangeSort = (value) => {
     setFilterProducts({
       filterProducts,
-      sort: value
+      sort: value,
     });
     setCurrentPage(1);
   };
@@ -118,7 +118,7 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
                   className="banner__container"
                   style={{
                     backgroundImage:
-                      "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider18.jpg?v=1607590481')"
+                      "url('https://cdn.shopify.com/s/files/1/0412/8151/9765/files/slider18.jpg?v=1607590481')",
                   }}
                 >
                   <div className="banner__content">
@@ -159,7 +159,7 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
               <section className="list">
                 <div className="list__content">
                   <Row gutter={[16, 16]}>
-                    {productsData.map(item => (
+                    {productsData.map((item) => (
                       <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12}>
                         <ProductItem data={item} />
                       </Col>
@@ -190,17 +190,17 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { productsData, totalProduct } = state.productReducer;
   return {
     productsData,
-    totalProduct
+    totalProduct,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getProducts: params => dispatch(getProducts(params)),
-    getTotalProducts: params => dispatch(getTotalProducts(params))
+    getProducts: (params) => dispatch(getProducts(params)),
+    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

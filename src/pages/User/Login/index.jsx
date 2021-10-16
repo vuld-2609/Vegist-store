@@ -7,17 +7,17 @@ import './style.scss';
 import { connect } from 'react-redux';
 import { getUser } from '../../../redux/actions';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
-const Login = ({ getUser, user }) => {
+const Login = ({ getUser }) => {
   const { t } = useTranslation();
   useEffect(() => {
     document.title = 'Vegist | Trang Đăng nhập';
   });
   const [form] = Form.useForm();
-  const handleSubmitForm = values => {
+  const handleSubmitForm = (values) => {
     getUser(values);
   };
   return (
@@ -30,7 +30,7 @@ const Login = ({ getUser, user }) => {
                 form={form}
                 name="register"
                 className="form-register"
-                onFinish={values => handleSubmitForm(values)}
+                onFinish={(values) => handleSubmitForm(values)}
                 scrollToFirstError
               >
                 <div className="register__title">
@@ -43,12 +43,12 @@ const Login = ({ getUser, user }) => {
                   rules={[
                     {
                       type: 'email',
-                      message: t('validate.email.regex')
+                      message: t('validate.email.regex'),
                     },
                     {
                       required: true,
-                      message: t('validate.email.required')
-                    }
+                      message: t('validate.email.required'),
+                    },
                   ]}
                 >
                   <Input placeholder="Email" />
@@ -59,12 +59,12 @@ const Login = ({ getUser, user }) => {
                   rules={[
                     {
                       min: 8,
-                      message: t('validate.password.regex')
+                      message: t('validate.password.regex'),
                     },
                     {
                       required: true,
-                      message: t('validate.password.required')
-                    }
+                      message: t('validate.password.required'),
+                    },
                   ]}
                   hasFeedback
                 >
@@ -105,15 +105,15 @@ const Login = ({ getUser, user }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { user } = state.accountReducer;
   return {
-    user
+    user,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: params => dispatch(getUser(params))
+    getUser: (params) => dispatch(getUser(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

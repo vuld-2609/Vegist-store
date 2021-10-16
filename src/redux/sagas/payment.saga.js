@@ -12,7 +12,7 @@ import {
   GET_BILL_SUCCESS,
   UPDATE_BILL,
   UPDATE_BILL_FAIL,
-  UPDATE_BILL_SUCCESS,
+  UPDATE_BILL_SUCCESS
 } from '../constants';
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -24,24 +24,24 @@ function* createBill(action) {
     const responseCheckUser = yield axios.get(`${apiURL}/payments?user=${user}&isPayment=false`);
     if (responseCheckUser.data.length) {
       response = yield axios.patch(`${apiURL}/payments/${responseCheckUser.data[0].id}`, {
-        ...other,
+        ...other
       });
     } else {
       response = yield axios.post(`${apiURL}/payments`, {
         ...action.payload,
-        isPayment: false,
+        isPayment: false
       });
     }
     const data = response.data;
     yield put({
       type: CREATE_BILL_SUCCESS,
-      payload: data,
+      payload: data
     });
     history.push('/shipping');
   } catch (error) {
     yield put({
       type: CREATE_BILL_FAIL,
-      payload: error,
+      payload: error
     });
   }
 }
@@ -53,23 +53,23 @@ function* updateBillSaga(action) {
     if (type === 'success') {
       [response] = yield all([
         axios.patch(`${apiURL}/payments/${id}`, { ...other }),
-        axios.delete(`${apiURL}/carts/${cartId}`),
+        axios.delete(`${apiURL}/carts/${cartId}`)
       ]);
     } else {
       response = axios.patch(`${apiURL}/payments/${id}`, {
-        ...other,
+        ...other
       });
     }
 
     const data = response.data;
     yield put({
       type: UPDATE_BILL_SUCCESS,
-      payload: data,
+      payload: data
     });
   } catch (error) {
     yield put({
       type: UPDATE_BILL_FAIL,
-      payload: error,
+      payload: error
     });
   }
 }
@@ -83,18 +83,18 @@ function* getBillSaga(action) {
       params: {
         ...(user && { user }),
         ...(id && { id }),
-        ...(!isNaN(isPayment) && { isPayment }),
-      },
+        ...(!isNaN(isPayment) && { isPayment })
+      }
     });
     const data = response.data;
     yield put({
       type: GET_BILL_SUCCESS,
-      payload: data[0],
+      payload: data[0]
     });
   } catch (error) {
     yield put({
       type: GET_BILL_FAIL,
-      payload: error,
+      payload: error
     });
   }
 }

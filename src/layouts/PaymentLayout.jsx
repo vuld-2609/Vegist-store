@@ -1,21 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Steps, Col, Row } from 'antd';
-import {
-  ShoppingCartOutlined,
-  SolutionOutlined,
-  LoadingOutlined,
-  SmileOutlined
-} from '@ant-design/icons';
+import { Col, Row } from 'antd';
 import './styles.scss';
 import InfoCart from '../components/InfoCart';
 function PaymentLayout({ component: Component, role, ...props }) {
-  const { Step } = Steps;
-
   return (
     <Route
       {...props}
-      render={routerProps => (
+      render={(routerProps) => (
         <>
           <div className=" payment-layout">
             <div className="main container">

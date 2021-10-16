@@ -150,7 +150,6 @@ const Footer = () => {
                       md={6}
                       lg={6}
                       xl={6}
-                      key={index}
                     >
                       <div className="list__title">{t(`Categories.${value.title}.name`)}</div>
                       <ul>

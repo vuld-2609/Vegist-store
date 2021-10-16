@@ -8,6 +8,7 @@ import './styles.scss';
 import history from '../../../until/history';
 const Shipping = ({ getBill, billData, updateBill }) => {
   const { t } = useTranslation();
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   useEffect(() => {
     document.title = 'Vegist | Trang ship';
@@ -18,7 +19,7 @@ const Shipping = ({ getBill, billData, updateBill }) => {
     updateBill({
       id: billData.id,
       method: 'Standard',
-      shippingCost: 20000
+      shippingCost: 20000,
     });
     history.push('/payment');
   };
@@ -81,16 +82,16 @@ const Shipping = ({ getBill, billData, updateBill }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { billData } = state.paymentReducer;
 
   return { billData };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getBill: params => dispatch(getBill(params)),
-    updateBill: params => dispatch(updateBill(params))
+    getBill: (params) => dispatch(getBill(params)),
+    updateBill: (params) => dispatch(updateBill(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Shipping);
