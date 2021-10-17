@@ -10,7 +10,8 @@ import {
   UPDATE_PRODUCTS_SUCCESS,
   UPDATE_PRODUCTS_FAIL,
   DELETE_PRODUCTS_SUCCESS,
-  DELETE_PRODUCTS_FAIL
+  DELETE_PRODUCTS_FAIL,
+  SET_VALUE_SEARCH,
 } from '../constants';
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   totalProduct: [],
   addProduct: {},
   updateProduct: {},
-  deleteProduct: {}
+  deleteProduct: {},
+  valueSearch: '',
 };
 
 export default function productReducer(state = initialState, action) {
@@ -27,7 +29,7 @@ export default function productReducer(state = initialState, action) {
     case GET_PRODUCT_HOME_SUCCESS:
       return {
         ...state,
-        productHome: { ...action.payload }
+        productHome: { ...action.payload },
       };
     case GET_PRODUCT_HOME_FAIL: {
       return state;
@@ -35,7 +37,7 @@ export default function productReducer(state = initialState, action) {
     case GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        productsData: [...action.payload]
+        productsData: [...action.payload],
       };
     case GET_PRODUCTS_FAIL: {
       return state;
@@ -43,7 +45,7 @@ export default function productReducer(state = initialState, action) {
     case GET_TOTAL_PRODUCTS_SUCCESS:
       return {
         ...state,
-        totalProduct: [...action.payload]
+        totalProduct: [...action.payload],
       };
     case GET_TOTAL_PRODUCTS_FAIL: {
       return state;
@@ -51,7 +53,7 @@ export default function productReducer(state = initialState, action) {
     case CREATE_PRODUCTS_SUCCESS:
       return {
         ...state,
-        addProduct: { ...action.payload }
+        addProduct: { ...action.payload },
       };
     case CREATE_PRODUCTS_FAIL: {
       return state;
@@ -59,7 +61,7 @@ export default function productReducer(state = initialState, action) {
     case UPDATE_PRODUCTS_SUCCESS:
       return {
         ...state,
-        updateProduct: { ...action.payload }
+        updateProduct: { ...action.payload },
       };
     case UPDATE_PRODUCTS_FAIL: {
       return state;
@@ -67,10 +69,16 @@ export default function productReducer(state = initialState, action) {
     case DELETE_PRODUCTS_SUCCESS:
       return {
         ...state,
-        deleteProduct: { ...action.payload }
+        deleteProduct: { ...action.payload },
       };
     case DELETE_PRODUCTS_FAIL: {
       return state;
+    }
+    case SET_VALUE_SEARCH: {
+      return {
+        ...state,
+        valueSearch: action.payload,
+      };
     }
     default:
       return state;

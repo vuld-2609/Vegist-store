@@ -5,6 +5,7 @@ import {
   CREATE_PRODUCTS,
   UPDATE_PRODUCTS,
   DELETE_PRODUCTS,
+  SET_VALUE_SEARCH,
 } from '../constants';
 
 export function getProductHome(params) {
@@ -35,6 +36,7 @@ export function createProduct(params) {
 }
 
 export function updateProduct(params) {
+  console.log('file: product.action.js > line 38 > updateProduct > params', params);
   return {
     type: UPDATE_PRODUCTS,
     payload: params,
@@ -44,6 +46,13 @@ export function updateProduct(params) {
 export function deleteProduct(params) {
   return {
     type: DELETE_PRODUCTS,
+    payload: params,
+  };
+}
+
+export function setValueSearch(params) {
+  return {
+    type: SET_VALUE_SEARCH,
     payload: params,
   };
 }

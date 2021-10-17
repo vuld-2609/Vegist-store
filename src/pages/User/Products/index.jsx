@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './styles.scss';
 import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
 import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { getProducts, getTotalProducts } from '../../../redux/actions';
+import { getProducts, getTotalProducts, setValueSearch } from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
+import { ToastContainer, toast } from 'react-toastify';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
@@ -18,7 +19,14 @@ const arrSelect = [
   { title: 'Date, new to old', value: 'date' },
 ];
 
-const Products = ({ getProducts, productsData, getTotalProducts, totalProduct }) => {
+const Products = ({
+  getProducts,
+  productsData,
+  getTotalProducts,
+  totalProduct,
+  valueSearch,
+  setValueSearch,
+}) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
   const { t } = useTranslation();
@@ -53,15 +61,10 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
   }
 
   useEffect(() => {
-    getProducts({
-      page: currentPage,
-      limit: 12,
-      category: filterProducts.category,
-      price: filterProducts.price,
-      tag: filterProducts.tag,
-      sort: filterProducts.sort,
-    });
-  }, [filterProducts, currentPage]);
+    return () => {
+      setValueSearch('');
+    };
+  }, []);
 
   useEffect(() => {
     document.title = 'Vegist | Trang Sản phẩm';
@@ -70,8 +73,19 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
       price: filterProducts.price,
       tag: filterProducts.tag,
       sort: filterProducts.sort,
+      searchKey: valueSearch,
     });
-  }, [filterProducts, currentPage]);
+
+    getProducts({
+      page: currentPage,
+      limit: 12,
+      category: filterProducts.category,
+      price: filterProducts.price,
+      tag: filterProducts.tag,
+      sort: filterProducts.sort,
+      searchKey: valueSearch,
+    });
+  }, [filterProducts, currentPage, valueSearch]);
 
   const handelChangePage = (page) => {
     setCurrentPage(page);
@@ -184,21 +198,24 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
           </Col>
         </Row>
       </div>
+      <ToastContainer />;
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct } = state.productReducer;
+  const { productsData, totalProduct, valueSearch } = state.productReducer;
   return {
     productsData,
     totalProduct,
+    valueSearch,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
     getTotalProducts: (params) => dispatch(getTotalProducts(params)),
+    setValueSearch: (params) => dispatch(setValueSearch(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
