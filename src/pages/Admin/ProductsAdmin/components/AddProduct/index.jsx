@@ -17,8 +17,8 @@ import {
   getProductDetail,
 } from '../../../../../redux/actions';
 import history from '../../../../../until/history';
-import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import { toastSuccess } from '../../../../../until/toast';
 
 const AddProductAdmin = ({
   match,
@@ -43,15 +43,7 @@ const AddProductAdmin = ({
 
   const handleCreateProduct = (values) => {
     createProduct({ ...values, newPrice: parseInt(values.newPrice) });
-    toast.success('🦄 Thêm sản phẩm thành công !', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toastSuccess('🦄 Thêm sản phẩm thành công !');
     history.push('/admin/products');
   };
 
@@ -62,15 +54,7 @@ const AddProductAdmin = ({
       newPrice: parseInt(values.newPrice),
     };
     updateProduct({ ...data });
-    toast.success('🦄 Cập nhật sản phẩm thành công !', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toastSuccess('🦄 Cập nhật sản phẩm thành công !');
     history.push('/admin/products');
   };
   return (

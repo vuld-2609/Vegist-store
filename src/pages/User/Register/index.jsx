@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import { createAccount } from '../../../redux/actions';
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 
 const Register = (prop) => {
@@ -38,7 +36,7 @@ const Register = (prop) => {
                   <p>{t('register.text')}</p>
                 </div>
                 <Form.Item
-                  name="first"
+                  name="firstName"
                   rules={[
                     {
                       required: true,
@@ -50,7 +48,7 @@ const Register = (prop) => {
                   <Input placeholder="First name" />
                 </Form.Item>
                 <Form.Item
-                  name="last"
+                  name="lastName"
                   rules={[
                     {
                       required: true,
@@ -119,7 +117,6 @@ const Register = (prop) => {
           </Row>
         </div>
       </section>
-      <ToastContainer />
     </>
   );
 };

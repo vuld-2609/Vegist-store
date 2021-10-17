@@ -9,7 +9,7 @@ import {
 } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
+import { toastSuccess, toastError } from '../../../until/toast';
 
 import { GiShoppingBag } from 'react-icons/gi';
 import Slide from '../Home/Slide';
@@ -60,9 +60,6 @@ const ProductDetail = ({
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
-
-  const success = (value) => toast(`🦄 ${value}`);
-  const error = (value) => toast.error(`🦄 ${value}`);
 
   useEffect(() => {
     getProductDetail(productId);
@@ -146,14 +143,14 @@ const ProductDetail = ({
           datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
           rate: rateValue,
         });
-        success('Thanks for your comment !');
+        toastSuccess('Thanks for your comment !');
         setIsShowFormComment(false);
       } else {
-        error("You didn't bought this product ago !");
+        toastError("You didn't bought this product ago !");
         setIsShowFormComment(false);
       }
     } else {
-      error("You don't login !");
+      toastError("You don't login !");
     }
   };
   const renderProductDetail = () => {

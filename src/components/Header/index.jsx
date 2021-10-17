@@ -15,8 +15,6 @@ import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 
 import Navbar from './Navbar';

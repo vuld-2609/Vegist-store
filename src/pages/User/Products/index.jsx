@@ -9,7 +9,6 @@ import { getProducts, getTotalProducts } from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { ToastContainer } from 'react-toastify';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
@@ -185,7 +184,6 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
           </Col>
         </Row>
       </div>
-      <ToastContainer />;
     </div>
   );
 };

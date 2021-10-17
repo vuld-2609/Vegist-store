@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { IoEyeSharp } from 'react-icons/io5';
 import { HiShoppingBag, HiHeart } from 'react-icons/hi';
 import history from '../../until/history';
-import { toast } from 'react-toastify';
 import { Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { addCart, getCartData } from '../../redux/actions';
 import Star from '../Star';
 import './styles.scss';
+import { toastSuccess } from '../../until/toast';
 
 const ProductItem = ({ data, addCart }) => {
   const { t } = useTranslation();
@@ -37,15 +37,7 @@ const ProductItem = ({ data, addCart }) => {
         } else arrData = [...cartData, productItem];
       } else arrData.push(productItem);
       addCart({ user: authData.email, cartData: [...arrData] });
-      toast.success(`😍 ${t('Add card success')}!`, {
-        position: 'top-right',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toastSuccess(`😍 ${t('Add card success')}!`);
     }
   };
 

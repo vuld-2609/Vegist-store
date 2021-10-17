@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';
+import { toastSuccess, toastError } from '../../until/toast';
 
 import {
   CREATE_ACCOUNT,
@@ -36,9 +37,6 @@ import {
 } from '../constants';
 const apiURL = process.env.REACT_APP_API_URL;
 
-const success = (value) => toast.success(`🦄 ${value}`);
-const error = (value) => toast.error(`🦄 ${value}`);
-
 function* editUserSaga(action) {
   try {
     const { id, first, last, name, phone, address } = action.payload;
@@ -50,7 +48,7 @@ function* editUserSaga(action) {
       name,
     });
     const data = response.data;
-    success('Modify user success !');
+    toastSuccess('Modify user success !');
     yield put({
       type: EDIT_USER_SUCCESS,
       payload: data,
@@ -66,7 +64,7 @@ function* deleteUserSaga(action) {
   try {
     const { id } = action.payload;
     yield axios.delete(`${apiURL}/userList/${id}`);
-    success('Delete user success !');
+    toastSuccess('Delete user success !');
     yield put({
       type: DELETE_USER_SUCCESS,
       payload: [],
@@ -119,19 +117,19 @@ function* createUserByAdminSaga(action) {
         password: hashedPassword,
       });
       const data = response.data;
-      success('Create user success !');
+      toastSuccess('Create user success !');
       yield put({
         type: CREATE_USER_BY_ADMIN_SUCCESS,
         payload: data,
       });
     } else {
-      error('An error has occurred !');
+      toastSuccess('An error has occurred !');
       yield put({
         type: CREATE_USER_BY_ADMIN_FAIL,
       });
     }
   } catch (error) {
-    error('An error has occurred !');
+    toastError('An error has occurred !');
 
     yield put({
       type: CREATE_USER_BY_ADMIN_FAIL,
@@ -139,77 +137,34 @@ function* createUserByAdminSaga(action) {
     });
   }
 }
+
 function* createAccountSaga(action) {
   try {
-    const { email, password, first, last } = action.payload;
-    const resCheck = yield axios.get(`${apiURL}/userList?email=${email}`);
-    const dataCheck = resCheck.data;
-    if (dataCheck.length === 0) {
-      const hashedPassword = yield bcrypt.hash(password, 12);
-      const response = yield axios.post(`${apiURL}/userList`, {
-        ...action.payload,
-        password: hashedPassword,
-        role: 'user',
-      });
-      const data = response.data;
-      const token = jwt.sign({ id: data.id }, 'register', {
-        expiresIn: '1h',
-      });
-      toast.success('🦄 Đăng ký thành công !', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      localStorage.setItem(
-        'profile',
-        JSON.stringify({
-          email,
-          first,
-          last,
-          role: data.role,
-          token,
-        })
-      );
-      history.push('/');
-      yield put({
-        type: CREATE_ACCOUNT_SUCCESS,
-        payload: data,
-      });
-    } else {
-      toast.error('🦄 Đăng ký thất bại!', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      yield put({
-        type: CREATE_ACCOUNT_FAIL,
-        payload: [],
-      });
-    }
-  } catch (error) {
-    toast.error('🦄 Đăng ký thất bại!', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    const { status, error, data } = yield axiosClient.post(`/user/auth/register`, {
+      ...action.payload,
     });
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
+    if (status === 'success' && data) {
+      toastSuccess(data.message);
+    }
+    history.push('/login');
+    yield put({
+      type: CREATE_ACCOUNT_SUCCESS,
+      payload: [],
+    });
+  } catch (error) {
+    toastError(error.message);
     yield put({
       type: CREATE_ACCOUNT_FAIL,
       payload: error,
     });
   }
 }
+
 function* getInfoSaga(action) {
   try {
     const { email } = action.payload;
@@ -226,6 +181,7 @@ function* getInfoSaga(action) {
     });
   }
 }
+
 function* loginSaga(action) {
   try {
     const { email, password } = action.payload;
@@ -236,7 +192,7 @@ function* loginSaga(action) {
       const token = jwt.sign({ id: data[0].id }, 'login', {
         expiresIn: '1h',
       });
-      toast.success('🦄 Đăng nhập thành công !', {
+      toastSuccess('🦄 Đăng nhập thành công !', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
