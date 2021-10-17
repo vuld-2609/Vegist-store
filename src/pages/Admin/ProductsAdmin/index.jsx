@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Pagination, Input, Modal, Empty, Button } from 'antd';
@@ -187,7 +185,6 @@ const ListUser = ({
             )}
           </div>
         </div>
-        <ToastContainer />
       </section>
     </>
   );

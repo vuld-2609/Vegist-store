@@ -4,13 +4,13 @@ import { BsPencilSquare } from 'react-icons/bs';
 import bcrypt from 'bcryptjs';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { editProfile, getInfo, getBill } from '../../../redux/actions';
 import * as Yup from 'yup';
 
 import history from '../../../until/history';
 import './style.scss';
+import { toastError, toastSuccess } from '../../../until/toast';
 const { Panel } = Collapse;
 
 function Profile(prop) {
@@ -21,9 +21,6 @@ function Profile(prop) {
   const [editable, setEditable] = useState(false);
   const [isShowChangePw, setIsShowChangePw] = useState(false);
   const [isPayment, setIsPayment] = useState(true);
-
-  const success = (value) => toast.success(`🦄 ${value}`);
-  const error = (value) => toast.error(`🦄 ${value}`);
 
   useEffect(() => {
     document.title = 'Vegist | Trang Thông tin cá nhân';
@@ -47,7 +44,7 @@ function Profile(prop) {
     });
     setUserEdited(value);
     setEditable(!editable);
-    success('Successful change of information !');
+    toastSuccess('Successful change of information !');
   };
 
   const handleSubmitPassword = async (values) => {
@@ -60,10 +57,10 @@ function Profile(prop) {
         password: hashedPassword,
         token: JSON.parse(localStorage.getItem('profile')).token,
       });
-      success('Change password successfully !');
+      toastSuccess('Change password successfully !');
       setIsShowChangePw(false);
     } else {
-      error('The password you entered is incorrect !');
+      toastError('The password you entered is incorrect !');
     }
   };
 

@@ -10,7 +10,6 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import history from '../../until/history';
-import { ToastContainer } from 'react-toastify';
 
 import './style.scss';
 const Admin = () => {
@@ -65,7 +64,6 @@ const Admin = () => {
           </SubMenu>
         </Menu>
       </div>
-      <ToastContainer />
     </>
   );
 };

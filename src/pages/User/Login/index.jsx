@@ -7,9 +7,6 @@ import './style.scss';
 import { connect } from 'react-redux';
 import { getUser } from '../../../redux/actions';
 
-import { ToastContainer } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 const Login = ({ getUser }) => {
   const { t } = useTranslation();
@@ -100,7 +97,6 @@ const Login = ({ getUser }) => {
           </Row>
         </div>
       </section>
-      <ToastContainer />
     </>
   );
 };

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { createUserByAdmin } from '../../../../redux/actions';
 import { regexPhone } from '../../../../Constant';
@@ -12,7 +11,6 @@ import './style.scss';
 
 const ModalCreate = ({ createUserByAdmin }) => {
   const { t } = useTranslation();
-  const success = (value) => toast.success(`🦄 ${value}`);
   const { Option } = Select;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
