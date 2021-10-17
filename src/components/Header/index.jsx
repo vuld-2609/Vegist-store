@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from 'antd';
 import { connect } from 'react-redux';
-import { getCartData } from '../../redux/actions';
+import { getCartData, setValueSearch } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 
 import history from '../../until/history';
@@ -15,21 +15,40 @@ import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 
 import Navbar from './Navbar';
 
 const { Option } = Select;
 
-const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
+const Header = ({
+  getCartData,
+  cartData,
+  addCartData,
+  userDataEdited,
+  setValueSearch,
+  valueSearch,
+  match,
+}) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  // eslint-disable-next-line no-unused-vars
   const [selectData, setSelectData] = useState([]);
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const [showNavbar, setShowNavbar] = useState(false);
   const [authData, setAuthData] = useState();
-  const options = selectData.map((d) => <Option key={d.value}>{d.text}</Option>);
+  const options = selectData.map((d) => (
+    <Option key={d.value} value={d.value}>
+      {d.text}
+    </Option>
+  ));
+  const [value, setValue] = useState('');
+  // console.log('Log :  value', value);
+  useEffect(() => {
+    if (!match.path.includes('/products')) setValue('');
+  }, [valueSearch]);
+
   useEffect(() => {
     if (authData) getCartData({ user: authData.email });
   }, [authData]);
@@ -54,6 +73,15 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
     i18n.changeLanguage(lang);
   };
 
+  const handleChangeSearch = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleClickSearch = () => {
+    setValueSearch(value);
+    history.push('/products');
+  };
+
   return (
     <header className="header">
       <section className="header__top">
@@ -62,11 +90,11 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
             <span>{t('language.name')}: </span>
             <Select onChange={changeLanguage} defaultValue="en">
               <Option value="en">
-                <img src={English} alt="English" className="header__language--img" />
+                <img src={English} className="header__language--img" />
                 {t('language.english')}
               </Option>
               <Option value="vi">
-                <img src={VietNam} alt="Vietnam" className="header__language--img" />
+                <img src={VietNam} className="header__language--img" />
                 {t('language.vietnam')}
               </Option>
             </Select>
@@ -84,20 +112,13 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
           </div>
           <div className="header__search">
             <div className="header__search--form">
-              <Select
-                showSearch
-                // value={selectValue}
+              <input
+                value={value}
                 placeholder="Search..."
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                filterOption={false}
-                notFoundContent={null}
                 className="header__search--input"
-              >
-                {options}
-              </Select>
-              <div className="icon icon-round">
-                {' '}
+                onChange={handleChangeSearch}
+              ></input>
+              <div className="icon icon-round" onClick={handleClickSearch}>
                 <BiSearch />
               </div>
             </div>
@@ -193,16 +214,18 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
 const mapStateToProps = (state) => {
   const { cartData, addCartData } = state.cartReducer;
   const { userDataEdited } = state.accountReducer;
-
+  const { valueSearch } = state.productReducer;
   return {
     userDataEdited,
     cartData,
     addCartData,
+    valueSearch,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getCartData: (params) => dispatch(getCartData(params)),
+    setValueSearch: (params) => dispatch(setValueSearch(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
