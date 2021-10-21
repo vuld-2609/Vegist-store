@@ -11,6 +11,7 @@ import ModalModify from './ModalModify';
 import './style.scss';
 
 const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) => {
+  console.log('Log :  listUser', listUser);
   const [current, setCurrent] = useState(1);
   const [isDeleted, setIsDeleted] = useState(false);
   const [search, setSearch] = useState('');
@@ -23,13 +24,13 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
     getListUser({
       page: current,
       limit: 10,
-      search: searchKey
+      search: searchKey,
     });
   }, [current, adminCreate, isDeleted, userEdit, searchKey]);
 
   const { Search } = Input;
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const value = e.target.value;
     setSearch(value);
 
@@ -38,7 +39,7 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
     }
     typingTimeoutRef.current = setTimeout(() => {
       const formValue = {
-        search: value
+        search: value,
       };
       setSearchKey(formValue.search);
       setCurrent(1);
@@ -55,7 +56,7 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
         deleteUser({ id: data.id });
         setIsDeleted(!isDeleted);
       },
-      onCancel() {}
+      onCancel() {},
     });
   }
   const renderLocationProduct = () => {
@@ -132,7 +133,7 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
                 </div>
                 <Pagination
                   current={current}
-                  onChange={page => setCurrent(page)}
+                  onChange={(page) => setCurrent(page)}
                   total={listUser[1]}
                   defaultPageSize={10}
                 />
@@ -145,20 +146,20 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { listUser, deleteUser, adminCreate, userEdit, isLoading } = state.accountReducer;
   return {
     listUser,
     deleteUser,
     adminCreate,
     userEdit,
-    isLoading
+    isLoading,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getListUser: params => dispatch(getListUser(params)),
-    deleteUser: params => dispatch(deleteUser(params))
+    getListUser: (params) => dispatch(getListUser(params)),
+    deleteUser: (params) => dispatch(deleteUser(params)),
   };
 };
 

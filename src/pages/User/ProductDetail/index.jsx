@@ -48,7 +48,7 @@ const ProductDetail = ({
   billData,
   getBill,
 }) => {
-  console.log('billData', billData);
+  // console.log('billData', billData);
   const product = productDetail.product;
   const sales = product?.oldPrice && Math.ceil((1 - product.newPrice / product.oldPrice) * 100);
   const rate = product?.rate;

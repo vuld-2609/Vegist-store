@@ -1,7 +1,8 @@
 {
     "header_text": {
         "free": "Free shipping",
-        "order": "Orders From All item"
+        "order": "Orders From All item",
+        "search": "Show all results"
     },
     "language": {
         "name": "Language",
