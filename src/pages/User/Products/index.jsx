@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.scss';
 import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
@@ -9,7 +9,6 @@ import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { ToastContainer, toast } from 'react-toastify';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
@@ -213,7 +212,6 @@ const Products = ({
           </Col>
         </Row>
       </div>
-      <ToastContainer />;
     </div>
   );
 };
