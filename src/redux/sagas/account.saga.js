@@ -185,15 +185,15 @@ function* getInfoSaga(action) {
 function* loginSaga(action) {
   try {
     const { email, password } = action.payload;
-    const response = yield axiosClient.post(`/user/auth/login`,{email,password});
-    if(response.status==='failed' && response.error.message){
-      throw new Error(response.error.message)
+    const {status,error,data} = yield axiosClient.post(`/user/auth/login`,{email,password});
+    if(status==='failed' && error.message){
+      throw new Error(error.message)
     }
-    if(response.data.token && response.status==='success'){
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('profile', JSON.stringify(response.data.user))
+    if(data.token && status==='success'){
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('profile', JSON.stringify(data.user))
       toastSuccess('Đăng Nhập Thành Công')
-      history.push('/')
+      data.user.role === "admin" ? history.push('/admin') : history.push('/')
     }
       yield put({
         type: GET_USER_ACCOUNT_SUCCESS,
