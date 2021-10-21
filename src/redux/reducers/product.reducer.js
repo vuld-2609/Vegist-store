@@ -12,6 +12,7 @@ import {
   DELETE_PRODUCTS_SUCCESS,
   DELETE_PRODUCTS_FAIL,
   SET_VALUE_SEARCH,
+  SET_FLAG_SEARCH_CHANGE,
 } from '../constants';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   updateProduct: {},
   deleteProduct: {},
   valueSearch: '',
+  flagSearchChange: false,
 };
 
 export default function productReducer(state = initialState, action) {
@@ -78,6 +80,12 @@ export default function productReducer(state = initialState, action) {
       return {
         ...state,
         valueSearch: action.payload,
+      };
+    }
+    case SET_FLAG_SEARCH_CHANGE: {
+      return {
+        ...state,
+        flagSearchChange: action.payload,
       };
     }
     default:

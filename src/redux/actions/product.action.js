@@ -6,6 +6,7 @@ import {
   UPDATE_PRODUCTS,
   DELETE_PRODUCTS,
   SET_VALUE_SEARCH,
+  SET_FLAG_SEARCH_CHANGE,
 } from '../constants';
 
 export function getProductHome(params) {
@@ -53,6 +54,13 @@ export function deleteProduct(params) {
 export function setValueSearch(params) {
   return {
     type: SET_VALUE_SEARCH,
+    payload: params,
+  };
+}
+
+export function setFlagSearchChange(params) {
+  return {
+    type: SET_FLAG_SEARCH_CHANGE,
     payload: params,
   };
 }

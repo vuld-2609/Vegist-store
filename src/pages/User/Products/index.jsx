@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.scss';
 import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
 import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { getProducts, getTotalProducts, setValueSearch } from '../../../redux/actions';
+import {
+  getProducts,
+  getTotalProducts,
+  setFlagSearchChange,
+  setValueSearch,
+} from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
-import { ToastContainer, toast } from 'react-toastify';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
@@ -26,6 +30,7 @@ const Products = ({
   totalProduct,
   valueSearch,
   setValueSearch,
+  flagSearchChange,
 }) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
@@ -40,19 +45,41 @@ const Products = ({
     sort: null,
   });
 
-  if (width >= 1200) {
+  // if (width >= 1200) {
+  //   window.scrollTo({
+  //     top: 430,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else if (width >= 992) {
+  //   window.scrollTo({
+  //     top: 380,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else {
+  //   window.scrollTo({
+  //     top: 340,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
+
+  if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({
       top: 430,
       left: 0,
       behavior: 'smooth',
     });
-  } else if (width >= 992) {
+  }
+  if (width >= 992 && !flagSearchChange) {
     window.scrollTo({
       top: 380,
       left: 0,
       behavior: 'smooth',
     });
-  } else {
+  }
+  if (!flagSearchChange) {
     window.scrollTo({
       top: 340,
       left: 0,
@@ -198,17 +225,17 @@ const Products = ({
           </Col>
         </Row>
       </div>
-      <ToastContainer />;
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct, valueSearch } = state.productReducer;
+  const { productsData, totalProduct, valueSearch, flagSearchChange } = state.productReducer;
   return {
     productsData,
     totalProduct,
     valueSearch,
+    flagSearchChange,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -216,6 +243,7 @@ const mapDispatchToProps = (dispatch) => {
     getProducts: (params) => dispatch(getProducts(params)),
     getTotalProducts: (params) => dispatch(getTotalProducts(params)),
     setValueSearch: (params) => dispatch(setValueSearch(params)),
+    setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
