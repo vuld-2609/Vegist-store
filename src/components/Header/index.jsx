@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from 'antd';
+import { Select,Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getCartData } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
@@ -52,6 +52,22 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
 
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    history.push('/login')
+    localStorage.clear()
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -114,30 +130,23 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
                 <>
                   <div className="header__widget--item">
                     <GiExitDoor
-                      onClick={() => {
-                        history.push('/');
-                        localStorage.clear();
-                      }}
+                      onClick={showModal}
                     />
+                    <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                      <p>Do you want to sign out?</p>
+                    </Modal>
                   </div>
-                  <div className="header__widget--account-content">
+                  <div  onClick={() => history.push('/profile')} className="header__widget--account-content">
+                    <div className="user-avatar">
+                     <img src={authData?.avatar} alt="avatar" />
+                    </div>
                     <p
-                      onClick={() => history.push('/profile')}
+                     
                       className="header__widget--account-title"
                     >
-                      {authData?.firstName + ' ' + authData?.lastName}
+                      {authData?.fullName}
                     </p>
-                    <p>
-                      <span
-                        onClick={() => {
-                          history.push('/');
-                          localStorage.clear();
-                        }}
-                        className="header__widget--account-text"
-                      >
-                        {t('Logout')}
-                      </span>
-                    </p>
+                   
                   </div>
                 </>
               ) : (

@@ -63,6 +63,9 @@
     }
   }
   &__content {
+   
+
+
     &--title {
       p {
         font-weight: 600;
@@ -158,13 +161,7 @@
   }
   &__description {
     padding: 3rem 0;
-    &--tabs {
-      .description__content {
-        p {
-          font-weight: 600;
-          padding: 1rem 0;
-        }
-      }
+    
       .review__content {
         p {
           font-weight: 600;
@@ -204,7 +201,6 @@
           color: $white;
         }
       }
-    }
   }
   &__related {
     p {

@@ -23,6 +23,7 @@ import {
   Comment,
   Tooltip,
   List,
+  Text,
   Collapse,
   Rate,
   Form,
@@ -48,7 +49,6 @@ const ProductDetail = ({
   billData,
   getBill,
 }) => {
-  console.log('billData', billData);
   const product = productDetail.product;
   const sales = product?.oldPrice && Math.ceil((1 - product.newPrice / product.oldPrice) * 100);
   const rate = product?.rate;
@@ -63,6 +63,7 @@ const ProductDetail = ({
 
   useEffect(() => {
     getProductDetail(productId);
+    // const infoUser = JSON.parse(localStorage.getItem('profile'))
     getInfo(info?.email);
   }, [productId]);
 
@@ -112,24 +113,6 @@ const ProductDetail = ({
       content: 'Quality comes first and our products are designed to last.',
     },
   ];
-  const description = [
-    {
-      id: 1,
-      title: 'More detail',
-      content: [
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.',
-      ],
-    },
-    {
-      id: 2,
-      title: 'Key Specification',
-      content: [
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-        'Lorem Ipsum has been the ‘s standard dummy text. Lorem Ipsumum is simply dummy text.',
-      ],
-    },
-  ];
 
   const handleSubmitForm = (value) => {};
   const handleSubmitFormComment = (value) => {
@@ -139,9 +122,10 @@ const ProductDetail = ({
           ...value,
           idUser: infoUser.id,
           idProduct: productId,
-          name: `${infoUser.first + infoUser.last}`,
           datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
           rate: rateValue,
+          fullName:info?.fullName,
+          avatar:info?.avatar
         });
         toastSuccess('Thanks for your comment !');
         setIsShowFormComment(false);
@@ -309,21 +293,6 @@ const ProductDetail = ({
         </div>
         <div className="productDetail__description">
           <div className="container">
-            <Tabs className="productDetail__description--tabs" defaultActiveKey="1">
-              <TabPane tab="DESCRIPTION" key="1">
-                <div className="description__content">
-                  <ul>
-                    {description.map((item, index) => (
-                      <div key={`description__content- ${item.id}-${item.index}`}>
-                        <p>{item.title}</p>
-                        <li>{item.content[0]}</li>
-                        <li>{item.content[1]}</li>
-                      </div>
-                    ))}
-                  </ul>
-                </div>
-              </TabPane>
-              <TabPane tab="REVIEW" key="2">
                 <div className="review__content">
                   <p>{t('productDetail.Review__customer')}</p>
                   <Rate disabled defaultValue={5} />
@@ -384,9 +353,9 @@ const ProductDetail = ({
                     renderItem={(item) => (
                       <li>
                         <Comment
-                          author={item.name}
+                          author={item.fullName}
                           avatar={
-                            'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+                           info?.avatar
                           }
                           content={
                             <>
@@ -421,8 +390,6 @@ const ProductDetail = ({
                     />
                   )}
                 </div>
-              </TabPane>
-            </Tabs>
           </div>
         </div>
         <div className="productDetail__related">
