@@ -125,7 +125,7 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
                       onClick={() => history.push('/profile')}
                       className="header__widget--account-title"
                     >
-                      {authData?.first + ' ' + authData?.last}
+                      {authData?.firstName + ' ' + authData?.lastName}
                     </p>
                     <p>
                       <span
