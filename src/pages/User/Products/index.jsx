@@ -5,7 +5,12 @@ import { Col, Pagination, Row, Select } from 'antd';
 import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { getProducts, getTotalProducts } from '../../../redux/actions';
+import {
+  getProducts,
+  getTotalProducts,
+  setFlagSearchChange,
+  setValueSearch,
+} from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
@@ -18,7 +23,15 @@ const arrSelect = [
   { title: 'Date, new to old', value: 'date' },
 ];
 
-const Products = ({ getProducts, productsData, getTotalProducts, totalProduct }) => {
+const Products = ({
+  getProducts,
+  productsData,
+  getTotalProducts,
+  totalProduct,
+  valueSearch,
+  setValueSearch,
+  flagSearchChange,
+}) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
   const { t } = useTranslation();
@@ -32,19 +45,41 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
     sort: null,
   });
 
-  if (width >= 1200) {
+  // if (width >= 1200) {
+  //   window.scrollTo({
+  //     top: 430,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else if (width >= 992) {
+  //   window.scrollTo({
+  //     top: 380,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else {
+  //   window.scrollTo({
+  //     top: 340,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
+
+  if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({
       top: 430,
       left: 0,
       behavior: 'smooth',
     });
-  } else if (width >= 992) {
+  }
+  if (width >= 992 && !flagSearchChange) {
     window.scrollTo({
       top: 380,
       left: 0,
       behavior: 'smooth',
     });
-  } else {
+  }
+  if (!flagSearchChange) {
     window.scrollTo({
       top: 340,
       left: 0,
@@ -53,15 +88,10 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
   }
 
   useEffect(() => {
-    getProducts({
-      page: currentPage,
-      limit: 12,
-      category: filterProducts.category,
-      price: filterProducts.price,
-      tag: filterProducts.tag,
-      sort: filterProducts.sort,
-    });
-  }, [filterProducts, currentPage]);
+    return () => {
+      setValueSearch('');
+    };
+  }, []);
 
   useEffect(() => {
     document.title = 'Vegist | Trang Sản phẩm';
@@ -70,8 +100,19 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
       price: filterProducts.price,
       tag: filterProducts.tag,
       sort: filterProducts.sort,
+      searchKey: valueSearch,
     });
-  }, [filterProducts, currentPage]);
+
+    getProducts({
+      page: currentPage,
+      limit: 12,
+      category: filterProducts.category,
+      price: filterProducts.price,
+      tag: filterProducts.tag,
+      sort: filterProducts.sort,
+      searchKey: valueSearch,
+    });
+  }, [filterProducts, currentPage, valueSearch]);
 
   const handelChangePage = (page) => {
     setCurrentPage(page);
@@ -189,16 +230,20 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct } = state.productReducer;
+  const { productsData, totalProduct, valueSearch, flagSearchChange } = state.productReducer;
   return {
     productsData,
     totalProduct,
+    valueSearch,
+    flagSearchChange,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
     getTotalProducts: (params) => dispatch(getTotalProducts(params)),
+    setValueSearch: (params) => dispatch(setValueSearch(params)),
+    setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

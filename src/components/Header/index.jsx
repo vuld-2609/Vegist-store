@@ -12,24 +12,32 @@ import { useTranslation } from 'react-i18next';
 
 import { AiOutlineUserAdd, AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-import { BiSearch } from 'react-icons/bi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 
 import Navbar from './Navbar';
+import Search from '../Search';
 
 const { Option } = Select;
 
 const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  // eslint-disable-next-line no-unused-vars
   const [selectData, setSelectData] = useState([]);
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const [showNavbar, setShowNavbar] = useState(false);
   const [authData, setAuthData] = useState();
-  const options = selectData.map((d) => <Option key={d.value}>{d.text}</Option>);
+  const options = selectData.map((d) => (
+    <Option key={d.value} value={d.value}>
+      {d.text}
+    </Option>
+  ));
+
+  const [value, setValue] = useState(''); //State lưu từ nhập vào từ ô search
+
   useEffect(() => {
     if (authData) getCartData({ user: authData.email });
   }, [authData]);
@@ -54,6 +62,12 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
     i18n.changeLanguage(lang);
   };
 
+  // Để về trang Home và xóa ô search
+  const handleClickLogo = () => {
+    setValue('');
+    history.push('/');
+  };
+
   return (
     <header className="header">
       <section className="header__top">
@@ -62,11 +76,11 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
             <span>{t('language.name')}: </span>
             <Select onChange={changeLanguage} defaultValue="en">
               <Option value="en">
-                <img src={English} alt="English" className="header__language--img" />
+                <img src={English} className="header__language--img" />
                 {t('language.english')}
               </Option>
               <Option value="vi">
-                <img src={VietNam} alt="Vietnam" className="header__language--img" />
+                <img src={VietNam} className="header__language--img" />
                 {t('language.vietnam')}
               </Option>
             </Select>
@@ -79,29 +93,10 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
       </section>
       <section className="header__main">
         <div className="container header__main--container">
-          <div onClick={() => history.push('/')} className="logo">
+          <div onClick={handleClickLogo} className="logo">
             <img src={logo} alt="logo"></img>
           </div>
-          <div className="header__search">
-            <div className="header__search--form">
-              <Select
-                showSearch
-                // value={selectValue}
-                placeholder="Search..."
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                filterOption={false}
-                notFoundContent={null}
-                className="header__search--input"
-              >
-                {options}
-              </Select>
-              <div className="icon icon-round">
-                {' '}
-                <BiSearch />
-              </div>
-            </div>
-          </div>
+          <Search value={value} setValue={setValue} />
           <div className="header__widget">
             <div
               className="header__widget--item icon-hamburger "
@@ -182,7 +177,7 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
       </section>
       <section className="header__navbar">
         <div className="container ">
-          <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />
+          <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} setValue={setValue} />
         </div>
       </section>
       <ToastContainer />
@@ -193,7 +188,6 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
 const mapStateToProps = (state) => {
   const { cartData, addCartData } = state.cartReducer;
   const { userDataEdited } = state.accountReducer;
-
   return {
     userDataEdited,
     cartData,
