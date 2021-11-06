@@ -52,8 +52,7 @@ const ProductDetail = ({
   const product = productDetail.product;
   const sales = product?.oldPrice && Math.ceil((1 - product.newPrice / product.oldPrice) * 100);
   const rate = product?.rate;
-  const productId = match.params.id;
-  // eslint-disable-next-line no-unused-vars
+  const productId = Number(match.params.id);
   const [info, setInfo] = useState(JSON.parse(localStorage.getItem('profile')));
   const [rateValue, setRateValue] = useState();
   const [isShowFormComment, setIsShowFormComment] = useState(false);
@@ -63,15 +62,19 @@ const ProductDetail = ({
 
   useEffect(() => {
     getProductDetail(productId);
-    // const infoUser = JSON.parse(localStorage.getItem('profile'))
     getInfo(info?.email);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
   }, [productId]);
 
   useEffect(() => {
     getComment({
       id: productId,
       page: current,
-      limit: 10,
+      limit: 5,
     });
     // eslint-disable-next-line
   }, [listComment, current, productId]);
@@ -84,7 +87,6 @@ const ProductDetail = ({
     });
   }, [productId]);
   const { Panel } = Collapse;
-  comments.reverse();
   function callback(key) {
     setIsShowFormComment(!isShowFormComment);
   }
@@ -115,20 +117,22 @@ const ProductDetail = ({
   ];
 
   const handleSubmitForm = (value) => {};
+
   const handleSubmitFormComment = (value) => {
     if (info) {
-      if (billData?.cartData?.findIndex((item) => item.id == productId) !== -1) {
+      if (billData?.cartData?.find((item) => item.id === productId) ) {
         createComment({
           ...value,
           idUser: infoUser.id,
           idProduct: productId,
           datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
           rate: rateValue,
-          fullName:info?.fullName,
-          avatar:info?.avatar
+          fullName:info.fullName,
+          avatar:info.avatar
         });
-        toastSuccess('Thanks for your comment !');
-        setIsShowFormComment(false);
+        
+      toastSuccess('Thanks for your comment !');
+      setIsShowFormComment(false);
       } else {
         toastError("You didn't bought this product ago !");
         setIsShowFormComment(false);
@@ -137,6 +141,7 @@ const ProductDetail = ({
       toastError("You don't login !");
     }
   };
+
   const renderProductDetail = () => {
     return (
       <>
@@ -355,7 +360,7 @@ const ProductDetail = ({
                         <Comment
                           author={item.fullName}
                           avatar={
-                           info?.avatar
+                            item?.avatar
                           }
                           content={
                             <>
@@ -383,9 +388,14 @@ const ProductDetail = ({
                       total={countComment}
                       defaultCurrent={1}
                       current={current}
+                      defaultPageSize={5}
                       onChange={(page) => {
                         setCurrent(page);
-                        window.scrollTo(0, 0);
+                        window.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: 'smooth'
+                        });
                       }}
                     />
                   )}
