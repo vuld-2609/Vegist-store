@@ -1,0 +1,52 @@
+@import '../../../scss/styles.scss';
+
+.order {
+  width: 60%;
+  margin: 40px auto 0;
+  padding: 40px 0;
+
+  &__icon {
+    font-size: 2.4rem;
+    margin-right: 12px;
+    cursor: pointer;
+
+    &--detail {
+      &:hover {
+        color: $blue;
+      }
+    }
+
+    &--delete {
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+
+  &__filter {
+    @include flex;
+    margin-bottom: 20px;
+  }
+
+  &__sort {
+    @include flex;
+
+    &--title {
+      margin-right: 12px;
+    }
+  }
+
+  &__search {
+    width: fit-content;
+  }
+}
+
+.table {
+  &__row {
+    background-color: $white;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+}
