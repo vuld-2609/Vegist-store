@@ -386,21 +386,19 @@ function Profile(prop) {
                   </thead>
                   <tbody>
                     {billData?.cartData?.map((item, index) => (
-                      <>
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>
-                            <div className="name-order">
-                              <p>{item.name}</p>
-                              <img src={item.img[0]} alt="" />
-                            </div>
-                          </td>
-                          <td>{item.amount}</td>
-                          <td>{billData.address}</td>
-                          <td>{billData.date}</td>
-                          <td>{item.price}</td>
-                        </tr>
-                      </>
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>
+                          <div className="name-order">
+                            <p>{item.name}</p>
+                            <img src={item.img[0]} alt="" />
+                          </div>
+                        </td>
+                        <td>{item.amount}</td>
+                        <td>{billData.address}</td>
+                        <td>{billData.date}</td>
+                        <td>{item.price}</td>
+                      </tr>
                     ))}
                   </tbody>
                 </table>

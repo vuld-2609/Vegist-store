@@ -1,402 +1,403 @@
 {
-    "header_text": {
-        "free": "Free shipping",
-        "order": "Orders From All item",
-        "search": "Show all results"
+  "header_text": {
+    "free": "Free shipping",
+    "order": "Orders From All item",
+    "search": "Show all results"
+  },
+  "language": {
+    "name": "Language",
+    "english": "English",
+    "vietnam": "Vietnamese"
+  },
+  "Home": "Home",
+  "Shop": "Shop",
+  "Collection": "Collection",
+  "About Us": "About Us",
+  "Faq's": "Faq's",
+  "Blog": "Blog",
+  "Account": "Account",
+  "Register": "Register",
+  "Login": "Login",
+  "Hotline": "Hotline",
+  "Free delivery": "Free delivery",
+  "Cash On Delivery": "Cash On Delivery",
+  "30 Days Returns": "30 Days Returns",
+  "Online Support": "Online Support",
+  "Address": "Address",
+  "Contact": "Contact",
+  "Cart": "Cart",
+  "Add card success": "Add card success",
+  "Categories": {
+    "Top_Categories": {
+      "name": "Top Categories",
+      "Fruits": "Fruits",
+      "Fast Foods": "Fast Foods",
+      "Vegetables": "Vegetables",
+      "Salads": "Salads",
+      "Bestseller": "Bestseller"
     },
-    "language": {
-        "name": "Language",
-        "english": "English",
-        "vietnam": "Vietnamese"
+    "Services": {
+      "name": "Services",
+      "About Vegist": "About Vegist",
+      "Faq's": "Faq's",
+      "Contact Us": "Contact Us",
+      "News": "News",
+      "Sitemap": "Sitemap"
     },
-    "Home": "Home",
-    "Shop": "Shop",
-    "Collection": "Collection",
-    "About Us": "About Us",
-    "Faq's": "Faq's",
-    "Blog": "Blog",
-    "Account": "Account",
-    "Register": "Register",
-    "Login": "Login",
-    "Hotline": "Hotline",
-    "Free delivery": "Free delivery",
-    "Cash On Delivery": "Cash On Delivery",
-    "30 Days Returns": "30 Days Returns",
-    "Online Support": "Online Support",
-    "Address": "Address",
-    "Contact": "Contact",
-    "Cart": "Cart",
-    "Add card success": "Add card success",
-    "Categories": {
-        "Top_Categories": {
-            "name": "Top Categories",
-            "Fruits": "Fruits",
-            "Fast Foods": "Fast Foods",
-            "Vegetables": "Vegetables",
-            "Salads": "Salads",
-            "Bestseller": "Bestseller"
-        },
-        "Services": {
-            "name": "Services",
-            "About Vegist": "About Vegist",
-            "Faq's": "Faq's",
-            "Contact Us": "Contact Us",
-            "News": "News",
-            "Sitemap": "Sitemap"
-        },
-        "Privacy_Terms": {
-            "name": "Privacy & Terms",
-            "Payment policy": "Payment policy",
-            "Privacy policy": "Privacy policy",
-            "Return policy": "Return policy",
-            "shipping policy": "shipping policy",
-            "Terms & Conditions": "Terms & Conditions"
-        },
-        "My_Account": {
-            "name": "My Account",
-            "My Account": "My Account",
-            "My Cart": "My Cart",
-            "Order History": "Order History",
-            "My Wishlist": "My Wishlist",
-            "My Address": "My Address"
-        }
+    "Privacy_Terms": {
+      "name": "Privacy & Terms",
+      "Payment policy": "Payment policy",
+      "Privacy policy": "Privacy policy",
+      "Return policy": "Return policy",
+      "shipping policy": "shipping policy",
+      "Terms & Conditions": "Terms & Conditions"
     },
-    "register": {
-        "create": "Create Account",
-        "text": "Please register below account detail",
-        "button register": "CREATE ACCOUNT",
-        "already": "Already an account holder ?",
-        "button login": "Log in"
+    "My_Account": {
+      "name": "My Account",
+      "My Account": "My Account",
+      "My Cart": "My Cart",
+      "Order History": "Order History",
+      "My Wishlist": "My Wishlist",
+      "My Address": "My Address"
+    }
+  },
+  "register": {
+    "create": "Create Account",
+    "text": "Please register below account detail",
+    "button register": "CREATE ACCOUNT",
+    "already": "Already an account holder ?",
+    "button login": "Log in"
+  },
+  "login": {
+    "create": "Login",
+    "text": "Please login below account detail",
+    "button register": "SIGN IN",
+    "already": "Don't have account ?",
+    "button login": "Create account",
+    "forgot": "Forgot your password"
+  },
+  "Terms & Conditions": {
+    "title": "Terms & Conditions",
+    "content": "Your privacy and security are important to us. For more information on how we use your data read our",
+    "privacy": "privacy policy"
+  },
+  "validate": {
+    "first": "First name can't be blank !",
+    "last": "Last name can't be blank !",
+    "email": {
+      "required": "Email can't be blank !",
+      "regex": "Invalid email field !",
+      "max": "Email cannot exceed 50 characters !"
     },
-    "login": {
-        "create": "Login",
-        "text": "Please login below account detail",
-        "button register": "SIGN IN",
-        "already": "Don't have account ?",
-        "button login": "Create account",
-        "forgot": "Forgot your password"
+    "password": {
+      "password": "password",
+      "required": "Password can't be blank !",
+      "regex": "Password must not be less than 8 characters !"
     },
-    "Terms & Conditions": {
-        "title": "Terms & Conditions",
-        "content": "Your privacy and security are important to us. For more information on how we use your data read our",
-        "privacy": "privacy policy"
+    "zipCode": "ZIP code must contain 6 digits !",
+    "address": {
+      "required": "Password can't be blank !",
+      "max": "The address cannot exceed 100 characters !"
     },
-    "validate": {
-        "first": "First name can't be blank !",
-        "last": "Last name can't be blank !",
-        "email": {
-            "required": "Email can't be blank !",
-            "regex": "Invalid email field !",
-            "max": "Email cannot exceed 50 characters !"
-        },
-        "password": {
-            "password": "password",
-            "required": "Password can't be blank !",
-            "regex": "Password must not be less than 8 characters !"
-        },
-        "zipCode": "ZIP code must contain 6 digits !",
-        "address": {
-            "required": "Password can't be blank !",
-            "max": "The address cannot exceed 100 characters !"
-        },
-        "phone": {
-            "required": "Phone can't be blank !",
-            "regex": "Invalid phone number !"
-        },
-        "firstName": {
-            "max": "First name must not exceed 50 characters !",
-            "required": "First name can't be blank !"
-        },
-        "lastName": {
-            "max": "Last name must not exceed 20 characters !",
-            "required": "Last name can't be blank !"
-        },
-        "name": {
-            "max": "Name must not exceed 50 characters !",
-            "required": "Name can't be blank !"
-        },
-        "category": {
-            "required": "Product line can't be blank !"
-        },
-        "tag": {
-            "required": "Tag can't be blank !"
-        },
-        "origin": {
-            "required": "Origin can't be blank !"
-        },
-        "size": {
-            "regex": "Minimum size is 1kg, maximum 99kg !",
-            "required": "Size can't be blank !"
-        },
-        "price": {
-            "regex": "Minimum price is 10.000, maximum 99.000.000 !",
-            "required": "Price can't be blank !"
-        },
-        "image": {
-            "required": "Choose 4 pictures !"
-        },
-        "Short description": {
-            "required": "Short description can't be blank !"
-        }
+    "phone": {
+      "required": "Phone can't be blank !",
+      "regex": "Invalid phone number !"
     },
-    "home": {
-        "banner": {
-            "shop now": "shop now",
-            "fresh fruit vegetable": "Fresh fruit,vegetable ",
-            "on our product": "On our product",
-            "Vegetable Eggplant": "Vegetable Eggplant ",
-            "100% Fresh food": "100% Fresh food"
-        },
-
-        "countdown": {
-            "title": "Deal Of The Day!",
-            "thumbnail": "We offer a hot deal offer every festival",
-            "day": "day",
-            "hrs": "hrs",
-            "min": "min",
-            "sec": "sec",
-            "shop collection": "shop collection"
-        },
-        "product": {
-            "Special Product": "Special Product",
-            "New Product": "New Product",
-            "Bestseller": "Bestseller"
-        },
-        "shopify": {
-            "title": "Get The Latest Deals",
-            "sub": "And Receive 20% Off Coupon For First Shopping",
-            "placeholder": "Enter Your Email Address",
-            "subscribe": "Subscribe"
-        },
-        "category": {
-            "title": "Shop By Category"
-        }
+    "firstName": {
+      "max": "First name must not exceed 50 characters !",
+      "required": "First name can't be blank !"
+    },
+    "lastName": {
+      "max": "Last name must not exceed 20 characters !",
+      "required": "Last name can't be blank !"
+    },
+    "name": {
+      "max": "Name must not exceed 50 characters !",
+      "required": "Name can't be blank !"
     },
     "category": {
-        "Baker's Rack": "Baker's Rack",
-        "Breakfast": "Breakfast",
-        "Dairy & Chesse": "Dairy & Chesse",
-        "Dinner": "Dinner",
-        "Featured Product": "Featured Product",
-        "Fresh Fruits": "Fresh Fruits ",
-        "Fresh Meat": "Fresh Meat ",
-        "Fresh Vegetable": "Fresh Vegetable",
-        "Green Seafood": "Green Seafood",
-        "New Product": "New Product",
-        "Sea & Fish": "Sea & Fish",
-        "Organic Juice": "Organic Juice ",
-        "Organic Dryfruit": "Organic Dryfruit"
+      "required": "Product line can't be blank !"
     },
-
-    "tags": {
-        "Almond": "Almond",
-        "banana": "banana",
-        "bitrrot": "bitrrot",
-        "blackberry": "blackberry",
-        "chikoo": "chikoo",
-        "guava": "guava",
-        "juice": "juice",
-        "minirrot": "minirrot",
-        "mussel": "mussel",
-        "onion": "onion",
-        "organic-food": "organic-food"
+    "tag": {
+      "required": "Tag can't be blank !"
     },
-    "products": {
-        "sort by": "Sort by",
-        "Featured": "Featured",
-        "Best Selling": "Best Selling",
-        "Price, low to high": "Price, low to high",
-        "Price, high to low": "Price, high to low",
-        "Date, new to old": "Date, new to old",
-        "Categories": "Categories",
-        "Filter by Price": "Filter by Price",
-        "Filter by Tags": "Filter by Tags",
-        "Showing": "Showing",
-        "of": "of",
-        "result": "result",
-        "placeholder": "Select a type",
-        "Anything...": "Anything...",
-        "Organic Juice ": "Organic Juice ",
-        "Organic Dryfruit": "Organic Dryfruit"
+    "origin": {
+      "required": "Origin can't be blank !"
     },
-
-    "productDetail": {
-        "Review": "Write a review",
-        "Review__customer": "Customer Review",
-        "Review__rating": "Rating",
-        "Review__title": "Review Title",
-        "Review__body": "Body of Review (1000)characters remaining",
-        "Review__submit": "Review submit",
-        "Review__validate": {
-            "title": "Please input your title !",
-            "content": "Content must be less than 1000 characters"
-        },
-        "Availability": "Availability",
-        "Availability__stock": "In stock",
-        "Availability__new": "News",
-        "Hurry up": "Hurry up !",
-        "Size": "Size",
-        "Material": "Material",
-        "Quantity": "Quantity",
-        "Share": "Share",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and"
+    "size": {
+      "regex": "Minimum size is 1kg, maximum 99kg !",
+      "required": "Size can't be blank !"
     },
-    "cart": {
-        "Yes": "Yes",
-        "No": "No",
-        "Are you sure delete this product?": "Are you sure delete this product?",
-        "Warning": "Warning",
-        "You can only order up to 30 products": "You can only order up to 30 products.",
-        "My Cart": "My Cart",
-        "item": "Item",
-        "Size": "Size",
-        "Clear Cart": "Clear Cart",
-        "Continue Shopping": "Continue Shopping",
-        "Subtotal": "Subtotal",
-        "Total": "Total",
-        "Shipping Info": "Shipping Info",
-        "Country": "Country",
-        "Zip/Postal code": "Zip/Postal code",
-        "The shopping cart has no products": "The shopping cart has no products",
-        "Do you want to delete all products": "Do you want to delete all products?",
-        "Checkout": "Checkout"
+    "price": {
+      "regex": "Minimum price is 10.000, maximum 99.000.000 !",
+      "required": "Price can't be blank !"
     },
-
-    "Profile": {
-        "welcome": "Welcome",
-        "edit": "Edit password",
-        "inner": "Inner Password",
-        "new": "New Password",
-        "confirm": "Confirm Password",
-        "confirm_pw": "The password you entered is the same as the old password !",
-        "confirm_pwNew": "Password don't matches !",
-        "max": "No more than 20 characters !",
-        "submit": "Submit",
-        "account": {
-            "title": "Account Detail",
-            "name": "Name",
-            "address": "Address",
-            "phone": "Phone numbers",
-            "edit": "EDIT PROFILE",
-            "first": "First Name",
-            "last": "Last Name",
-            "cancel": "Cancel",
-            "save": "Save",
-            "password": "Password",
-            "role": "Role",
-            "user": "User",
-            "admin": "Admin"
-        }
+    "image": {
+      "required": "Choose 4 pictures !"
     },
-    "orderHistory": {
-        "title": "Order History",
-        "content": "You haven't placed any orders yet !"
-    },
-    "payments": {
-        "breadcrumb": {
-            "Cart": "Cart",
-            "Information": "Information",
-            "Shipping": "Shipping",
-            "Payment": "Payment"
-        },
-        "information": {
-            "check": "Keep me up to date on news and offers.",
-            "Country/region": "Country/region",
-            "First name": "First name",
-            "Last name": "Last name",
-            "Address": "Address",
-            "Phone": "Phone",
-            "ZIP code": "ZIP code",
-            "Continue to shipping": "Continue to shipping",
-            "Return to cart": "Return to cart"
-        },
-        "shipping": {
-            "Contact": "Contact",
-            "Ship to": "Ship to",
-            "Change": "Change",
-            "Shipping method": "Shipping method",
-            "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.": "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.",
-            "Standard": "Standard",
-            "Continue to payment": "Continue to payment",
-            "Return to information": "Return to information"
-        },
-        "payment": {
-            "Method": "Method",
-            "Payment": "Payment",
-            "All transactions are secure and encrypted": "All transactions are secure and encrypted.",
-            "This store can only pay with COD": "This store can only pay with COD",
-            "Credit card": "Credit card",
-            "Cash on Delivery (COD)": "Cash on Delivery (COD)",
-            "Billing address": "Billing address",
-            "Select the address that matches your card or payment method.": "Select the address that matches your card or payment method.",
-            "Same as shipping address": "Same as shipping address",
-            "Use a different billing address": "Use a different billing address",
-            "Complete order": "Complete order",
-            "Return to shipping": "Return to shipping"
-        }
-    },
-    "infoCart": {
-        "Discount": "Discount",
-        "Discount code": "Discount code",
-        "Apply": "Apply",
-        "Subtotal": "Subtotal",
-        "Shipping cost": "Shipping cost",
-        "Calculated at next step": "Calculated at next step",
-        "Total": "Total"
-    },
-    "success": {
-        "Order Success": "Order Success",
-        "Thanks": "Thank you for giving Vegist the opportunity to serve. Please follow by clicking",
-        "Order Management": "Order Management",
-        "Order": "Order",
-        "Receiver": "Receiver",
-        "Delivery address": "Delivery address",
-        "Staff will call to confirm before delivery": "Staff will call to confirm before delivery",
-        "Estimated delivery time": "Estimated delivery time",
-        "day": "day",
-        "Total amount": "Total amount",
-        "Payment type": "Payment type",
-        "Order Cancellation": "Order Cancellation",
-        "When you need help, please call": "When you need help, please call",
-        "Products purchased": "Products purchased",
-        "amount": "Amount",
-        "return to home page": "return to home page"
-    },
-    "admin": {
-        "listUser": {
-            "title": "LIST USER"
-        },
-        "listProduct": {
-            "title": "LIST PRODUCT"
-        },
-        "table": {
-            "name": "NAME",
-            "address": "ADDRESS",
-            "phone": "PHONE",
-            "action": "ACTION"
-        },
-
-        "products": {
-            "More new products": "More new products",
-            "Enter product name": "Enter product name...",
-            "Product's name": "Product's name",
-            "Product Line": "Product line",
-            "Select product line": "Select product line...",
-            "Unit price": "Unit price",
-            "Enter unit price": "Enter unit price...",
-            "New price": "New price",
-            "Enter new price": "Enter new price",
-            "Size": "Size",
-            "Select...": "Select...",
-            "Origin": "Origin",
-            "Tag": "Tag",
-            "Select tag": "Select tag",
-            "Image": "Image",
-            "Short description": "Short description",
-            "Enter short description": "Enter Short description...",
-            "Describe": "Describe",
-            "Enter describe": "Enter describe...",
-            "Add new": "Add new"
-        }
+    "Short description": {
+      "required": "Short description can't be blank !"
     }
+  },
+  "home": {
+    "banner": {
+      "shop now": "shop now",
+      "fresh fruit vegetable": "Fresh fruit,vegetable ",
+      "on our product": "On our product",
+      "Vegetable Eggplant": "Vegetable Eggplant ",
+      "100% Fresh food": "100% Fresh food"
+    },
+
+    "countdown": {
+      "title": "Deal Of The Day!",
+      "thumbnail": "We offer a hot deal offer every festival",
+      "day": "day",
+      "hrs": "hrs",
+      "min": "min",
+      "sec": "sec",
+      "shop collection": "shop collection"
+    },
+    "product": {
+      "Special Product": "Special Product",
+      "New Product": "New Product",
+      "Bestseller": "Bestseller"
+    },
+    "shopify": {
+      "title": "Get The Latest Deals",
+      "sub": "And Receive 20% Off Coupon For First Shopping",
+      "placeholder": "Enter Your Email Address",
+      "subscribe": "Subscribe"
+    },
+    "category": {
+      "title": "Shop By Category"
+    }
+  },
+  "category": {
+    "Baker's Rack": "Baker's Rack",
+    "Breakfast": "Breakfast",
+    "Dairy & Chesse": "Dairy & Chesse",
+    "Dinner": "Dinner",
+    "Featured Product": "Featured Product",
+    "Fresh Fruits": "Fresh Fruits ",
+    "Fresh Meat": "Fresh Meat ",
+    "Fresh Vegetable": "Fresh Vegetable",
+    "Green Seafood": "Green Seafood",
+    "New Product": "New Product",
+    "Sea & Fish": "Sea & Fish",
+    "Organic Juice": "Organic Juice ",
+    "Organic Dryfruit": "Organic Dryfruit"
+  },
+
+  "tags": {
+    "Almond": "Almond",
+    "banana": "banana",
+    "bitrrot": "bitrrot",
+    "blackberry": "blackberry",
+    "chikoo": "chikoo",
+    "guava": "guava",
+    "juice": "juice",
+    "minirrot": "minirrot",
+    "mussel": "mussel",
+    "onion": "onion",
+    "organic-food": "organic-food"
+  },
+  "products": {
+    "sort by": "Sort by",
+    "Featured": "Featured",
+    "Best Selling": "Best Selling",
+    "Price, low to high": "Price, low to high",
+    "Price, high to low": "Price, high to low",
+    "Date, new to old": "Date, new to old",
+    "Categories": "Categories",
+    "Filter by Price": "Filter by Price",
+    "Filter by Tags": "Filter by Tags",
+    "Showing": "Showing",
+    "of": "of",
+    "result": "result",
+    "placeholder": "Select a type",
+    "Anything...": "Anything...",
+    "Organic Juice ": "Organic Juice ",
+    "Organic Dryfruit": "Organic Dryfruit"
+  },
+
+  "productDetail": {
+    "Review": "Write a review",
+    "Review__customer": "Customer Review",
+    "Review__rating": "Rating",
+    "Review__title": "Review Title",
+    "Review__body": "Body of Review (1000)characters remaining",
+    "Review__submit": "Review submit",
+    "Review__validate": {
+      "title": "Please input your title !",
+      "content": "Content must be less than 1000 characters"
+    },
+    "Availability": "Availability",
+    "Availability__stock": "In stock",
+    "Availability__new": "News",
+    "Hurry up": "Hurry up !",
+    "Size": "Size",
+    "Material": "Material",
+    "Quantity": "Quantity",
+    "Share": "Share",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and"
+  },
+  "cart": {
+    "Yes": "Yes",
+    "No": "No",
+    "Are you sure delete this product?": "Are you sure delete this product?",
+    "Warning": "Warning",
+    "You can only order up to 30 products": "You can only order up to 30 products.",
+    "My Cart": "My Cart",
+    "item": "Item",
+    "Size": "Size",
+    "Clear Cart": "Clear Cart",
+    "Continue Shopping": "Continue Shopping",
+    "Subtotal": "Subtotal",
+    "Total": "Total",
+    "Shipping Info": "Shipping Info",
+    "Country": "Country",
+    "Zip/Postal code": "Zip/Postal code",
+    "The shopping cart has no products": "The shopping cart has no products",
+    "Do you want to delete all products": "Do you want to delete all products?",
+    "Checkout": "Checkout"
+  },
+
+  "Profile": {
+    "welcome": "Welcome",
+    "edit": "Edit password",
+    "inner": "Inner Password",
+    "new": "New Password",
+    "confirm": "Confirm Password",
+    "confirm_pw": "The password you entered is the same as the old password !",
+    "confirm_pwNew": "Password don't matches !",
+    "max": "No more than 20 characters !",
+    "submit": "Submit",
+    "account": {
+      "title": "Account Detail",
+      "name": "Name",
+      "address": "Address",
+      "phone": "Phone numbers",
+      "edit": "EDIT PROFILE",
+      "first": "First Name",
+      "last": "Last Name",
+      "cancel": "Cancel",
+      "save": "Save",
+      "password": "Password",
+      "role": "Role",
+      "user": "User",
+      "admin": "Admin"
+    }
+  },
+  "orderHistory": {
+    "title": "Order History",
+    "content": "You haven't placed any orders yet !"
+  },
+  "payments": {
+    "breadcrumb": {
+      "Cart": "Cart",
+      "Information": "Information",
+      "Shipping": "Shipping",
+      "Payment": "Payment"
+    },
+    "information": {
+      "check": "Keep me up to date on news and offers.",
+      "Country/region": "Country/region",
+      "First name": "First name",
+      "Last name": "Last name",
+      "Address": "Address",
+      "Phone": "Phone",
+      "ZIP code": "ZIP code",
+      "Continue to shipping": "Continue to shipping",
+      "Return to cart": "Return to cart"
+    },
+    "shipping": {
+      "Contact": "Contact",
+      "Ship to": "Ship to",
+      "Change": "Change",
+      "Shipping method": "Shipping method",
+      "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.": "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.",
+      "Standard": "Standard",
+      "Continue to payment": "Continue to payment",
+      "Return to information": "Return to information"
+    },
+    "payment": {
+      "Method": "Method",
+      "Payment": "Payment",
+      "All transactions are secure and encrypted": "All transactions are secure and encrypted.",
+      "This store can only pay with COD": "This store can only pay with COD",
+      "Credit card": "Credit card",
+      "Cash on Delivery (COD)": "Cash on Delivery (COD)",
+      "Billing address": "Billing address",
+      "Select the address that matches your card or payment method.": "Select the address that matches your card or payment method.",
+      "Same as shipping address": "Same as shipping address",
+      "Use a different billing address": "Use a different billing address",
+      "Complete order": "Complete order",
+      "Return to shipping": "Return to shipping"
+    }
+  },
+  "infoCart": {
+    "Discount": "Discount",
+    "Discount code": "Discount code",
+    "Apply": "Apply",
+    "Subtotal": "Subtotal",
+    "Shipping cost": "Shipping cost",
+    "Calculated at next step": "Calculated at next step",
+    "Total": "Total"
+  },
+  "success": {
+    "Order Success": "Order Success",
+    "Thanks": "Thank you for giving Vegist the opportunity to serve. Please follow by clicking",
+    "Order Management": "Order Management",
+    "Order": "Order",
+    "Receiver": "Receiver",
+    "Delivery address": "Delivery address",
+    "Staff will call to confirm before delivery": "Staff will call to confirm before delivery",
+    "Estimated delivery time": "Estimated delivery time",
+    "day": "day",
+    "Total amount": "Total amount",
+    "Payment type": "Payment type",
+    "Order Cancellation": "Order Cancellation",
+    "When you need help, please call": "When you need help, please call",
+    "Products purchased": "Products purchased",
+    "amount": "Amount",
+    "return to home page": "return to home page"
+  },
+  "admin": {
+    "listUser": {
+      "title": "LIST USER"
+    },
+    "listProduct": {
+      "title": "LIST PRODUCT"
+    },
+    "table": {
+      "name": "NAME",
+      "address": "ADDRESS",
+      "phone": "PHONE",
+      "action": "ACTION"
+    },
+
+    "products": {
+      "More new products": "More new products",
+      "Enter product name": "Enter product name...",
+      "Product's name": "Product's name",
+      "Product Line": "Product line",
+      "Select product line": "Select product line...",
+      "Enter price": "Enter price...",
+      "Price": "Price",
+      "Enter sale": "Enter sale",
+      "Select...": "Select...",
+      "Unit": "Unit",
+      "Select unit": "Select unit...",
+      "Origin": "Origin",
+      "Tag": "Tag",
+      "Sale": "Sale",
+      "Select tag": "Select tag",
+      "Image": "Image",
+      "Short description": "Short description",
+      "Enter short description": "Enter Short description...",
+      "Describe": "Describe",
+      "Enter describe": "Enter describe...",
+      "Add new": "Add new"
+    }
+  }
 }

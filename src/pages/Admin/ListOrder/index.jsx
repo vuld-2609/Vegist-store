@@ -136,17 +136,21 @@ function ListOrder({
           <tbody>
             {payments?.length ? (
               payments?.map((item, index) => (
-                <Row
-                  payments={payments}
-                  item={item}
-                  index={index}
-                  arrStatus={arrStatus}
-                  handleChangeStatus={handleChangeStatus}
-                  handleClickDelete={handleClickDelete}
-                />
+                <tr>
+                  <Row
+                    payments={payments}
+                    item={item}
+                    index={index}
+                    arrStatus={arrStatus}
+                    handleChangeStatus={handleChangeStatus}
+                    handleClickDelete={handleClickDelete}
+                  />
+                </tr>
               ))
             ) : (
-              <Empty />
+              <tr>
+                <Empty />
+              </tr>
             )}
           </tbody>
         </table>

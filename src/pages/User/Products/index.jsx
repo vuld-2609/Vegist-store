@@ -5,12 +5,7 @@ import { Col, Pagination, Row, Select } from 'antd';
 import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import {
-  getProducts,
-  getTotalProducts,
-  setFlagSearchChange,
-  setValueSearch,
-} from '../../../redux/actions';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
@@ -26,11 +21,10 @@ const arrSelect = [
 const Products = ({
   getProducts,
   productsData,
-  getTotalProducts,
-  totalProduct,
   valueSearch,
   setValueSearch,
   flagSearchChange,
+  totalProduct,
 }) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
@@ -95,13 +89,6 @@ const Products = ({
 
   useEffect(() => {
     document.title = 'Vegist | Trang Sản phẩm';
-    getTotalProducts({
-      category: filterProducts.category,
-      price: filterProducts.price,
-      tag: filterProducts.tag,
-      sort: filterProducts.sort,
-      searchKey: valueSearch,
-    });
 
     getProducts({
       page: currentPage,
@@ -146,7 +133,7 @@ const Products = ({
                 filterProducts={filterProducts}
                 setFilterProducts={setFilterProducts}
                 setCurrentPage={setCurrentPage}
-                totalProduct={totalProduct}
+                products={productsData}
                 setBannerData={setBannerData}
               />
             </div>
@@ -200,23 +187,23 @@ const Products = ({
                 <div className="list__content">
                   <Row gutter={[16, 16]}>
                     {productsData.map((item) => (
-                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12}>
+                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12} key={item.id}>
                         <ProductItem data={item} />
                       </Col>
                     ))}
                   </Row>
                 </div>
               </section>
-              {totalProduct.length > 0 && (
+              {totalProduct > 0 && (
                 <section className="pagination">
                   <div className="pagination__result">
                     {t('products.Showing')} {renderLocationProduct()} {t('products.of')}{' '}
-                    {totalProduct.length} {t('products.result')}
+                    {totalProduct} {t('products.result')}
                   </div>
                   <Pagination
                     current={currentPage}
                     onChange={handelChangePage}
-                    total={totalProduct?.length}
+                    total={totalProduct}
                     defaultPageSize={12}
                   />
                 </section>
@@ -230,18 +217,17 @@ const Products = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct, valueSearch, flagSearchChange } = state.productReducer;
+  const { productsData, valueSearch, flagSearchChange, totalProduct } = state.productReducer;
   return {
     productsData,
-    totalProduct,
     valueSearch,
     flagSearchChange,
+    totalProduct,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
-    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
     setValueSearch: (params) => dispatch(setValueSearch(params)),
     setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };

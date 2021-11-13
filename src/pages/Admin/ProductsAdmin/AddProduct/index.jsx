@@ -1,24 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Row, Col, Select, Upload, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import CustomField from './CustomField';
-import VietNam from '../../../../../assets/images/vietnam.svg';
-import English from '../../../../../assets/images/english.svg';
+import { Row, Col, Select } from 'antd';
+import CustomField from '../../../../components/Admin/CustomField/index';
+import VietNam from '../../../../assets/images/vietnam.svg';
+import English from '../../../../assets/images/english.svg';
 import { FaStarOfLife } from 'react-icons/fa';
-import './styles.scss';
 import { connect } from 'react-redux';
 import {
   createProduct,
   getSidebar,
   updateProduct,
   getProductDetail,
-} from '../../../../../redux/actions';
-import history from '../../../../../until/history';
+} from '../../../../redux/actions';
 import { useLocation } from 'react-router-dom';
-import { toastSuccess } from '../../../../../until/toast';
+import './styles.scss';
 
 const AddProductAdmin = ({
   match,
@@ -33,8 +30,10 @@ const AddProductAdmin = ({
   const { t } = useTranslation();
   const { Option } = Select;
   const location = useLocation();
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
+    document.title = 'Vegist | Thêm sản phẩm';
     getSidebar();
     if (location.pathname.indexOf(`edit`) !== -1) {
       getProductDetail(productId);
@@ -42,20 +41,16 @@ const AddProductAdmin = ({
   }, []);
 
   const handleCreateProduct = (values) => {
-    createProduct({ ...values, newPrice: parseInt(values.newPrice) });
-    toastSuccess('🦄 Thêm sản phẩm thành công !');
-    history.push('/admin/products');
+    createProduct({ ...values, imgs: files, price: parseInt(values.price) });
   };
 
   const handleEditProduct = (values) => {
     const data = {
       id: productId,
       ...values,
-      newPrice: parseInt(values.newPrice),
+      price: parseInt(values.price),
     };
     updateProduct({ ...data });
-    toastSuccess('🦄 Cập nhật sản phẩm thành công !');
-    history.push('/admin/products');
   };
   return (
     <section className="addProductAdmin">
@@ -68,43 +63,39 @@ const AddProductAdmin = ({
                 name: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.name : '',
                 categoryId:
                   location.pathname.indexOf(`edit`) !== -1
-                    ? productDetail?.product?.categoryId
+                    ? productDetail?.product?.categoryId.id
                     : '',
-                size: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.size : '',
                 origin:
                   location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.origin : '',
-                desc: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.desc : '',
-                shortDesc:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.shortDesc : '',
+                des: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.des : '',
+                shortDes:
+                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.shortDes : '',
                 tagId:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.tagId : '',
-                newPrice:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.newPrice : '',
-                oldPrice:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.newPrice : '',
-                // image: null,
+                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.tagId.id : '',
+                price:
+                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.price : '',
+                sale: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.sale : '',
+                unit: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.unit : '',
+                // image: [],
               }}
               validationSchema={Yup.object({
                 name: Yup.string()
                   .max(50, t('validate.name.max'))
                   .required(t('validate.name.required')),
-                shortDesc: Yup.string().required(t('validate.Short description.required')),
+                shortDes: Yup.string().required(t('validate.Short description.required')),
                 categoryId: Yup.string().required(t('validate.category.required')),
                 origin: Yup.string().required(t('validate.origin.required')),
                 tagId: Yup.string().required(t('validate.tag.required')),
-                size: Yup.string()
-                  .required(t('validate.size.required'))
-                  .matches(/([0-9]{1,2})/, t('validate.size.regex')),
-                newPrice: Yup.string()
+                unit: Yup.string().required(t('validate.tag.required')),
+                price: Yup.string()
                   .required(t('validate.price.required'))
                   .matches(/(^(1|2|3|4|5|6|7|8|9)+[0-9]{4,8}$)/, t('validate.price.regex')),
                 ...(location.pathname.indexOf(`edit`) !== -1 && {
-                  oldPrice: Yup.string()
-                    .required(t('validate.price.required'))
-                    .matches(/(^(1|2|3|4|5|6|7|8|9)+[0-9]{4,8}$)/, t('validate.price.regex')),
+                  sale: Yup.string()
+                    .required(t('validate.size.required'))
+                    .matches(/([0-9]{1,2})/, t('validate.size.regex')),
                 }),
-
-                // image: Yup.object().required(t("validate.image.required")),
+                // imgs: Yup.array.min(4, t('validate.image.required')),
               })}
               onSubmit={(values) => {
                 if (location.pathname !== `/admin/products/edit/${productId}`)
@@ -126,20 +117,20 @@ const AddProductAdmin = ({
                   </Col>
                   <Col xs={24}>
                     <CustomField
-                      name="newPrice"
+                      name="price"
                       type="text"
-                      label={t('admin.products.Unit price')}
-                      placeholder={t('admin.products.Enter unit price')}
+                      label={t('admin.products.Price')}
+                      placeholder={t('admin.products.Enter price')}
                       required
                     />
                   </Col>
                   {location.pathname.indexOf(`edit`) !== -1 && (
                     <Col xs={24}>
                       <CustomField
-                        name="oldPrice"
+                        name="sale"
                         type="text"
-                        label={t('admin.products.New price')}
-                        placeholder={t('admin.products.Enter new price')}
+                        label={t('admin.products.Sale')}
+                        placeholder={t('admin.products.Enter sale')}
                         required
                       />
                     </Col>
@@ -181,18 +172,9 @@ const AddProductAdmin = ({
                     </Row>
                   </Col>
                   <Col xs={24}>
-                    <CustomField
-                      name="size"
-                      type="size"
-                      label={t('admin.products.Size')}
-                      placeholder={t('admin.products.Select...')}
-                      required
-                    />
-                  </Col>
-                  <Col xs={24}>
                     <Row align="middle">
                       <Col md={6}>
-                        <label className htmlFor="origin">
+                        <label htmlFor="origin">
                           {t('admin.products.Origin')}
                           <FaStarOfLife />
                         </label>
@@ -212,11 +194,11 @@ const AddProductAdmin = ({
                               }
                             >
                               <Option value="vi">
-                                <img src={VietNam} className="header__language--img" />
+                                <img src={VietNam} className="header__language--img" alt="anh" />
                                 <span>Viet Nam</span>
                               </Option>
                               <Option value="en">
-                                <img src={English} className="header__language--img" />
+                                <img src={English} className="header__language--img" alt="anh" />
                                 <span>England</span>
                               </Option>
                             </Select>
@@ -251,8 +233,10 @@ const AddProductAdmin = ({
                                 FieldProps.form.setFieldValue(FieldProps.field.name, value)
                               }
                             >
-                              {sidebarData?.tagsData?.map((item) => (
-                                <Option value={item.id}>{item.name}</Option>
+                              {sidebarData?.tagsData?.map((item, i) => (
+                                <Option value={item.id} key={i}>
+                                  {item.name}
+                                </Option>
                               ))}
                             </Select>
                           )}
@@ -262,7 +246,44 @@ const AddProductAdmin = ({
                         </div>
                       </Col>
                     </Row>
-                  </Col>{' '}
+                  </Col>
+                  <Col xs={24}>
+                    <Row align="middle">
+                      <Col md={6}>
+                        <label htmlFor="tagId">
+                          {t('admin.products.Unit')}
+                          <FaStarOfLife />
+                        </label>
+                      </Col>
+                      <Col md={18}>
+                        <Field
+                          name="unit"
+                          id="unit"
+                          type="select"
+                          render={(FieldProps) => (
+                            <Select
+                              {...FieldProps.field}
+                              style={{ width: '100%' }}
+                              className="form__control--select"
+                              placeholder={t('admin.products.Select unit')}
+                              onChange={(value) =>
+                                FieldProps.form.setFieldValue(FieldProps.field.name, value)
+                              }
+                            >
+                              {unitData.map((item, i) => (
+                                <Option value={item} key={i}>
+                                  {item}
+                                </Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        <div className="text-danger">
+                          <ErrorMessage name="unit" />
+                        </div>
+                      </Col>
+                    </Row>
+                  </Col>
                   <Col xs={24}>
                     <Row align="middle">
                       <Col md={6}>
@@ -275,27 +296,27 @@ const AddProductAdmin = ({
                         <Row align="middle" gutter={[0, 8]}>
                           <Col>
                             <Field
-                              name="image"
-                              id="image"
+                              name="imgs"
+                              id="imgs"
                               type="select"
                               render={(FieldProps) => (
-                                <Upload
+                                <input
                                   {...FieldProps.field}
-                                  onChange={(value) =>
-                                    FieldProps.form.setFieldValue(FieldProps.field.name, value)
+                                  type="file"
+                                  id="avatar"
+                                  onChange={(evt) =>
+                                    setFiles((files) => [...files, evt.target.files[0]])
                                   }
-                                >
-                                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                                </Upload>
+                                />
                               )}
                             />
                           </Col>
                           <Col>
                             {location.pathname.indexOf(`edit`) !== -1 && (
-                              <div className=" ">
+                              <div>
                                 <Row gutter={[16, 24]}>
-                                  {productDetail?.product?.img?.map((item, index) => (
-                                    <Col md={2} xs={4}>
+                                  {productDetail?.product?.imgs?.map((item, index) => (
+                                    <Col md={3} xs={5}>
                                       <img key={index} src={item} alt="anh product"></img>
                                     </Col>
                                   ))}
@@ -313,7 +334,7 @@ const AddProductAdmin = ({
                   </Col>
                   <Col xs={24}>
                     <CustomField
-                      name="shortDesc"
+                      name="shortDes"
                       required
                       type="text"
                       label={t('admin.products.Short description')}
@@ -322,7 +343,7 @@ const AddProductAdmin = ({
                   </Col>
                   <Col xs={24}>
                     <CustomField
-                      name="desc"
+                      name="des"
                       type="textarea"
                       label={t('admin.products.Describe')}
                       placeholder={t('admin.products.Enter describe')}
@@ -346,6 +367,8 @@ const AddProductAdmin = ({
     </section>
   );
 };
+
+const unitData = ['Kg', 'Cái', 'Quả'];
 
 const mapStateToProps = (state) => {
   const { sidebarData } = state.categoryReducer;
