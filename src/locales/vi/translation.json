@@ -1,7 +1,8 @@
 {
     "header_text": {
         "free": "Giao hàng miễn phí",
-        "order": "Đặt hàng từ tất cả mặt hàng"
+        "order": "Đặt hàng từ tất cả mặt hàng",
+        "search": "Hiển thị tất cả kết quả"
     },
     "language": {
         "name": "Ngôn ngữ",

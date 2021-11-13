@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Drawer } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import history from '../../../until/history';
 
 import { BsChevronDown } from 'react-icons/bs';
 
 import './styles.scss';
+import { setFlagSearchChange } from '../../../redux/actions';
 
 const navbarData = [
   {
@@ -111,7 +113,7 @@ const navbarData = [
   },
 ];
 
-const Navbar = ({ setShowNavbar, showNavbar }) => {
+const Navbar = ({ setShowNavbar, showNavbar, setValue, setFlagSearchChange }) => {
   const location = useLocation();
   const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
@@ -120,6 +122,8 @@ const Navbar = ({ setShowNavbar, showNavbar }) => {
   const handelNavbarClick = (id, path) => {
     setIsActive(id);
     history.push(path);
+    setValue(''); //Xóa ô search khi chuyển trang
+    setFlagSearchChange(false); //check ô search để điều chỉnh thanh Scroll
     if (window.innerWidth < 992) {
       setIsActiveMobile({
         idParentNavbar: id,
@@ -236,4 +240,11 @@ const Navbar = ({ setShowNavbar, showNavbar }) => {
   );
 };
 
-export default Navbar;
+// export default Navbar;
+const mapStateToProps = (state) => {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

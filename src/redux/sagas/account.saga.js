@@ -185,66 +185,21 @@ function* getInfoSaga(action) {
 function* loginSaga(action) {
   try {
     const { email, password } = action.payload;
-    const response = yield axios.get(`${apiURL}/userList?email=${email}`);
-    const data = response.data;
-    const isPasswordCorrect = yield bcrypt.compare(password, data[0].password);
-    if (data.length > 0 && isPasswordCorrect) {
-      const token = jwt.sign({ id: data[0].id }, 'login', {
-        expiresIn: '1h',
-      });
-      toastSuccess('🦄 Đăng nhập thành công !', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-
-      localStorage.setItem(
-        'profile',
-        JSON.stringify({
-          email,
-          first: data[0].first,
-          last: data[0].last,
-          role: data[0].role,
-          token,
-        })
-      );
-
-      if (data[0].role === 'user') {
-        history.push('/');
-      } else history.push('/admin');
-
-      yield put({
-        type: GET_USER_ACCOUNT_SUCCESS,
-        payload: data,
-      });
-    } else {
-      toast.error('🦄 Đăng nhập thất bại !', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      yield put({
-        type: GET_USER_ACCOUNT_FAIL,
-      });
+    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { email, password });
+    if (status === 'failed' && error.message) {
+      throw new Error(error.message);
     }
-  } catch (error) {
-    toast.error('🦄 Đăng nhập thất bại !', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    if (data.token && status === 'success') {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('profile', JSON.stringify(data.user));
+      toastSuccess('Đăng Nhập Thành Công');
+      data.user.role === 'admin' ? history.push('/admin') : history.push('/');
+    }
+    yield put({
+      type: GET_USER_ACCOUNT_SUCCESS,
     });
+  } catch (error) {
+    toastError(error.message);
     yield put({
       type: GET_USER_ACCOUNT_FAIL,
       payload: error,
