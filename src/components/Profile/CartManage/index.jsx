@@ -1,16 +1,46 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { getBill, deletePayments } from '../../../redux/actions';
+import { Button, Modal } from 'antd';
+import history from '../../../until/history';
 
 import './style.scss';
 
+function CartManage(prop) {
+  const { billData, getBill, deletePayments } = prop;
+  const { t } = useTranslation();
 
-function CartManage() {
+  useEffect(() => {
+    document.title = 'Vegist | Trang Thông tin cá nhân';
+    const user = JSON.parse(localStorage.getItem('profile'));
+    getBill({
+      user: user.email,
+    });
+  }, []);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    deletePayments({ id:1 });
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancelPayment = () => {
+    setIsModalVisible(true);
+  };
 
   return (
     <>
-         <div className="profile__order">
+      <section className="profile fadeIn">
+        <div className="container">
+          <div className="profile__order">
             <p className="profile__order--title">{t('orderHistory.title')}</p>
-            {isPayment === false ? (
+            {!billData ? (
               <div className="cart__nonProduct ">
                 <div className="cart__nonProduct-img text-center">
                   <img src="https://i.imgur.com/Drj57qu.png" alt="nonProduct" />
@@ -28,6 +58,7 @@ function CartManage() {
               </div>
             ) : (
               <div>
+                <div>hehe</div>
                 <table>
                   <thead>
                     <tr>
@@ -37,33 +68,79 @@ function CartManage() {
                       <td>ADDRESS</td>
                       <td>DATE</td>
                       <td>PRICE</td>
+                      <td>STATUS</td>
+                      <td>ACTION</td>
                     </tr>
                   </thead>
                   <tbody>
-                    {billData?.cartData?.map((item, index) => (
-                      <>
+                    <>
+                      {billData?.map((item) => (
                         <tr>
-                          <td>{index + 1}</td>
+                          <td>{1}</td>
                           <td>
                             <div className="name-order">
-                              <p>{item.name}</p>
-                              <img src={item.img[0]} alt="" />
+                              {item?.cartData?.map((itemC, index) => (
+                                <>
+                                  <p>{itemC.name}</p>
+                                  <img src={itemC.img[0]} alt="" />
+                                </>
+                              ))}
                             </div>
                           </td>
-                          <td>{item.amount}</td>
-                          <td>{billData.address}</td>
-                          <td>{billData.date}</td>
-                          <td>{item.price}</td>
+                          <td>{item?.cartData?.length}</td>
+                          <td>{item.address}</td>
+                          <td>{item.datetime}</td>
+                          <td>
+                            {item?.cartData
+                              ?.reduce((acc, item) => {
+                                return acc + item.price;
+                              }, 0)
+                              .toLocaleString()}
+                          </td>
+                          <td>{item.status}</td>
+                          <td>
+                            <Button
+                              disabled={item.status === 'done'}
+                              onClick={handleCancelPayment}
+                            >
+                              Huỷ
+                            </Button>
+                            <Modal
+                              title="Basic Modal"
+                              visible={isModalVisible}
+                              onOk={handleOk}
+                              onCancel={handleCancel}
+                            >
+                              <p>Bạn có chắc muốn huỷ đơn đặt hàng này không ?</p>
+                            </Modal>
+                          </td>
                         </tr>
-                      </>
-                    ))}
+                      ))}
+                    </>
                   </tbody>
                 </table>
               </div>
             )}
           </div>
+        </div>
+      </section>
     </>
   );
 }
 
-export default CartManage;
+const mapStateToProps = (state) => {
+  const { billData } = state.paymentReducer;
+
+  return {
+    billData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBill: (params) => dispatch(getBill(params)),
+    deletePayments: (params) => dispatch(deletePayments(params)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartManage);

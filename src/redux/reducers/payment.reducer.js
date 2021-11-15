@@ -18,7 +18,7 @@ import {
 const initialState = {
   billInitData: {},
   billUpdateData: {},
-  billData: {},
+  billData: [],
   paymentsData: {},
   deleteData: {},
   updateData: {},
@@ -46,7 +46,7 @@ export default function paymentReducer(state = initialState, action) {
     case GET_BILL_SUCCESS:
       return {
         ...state,
-        billData: { ...action.payload },
+        billData: [ ...action.payload ],
       };
     case GET_BILL_FAIL: {
       return state;

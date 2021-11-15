@@ -2,6 +2,15 @@
 @import '../../../scss/utilities/mixin';
 $border-input: #1890ff33;
 .profile {
+  ::-webkit-scrollbar {
+    width: 6px;
+    background-color: #eee;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: gray;
+  }
+
   h6 {
     color: $white;
   }
@@ -115,6 +124,8 @@ $border-input: #1890ff33;
     }
     .name-order {
       text-align: center;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
     table {

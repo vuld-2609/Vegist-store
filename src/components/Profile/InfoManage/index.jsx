@@ -14,22 +14,17 @@ import { toastError, toastSuccess } from '../../../until/toast';
 const { Panel } = Collapse;
 
 function InfoManage(prop) {
-  const { editProfile, infoUser, getInfo, userDataEdited, getBill, billData } = prop;
+  const { editProfile, infoUser, getInfo, userDataEdited } = prop;
   const { t } = useTranslation();
 
   const [userEdited, setUserEdited] = useState({});
   const [editable, setEditable] = useState(false);
   const [isShowChangePw, setIsShowChangePw] = useState(false);
-  const [isPayment, setIsPayment] = useState(true);
 
   useEffect(() => {
     document.title = 'Vegist | Trang Thông tin cá nhân';
     const user = JSON.parse(localStorage.getItem('profile'));
     getInfo({ email: user.email });
-    getBill({
-      user: user.email,
-      isPayment: true,
-    });
   }, [userDataEdited]);
 
   useEffect(() => {
@@ -360,14 +355,12 @@ function InfoManage(prop) {
 }
 const mapStateToProps = (state) => {
   const { editProfile, infoUser, userList, userDataEdited } = state.accountReducer;
-  const { billData } = state.paymentReducer;
 
   return {
     editProfile,
     infoUser,
     userDataEdited,
     userList,
-    billData,
   };
 };
 const mapDispatchToProps = (dispatch) => {

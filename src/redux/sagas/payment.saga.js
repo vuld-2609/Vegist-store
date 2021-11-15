@@ -101,7 +101,7 @@ function* getBillSaga(action) {
     const data = response.data;
     yield put({
       type: GET_BILL_SUCCESS,
-      payload: data[0],
+      payload: data,
     });
   } catch (error) {
     yield put({
