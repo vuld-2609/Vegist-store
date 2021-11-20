@@ -20,10 +20,10 @@ function InfoManage(prop) {
   const [userEdited, setUserEdited] = useState({});
   const [editable, setEditable] = useState(false);
   const [isShowChangePw, setIsShowChangePw] = useState(false);
-
+  document.title = 'Vegist | Trang Thông tin cá nhân';
+  const user = JSON.parse(localStorage.getItem('profile'));
+  
   useEffect(() => {
-    document.title = 'Vegist | Trang Thông tin cá nhân';
-    const user = JSON.parse(localStorage.getItem('profile'));
     getInfo({ email: user.email });
   }, [userDataEdited]);
 
@@ -35,28 +35,18 @@ function InfoManage(prop) {
     editProfile({
       ...value,
       id: infoUser.id,
-      token: JSON.parse(localStorage.getItem('profile')).token,
     });
     setUserEdited(value);
     setEditable(!editable);
-    toastSuccess('Successful change of information !');
   };
 
-  const handleSubmitPassword = async (values) => {
-    const isPasswordCorrect = await bcrypt.compare(values.passwordInner, infoUser.password);
-
-    const hashedPassword = await bcrypt.hash(values.passwordNew, 12);
-    if (isPasswordCorrect) {
+  const handleSubmitPassword = (values) => {
       editProfile({
         id: infoUser.id,
-        password: hashedPassword,
+        password: values.password,
         token: JSON.parse(localStorage.getItem('profile')).token,
       });
-      toastSuccess('Change password successfully !');
       setIsShowChangePw(false);
-    } else {
-      toastError('The password you entered is incorrect !');
-    }
   };
 
   const callback = () => {
@@ -67,26 +57,26 @@ function InfoManage(prop) {
     {
       id: 1,
       title: t('Profile.account.first'),
-      content: `${userEdited?.first + ' ' + userEdited?.last}`,
+      content: user?.fullName,
       type: 'name',
       last: 'last',
     },
     {
       id: 2,
       title: 'Email',
-      content: `${userEdited?.email}`,
+      content: user.email,
       type: 'email',
     },
     {
       id: 3,
       title: t('Profile.account.address'),
-      content: `${userEdited?.address ? userEdited.address : 'Empty'}`,
+      content: `${user.address ?? ''} `,
       type: 'address',
     },
     {
       id: 4,
       title: t('Profile.account.phone'),
-      content: `${userEdited?.phone ? userEdited.phone : 'Empty'}`,
+      content: `${user.phone ?? ''}`,
       type: 'phone',
     },
   ];
@@ -98,7 +88,7 @@ function InfoManage(prop) {
       <section className="profile fadeIn">
         <div className="container">
           <h2>
-            {t('Profile.welcome')} {userEdited?.first + userEdited?.last}
+            {t('Profile.welcome')} {user.fullName}
           </h2>
           <div className="profile__content">
             <Row>
@@ -237,21 +227,21 @@ function InfoManage(prop) {
                 <div className="profile__content--info">
                   <p>{t('Profile.account.title')}</p>
                   <div className="profile__content--info-detail">
-                    {userEdited && (
+                    {user && (
                       <Formik
                         initialValues={{
-                          first: userEdited?.first,
-                          last: userEdited?.last,
-                          email: userEdited?.email,
-                          address: userEdited?.address,
-                          phone: userEdited?.phone,
+                          firstName: user?.firstName,
+                          lastName: user?.lastName,
+                          email: user?.email,
+                          address: user?.address,
+                          phone: user?.phone,
                         }}
                         enableReinitialize
                         validationSchema={Yup.object({
-                          first: Yup.string()
+                          firstName: Yup.string()
                             .required(t('validate.first'))
                             .max(20, t('Profile.max')),
-                          last: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
+                            lastName: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
                           phone: Yup.string().matches(
                             /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
                             'Invalid phone number !'
@@ -285,21 +275,21 @@ function InfoManage(prop) {
                                             key="2"
                                           >
                                             <div className="profile-input">
-                                              <label htmlFor="first">
+                                              <label htmlFor="firstName">
                                                 {t('Profile.account.first')}
                                               </label>
-                                              <Field id="first" type="text" name="first" />
+                                              <Field id="firstName" type="text" name="firstName" />
                                               <span className="error-message">
-                                                <ErrorMessage name="first" />
+                                                <ErrorMessage name="firstName" />
                                               </span>
                                             </div>
                                             <div>
-                                              <label htmlFor="Last">
+                                              <label htmlFor="lastName">
                                                 {t('Profile.account.last')}
                                               </label>
-                                              <Field id="Last" type="text" name="last" />
+                                              <Field id="lastName" type="text" name="lastName" />
                                               <span className="error-message">
-                                                <ErrorMessage name="last" />
+                                                <ErrorMessage name="lastName" />
                                               </span>
                                             </div>
                                           </Panel>

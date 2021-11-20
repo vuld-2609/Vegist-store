@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getBill, deletePayments } from '../../../redux/actions';
-import { Button, Modal } from 'antd';
+import { Button, Modal,Select,Input,Pagination  } from 'antd';
 import history from '../../../until/history';
 
 import './style.scss';
-
+const { Option } = Select;
+const { Search } = Input;
 function CartManage(prop) {
   const { billData, getBill, deletePayments } = prop;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [current, setCurrent] = useState(1);
+  const [searchKey, setSearchKey] = useState('');
+  const [filterSelect, setFilterSelect] = useState('');
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -16,14 +22,24 @@ function CartManage(prop) {
     const user = JSON.parse(localStorage.getItem('profile'));
     getBill({
       user: user.email,
+      search:searchKey,
+      page:current,
+      status:filterSelect
     });
-  }, []);
+  }, [current,searchKey,filterSelect]);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  function handleChange(value) {
+    setFilterSelect(value)
+  }
+  
+  const handleSearchOrder=(key)=>{
+    setSearchKey(key)
+    
+  }
 
-  const handleOk = () => {
+  const handleOk = (id) => {
     setIsModalVisible(false);
-    deletePayments({ id:1 });
+    // deletePayments({ id:1 });
   };
 
   const handleCancel = () => {
@@ -57,8 +73,19 @@ function CartManage(prop) {
                 </div>
               </div>
             ) : (
-              <div>
-                <div>hehe</div>
+              <div className="profile__order-content">
+                <div className="profile__order-content-action">
+                  <div className="action-select">
+                    <Select defaultValue="all"  onChange={handleChange}>
+                      <Option value="all">ALL</Option>
+                      <Option value="done">DONE</Option>
+                      <Option value="approval">PENDING</Option>
+                    </Select>
+                  </div>
+                  <div>
+                    <Search placeholder="input search text" onSearch={handleSearchOrder} enterButton />
+                  </div>
+                </div>
                 <table>
                   <thead>
                     <tr>
@@ -119,6 +146,15 @@ function CartManage(prop) {
                     </>
                   </tbody>
                 </table>
+
+                <div className="admin__listUser--pagination">
+                  <Pagination
+                    current={current}
+                    onChange={(page) => setCurrent(page)}
+                    total={billData.length}
+                    defaultPageSize={10}
+                  />
+                </div>
               </div>
             )}
           </div>

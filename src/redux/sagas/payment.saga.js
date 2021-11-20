@@ -87,14 +87,17 @@ function* updateBillSaga(action) {
 }
 function* getBillSaga(action) {
   try {
-    const { user, isPayment, id } = action.payload;
+    const { user, isPayment, id,page,search,status } = action.payload;
 
     const response = yield axios({
       method: 'GET',
       url: `${apiURL}/payments`,
       params: {
         ...(user && { user }),
+          ...(search && { q: search }),
+          ...(page && { _page: page }),
         ...(id && { id }),
+        ...(status && status !== 'all' && { status }),
         ...(!isNaN(isPayment) && { isPayment }),
       },
     });

@@ -2,6 +2,8 @@
 @import '../../../scss/utilities/mixin';
 $border-input: #1890ff33;
 .profile {
+  min-height: 50vh;
+
   ::-webkit-scrollbar {
     width: 6px;
     background-color: #eee;
@@ -159,6 +161,19 @@ $border-input: #1890ff33;
           }
         }
       }
+    }
+
+    &-content-action{
+      display: flex;
+      justify-content: flex-end;
+      gap: 2rem;
+      padding: 10px 0;
+
+        .action-select{
+          .ant-select{
+            min-width:120px;
+          }
+        }
     }
   }
 }

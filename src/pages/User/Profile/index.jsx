@@ -17,7 +17,7 @@ function Profile() {
             <CartManage/>
           </TabPane>
           <TabPane tab="Tab 2" key="2">
-            {/* <InfoManage/> */}
+            <InfoManage/>
           </TabPane>
         </Tabs>
     </>
