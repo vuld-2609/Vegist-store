@@ -71,7 +71,11 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Payment Status')}</h3>
-              <p>{bill?.isCompleted === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
+              <p>
+                {!!bill?.isCompleted || bill?.status === 'Đã giao hàng'
+                  ? 'Đã thanh toán'
+                  : 'Chưa thanh toán (Ship COD)'}
+              </p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Order Status')}</h3>

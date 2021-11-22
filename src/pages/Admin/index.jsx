@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
 import { FaRegCommentDots } from 'react-icons/fa';
-import { RiBillLine } from 'react-icons/ri';
+import { RiBillLine, RiContactsBookLine, RiLogoutBoxRLine } from 'react-icons/ri';
+import { GiJerusalemCross } from 'react-icons/gi';
 import history from '../../until/history';
 import './style.scss';
 
@@ -52,7 +53,7 @@ const Admin = () => {
             {t('admin.home')}
           </Menu.Item>
           <Menu.Item onClick={() => history.push('/admin')} key="3" icon={<PieChartOutlined />}>
-            DASHBOARD
+            {t('admin.Dashboard.title')}
           </Menu.Item>
           <Menu.Item onClick={() => history.push('/admin/listUser')} key="4" icon={<BiUser />}>
             {t('admin.listUser.title')}
@@ -76,12 +77,19 @@ const Admin = () => {
           </Menu.Item>
           <Menu.Item
             key="8"
-            icon={<ContainerOutlined />}
+            icon={<GiJerusalemCross />}
             onClick={() => history.push('/admin/discount')}
           >
             {t('admin.discount.title')}
           </Menu.Item>
-          <Menu.Item key="9" icon={<FaRegCommentDots />} onClick={showModal}>
+          <Menu.Item
+            key="9"
+            icon={<RiContactsBookLine />}
+            onClick={() => history.push('/admin/listContact')}
+          >
+            {t('admin.listContact.title')}
+          </Menu.Item>
+          <Menu.Item key="10" icon={<RiLogoutBoxRLine />} onClick={showModal}>
             {t('logout')}
           </Menu.Item>
         </Menu>

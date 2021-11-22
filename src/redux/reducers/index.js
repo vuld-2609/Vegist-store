@@ -6,6 +6,7 @@ import categoryReducer from './category.reducer';
 import cartReducer from './cart.reducer';
 import paymentReducer from './payment.reducer';
 import discountReducer from './discount.reducer';
+import contactReducer from './contact.reducer';
 
 export default combineReducers({
   productReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   cartReducer,
   paymentReducer,
   discountReducer,
+  contactReducer,
 });

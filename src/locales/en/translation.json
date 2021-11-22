@@ -24,7 +24,20 @@
   "30 Days Returns": "30 Days Returns",
   "Online Support": "Online Support",
   "Address": "Address",
-  "Contact": "Contact",
+  "Contact": {
+    "title": "Contact Us",
+    "description": "Got a question? We had love to hear from you. Send us a message and we will respond as soon as possible.",
+    "Drop us message": "Drop us message",
+    "Name": "Name",
+    "Email": "Email",
+    "Message": "Message",
+    "Enter your name": "Enter your name",
+    "Enter your email address": "Enter your email address",
+    "Your message here": "Your message here...",
+    "Get in touch": "Get in touch",
+    "Get description": "We are happy to receive contact from you. We look forward to assisting you so that you can have a great experience.",
+    "SUBMIT": "SUBMIT"
+  },
   "Cart": "Cart",
   "Add card success": "Add card success",
   "notFound": "No search results for",
@@ -105,8 +118,12 @@
       "required": "Last name can't be blank !"
     },
     "name": {
-      "max": "Name must not exceed 50 characters !",
+      "max": "Name must not exceed 40 characters !",
       "required": "Name can't be blank !"
+    },
+    "message": {
+      "max": "Message must not exceed 1000 characters !",
+      "required": "Message can't be blank !"
     },
     "category": {
       "required": "Product line can't be blank !"
@@ -380,6 +397,12 @@
     "listComment": {
       "title": "Comment Management "
     },
+    "listContact": {
+      "title": "Contact Management "
+    },
+    "Dashboard": {
+      "title": "Dashboard"
+    },
     "discount": {
       "title": "Discount Management",
       "StartDate": "Start date",
@@ -491,6 +514,13 @@
       "Date Time": "Date Time",
       "Action": "Action",
       "Search": "Search a product or a user..."
+    },
+    "contact": {
+      "Full Name": "Full Name",
+      "Email": "Email",
+      "Message": "Message",
+      "Date Time": "Date Time",
+      "Action": "Action"
     }
   },
   "logout": "Logout"
