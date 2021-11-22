@@ -50,8 +50,7 @@ const ProductDetail = ({
   getBill,
 }) => {
   const product = productDetail.product;
-  const sales = product?.oldPrice && Math.ceil((1 - product.newPrice / product.oldPrice) * 100);
-  const rate = product?.rate;
+  const sales =  product?.sales>0 &&  Math.ceil(((product?.price - (product?.price * (10/100)))));
   const productId = Number(match.params.id);
   const [info, setInfo] = useState(JSON.parse(localStorage.getItem('profile')));
   const [rateValue, setRateValue] = useState();
@@ -76,7 +75,6 @@ const ProductDetail = ({
       page: current,
       limit: 5,
     });
-    // eslint-disable-next-line
   }, [listComment, current, productId]);
 
   useEffect(() => {
@@ -86,10 +84,13 @@ const ProductDetail = ({
       isPayment: true,
     });
   }, [productId]);
+
   const { Panel } = Collapse;
+
   function callback(key) {
     setIsShowFormComment(!isShowFormComment);
   }
+
   function handleChangRate(value) {
     setRateValue(value);
   }
@@ -150,7 +151,7 @@ const ProductDetail = ({
             <div className="productDetail__tabs--img">
               <div className="productDetail__tabs--img">
                 <Tabs tabPosition="bottom" defaultActiveKey="1">
-                  {product?.img?.map((item, index) => (
+                  {product?.imgs?.map((item, index) => (
                     <>
                       <TabPane
                         tab={
@@ -177,26 +178,14 @@ const ProductDetail = ({
                 <p>{product?.name}</p>
               </div>
               <div className="productDetail__content--info">
-                <Rate disabled defaultValue={rate} />
+                <Rate disabled defaultValue={2} />
                 <p className="spanColor">
                   {t('productDetail.Availability')}:{' '}
                   <span> {t('productDetail.Availability__stock')}</span>
                 </p>
-                <p className="spanColor">
-                  <span>{`$${product?.newPrice?.toLocaleString()} USD`}</span>
-                  {product?.oldPrice && (
-                    <span className="product-item__price--old">{` $${product?.oldPrice?.toLocaleString()} USD`}</span>
-                  )}
-                  <span
-                    id="pointer-mini"
-                    className={`${
-                      product?.news ? (product.news === true ? 'news' : 'discount') : ''
-                    }`}
-                  >
-                    <div className="cnt">
-                      <p>{product?.news === true ? 'News' : `-${sales}%`}</p>
-                    </div>
-                  </span>
+                <p className="spanColor"> 
+                  <span>{`${ sales | product?.price.toLocaleString()} USD`} </span>
+                  <span className="product-item__price--old">{product?.sales && `${product?.sales } %`}</span>
                 </p>
                 <p className="gray-color">{t('productDetail.Hurry')}</p>
                 <p className="gray-color">{t('productDetail.description')}</p>

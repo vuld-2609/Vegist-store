@@ -1,5 +1,6 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
+import axiosClient from '../config/axiosClient';
 import { all } from 'redux-saga/effects';
 
 import {
@@ -20,21 +21,24 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 function* getProductDetailSaga(action) {
   const productId = action.payload;
+
   try {
     const [response, responseNew] = yield all([
-      axios({
-        method: 'GET',
-        url: `${apiURL}/products?id=${productId}`,
-      }),
+      axiosClient.get(
+        `/user/products/617caa214b52be531c1cd018`,
+      ),
+      
       axios({
         method: 'GET',
         url: `${apiURL}/products?news=true`,
       }),
     ]);
+
     const data = {
-      product: response.data[0],
+      product: response.data.product,
       relatedProduct: responseNew.data,
     };
+
     yield put({
       type: GET_PRODUCT_DETAIL_SUCCESS,
       payload: data,
