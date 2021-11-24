@@ -4,6 +4,7 @@ import { BiSearch } from 'react-icons/bi';
 import { connect } from 'react-redux';
 import { getTotalProducts, setFlagSearchChange, setValueSearch } from '../../redux/actions';
 import history from '../../until/history';
+import { toastError } from '../../until/toast';
 import './styles.scss';
 
 function Search({
@@ -42,7 +43,9 @@ function Search({
     setValueSearch(value);
     setFlag(false);
     setFlagSearchChange(false);
-    history.push('/products');
+    if (value === '') toastError(t('validate.search.required'));
+    else if (value !== '' && !totalProduct.length) history.push('/notfound');
+    else history.push('/products');
   };
 
   const handleClickSearchItem = (id) => {
@@ -72,10 +75,10 @@ function Search({
                 key={item.id}
                 onClick={() => handleClickSearchItem(item.id)}
               >
-                {item.img && <img src={item.img[0]} alt="img" className="header__search--img" />}
+                {item.imgs && <img src={item.imgs[0]} alt="img" className="header__search--img" />}
                 <div className="header__search--wrapper">
                   <span>{item.name}</span>
-                  <span>{`$${item.newPrice.toLocaleString()} USD`}</span>
+                  <span>{`$${item.price.toLocaleString()} USD`}</span>
                 </div>
               </li>
             ))}

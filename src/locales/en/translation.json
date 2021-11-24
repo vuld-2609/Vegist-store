@@ -27,6 +27,7 @@
     "Contact": "Contact",
     "Cart": "Cart",
     "Add card success": "Add card success",
+    "notFound": "No search results for",
     "Categories": {
         "Top_Categories": {
             "name": "Top Categories",
@@ -137,6 +138,9 @@
         },
         "Short description": {
             "required": "Short description can't be blank !"
+        },
+        "search": {
+            "required": "You have not entered a keyword !"
         }
     },
     "home": {

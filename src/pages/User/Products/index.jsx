@@ -45,26 +45,6 @@ const Products = ({
     sort: null,
   });
 
-  // if (width >= 1200) {
-  //   window.scrollTo({
-  //     top: 430,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else if (width >= 992) {
-  //   window.scrollTo({
-  //     top: 380,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else {
-  //   window.scrollTo({
-  //     top: 340,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }
-
   if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({
       top: 430,

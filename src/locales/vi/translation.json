@@ -28,6 +28,7 @@
     "Contact": "Liên hệ",
     "Cart": "Giỏ hàng",
     "Add card success": "Thêm vào giỏ hàng thành công",
+    "notFound": "Không có kết quả tìm kiếm cho từ khóa",
     "Categories": {
         "Top_Categories": {
             "name": "Danh mục hàng đầu",
@@ -138,6 +139,9 @@
         },
         "Short description": {
             "required": "Mô tả ngắn không được để trống !"
+        },
+        "search": {
+            "required": "Bạn chưa nhập từ khóa !"
         }
     },
 

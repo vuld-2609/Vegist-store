@@ -11,6 +11,7 @@ import './styles.scss';
 import { toastSuccess } from '../../until/toast';
 
 const ProductItem = ({ data, addCart }) => {
+  console.log('Log :  data', data);
   const { t } = useTranslation();
 
   const [authData, setAuthData] = useState();
