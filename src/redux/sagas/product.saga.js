@@ -1,7 +1,8 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';
+import { toastSuccess, toastError } from '../../until/toast';
+
 import {
   CREATE_PRODUCTS,
   CREATE_PRODUCTS_FAIL,
@@ -15,37 +16,43 @@ import {
   GET_PRODUCT_HOME,
   GET_PRODUCT_HOME_FAIL,
   GET_PRODUCT_HOME_SUCCESS,
-  GET_TOTAL_PRODUCTS,
-  GET_TOTAL_PRODUCTS_FAIL,
-  GET_TOTAL_PRODUCTS_SUCCESS,
   UPDATE_PRODUCTS,
   UPDATE_PRODUCTS_FAIL,
   UPDATE_PRODUCTS_SUCCESS,
 } from '../constants';
+import history from '../../until/history';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
 function* getProductHomeSaga() {
   try {
     const [responseNew, responseSale, responseSpecial] = yield all([
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/products?new=true`,
+        url: `user/products?isNew=true`,
       }),
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/products?oldPrice_gte=1`,
+        url: `user/products?sale=true`,
       }),
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/products?rate_gte=4`,
+        url: `user/products?rate_gte=4`,
       }),
     ]);
 
+    if (
+      (responseNew.status === 'failed' && responseNew.error) ||
+      (responseSale.status === 'failed' && responseSale.error) ||
+      (responseSpecial.status === 'failed' && responseSpecial.error)
+    ) {
+      throw new Error(responseNew.message);
+    }
+
     const data = {
-      new: responseNew.data,
-      sale: responseSale.data,
-      special: responseSpecial.data,
+      new: responseNew.data.products,
+      sale: responseSale.data.products,
+      special: responseSpecial.data.products,
     };
 
     yield put({
@@ -57,30 +64,34 @@ function* getProductHomeSaga() {
       type: GET_PRODUCT_HOME_FAIL,
       payload: error,
     });
+    toastError(error);
   }
 }
 
 function* getProductSaga(action) {
   try {
-    const { page, limit, category, price, tag, sort, searchKey, sortId } = action.payload;
-    const response = yield axiosClient({
+    const { page, limit, category, price, tag, sort, searchKey } = action.payload;
+    const { status, error, data } = yield axiosClient({
       method: 'GET',
-      url: `/user/products`,
+      url: `user/products`,
       params: {
         ...(page && { _page: page }),
         ...(limit && { _limit: limit }),
         ...(category && { categoryId: category }),
-        ...(price && { newPrice_gte: price[0], newPrice_lte: price[1] }),
+        ...(price && { price_gte: price[0], price_lte: price[1] }),
         ...(tag && { tagId: tag }),
-        ...(sort === 'bestSelling' && { oldPrice_gte: 0 }),
-        ...(sort === 'priceLowToHigh' && { _sort: 'newPrice', _order: 'asc' }),
-        ...(sort === 'priceHighToLow' && { _sort: 'newPrice', _order: 'desc' }),
-        ...(sort === 'date' && { news: true }),
+        ...(sort === 'bestSelling' && { sale: true }),
+        ...(sort === 'priceLowToHigh' && { _sort: 'price', _order: 'asc' }),
+        ...(sort === 'priceHighToLow' && { _sort: 'price', _order: 'desc' }),
+        ...(sort === 'date' && { isNew: true }),
         ...(searchKey && { q: searchKey }),
-        ...(sortId && { _sort: 'id', _order: 'desc' }),
       },
     });
-    const data = response.data.products;
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
     yield put({
       type: GET_PRODUCTS_SUCCESS,
       payload: data,
@@ -90,67 +101,70 @@ function* getProductSaga(action) {
       type: GET_PRODUCTS_FAIL,
       payload: error,
     });
-  }
-}
-
-function* getTotalProductSaga(action) {
-  try {
-    const { category, price, tag, sort, searchKey } = action.payload;
-
-    const response = yield axiosClient({
-      method: 'GET',
-      url: `/user/products`,
-      params: {
-        ...(category && { categoryId: category }),
-        ...(price && { newPrice_gte: price[0], newPrice_lte: price[1] }),
-        ...(tag && { tagId: tag }),
-        ...(sort === 'bestSelling' && { oldPrice_gte: 0 }),
-        ...(sort === 'priceLowToHigh' && { _sort: 'newPrice', _order: 'asc' }),
-        ...(sort === 'priceHighToLow' && { _sort: 'newPrice', _order: 'desc' }),
-        ...(sort === 'date' && { news: true }),
-        ...(searchKey && { q: searchKey }),
-      },
-    });
-    const data = response.data.products;
-    yield put({
-      type: GET_TOTAL_PRODUCTS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    yield put({
-      type: GET_TOTAL_PRODUCTS_FAIL,
-      payload: error,
-    });
+    toastError(error);
   }
 }
 
 function* createProductSaga(action) {
+  const values = action.payload;
+  delete values.origin;
+
+  const formData = new FormData();
+  Object.keys(values).forEach((key) => {
+    if (key === 'imgs') {
+      for (let imgs of values.imgs) {
+        formData.append('imgs', imgs);
+      }
+    } else {
+      formData.append(key, values[key]);
+    }
+  });
+  debugger;
   try {
-    const response = yield axios.post(`${apiURL}/products`, {
-      ...action.payload,
-    });
-    const data = response.data;
+    const { status, error, data } = yield axiosClient.post(`admin/products`, formData);
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
+    if (status === 'success' && data) {
+      toastSuccess(data.message);
+    }
+
     yield put({
       type: CREATE_PRODUCTS_SUCCESS,
-      payload: data,
+      payload: data.products,
     });
+
+    yield history.push('/admin/products');
   } catch (error) {
+    toastError(error.message);
     yield put({
       type: CREATE_PRODUCTS_FAIL,
       payload: error,
     });
   }
 }
+
 function* updateProductSaga(action) {
   try {
     const { id, ...other } = action.payload;
 
-    const response = yield axios.patch(`${apiURL}/products/${id}`, { ...other });
-    const data = response.data;
+    const { status, error, data } = yield axiosClient.patch(`admin/products/${id}`, {
+      ...other,
+    });
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
+    if (status === 'success' && data) {
+      toastSuccess(data.message);
+    }
     yield put({
       type: UPDATE_PRODUCTS_SUCCESS,
       payload: data,
     });
+
+    yield history.push('/admin/products');
   } catch (error) {
     yield put({
       type: UPDATE_PRODUCTS_FAIL,
@@ -158,16 +172,22 @@ function* updateProductSaga(action) {
     });
   }
 }
+
 function* deleteProductSaga(action) {
   try {
     const { id } = action.payload;
 
-    const response = yield axios.delete(`${apiURL}/products/${id}`);
+    const { status, error, data } = yield axiosClient.delete(`admin/products/${id}`);
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
 
-    const data = response.data;
+    if (status === 'success' && data) {
+      toastSuccess(data.message);
+    }
     yield put({
       type: DELETE_PRODUCTS_SUCCESS,
-      payload: data,
+      payload: id,
     });
   } catch (error) {
     yield put({
@@ -176,10 +196,10 @@ function* deleteProductSaga(action) {
     });
   }
 }
+
 export default function* productSaga() {
   yield takeEvery(GET_PRODUCT_HOME, getProductHomeSaga);
   yield takeEvery(GET_PRODUCTS, getProductSaga);
-  yield takeEvery(GET_TOTAL_PRODUCTS, getTotalProductSaga);
   yield takeEvery(CREATE_PRODUCTS, createProductSaga);
   yield takeEvery(UPDATE_PRODUCTS, updateProductSaga);
   yield takeEvery(DELETE_PRODUCTS, deleteProductSaga);

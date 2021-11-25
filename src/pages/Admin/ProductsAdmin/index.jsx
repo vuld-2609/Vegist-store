@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Pagination, Input, Modal, Empty, Button } from 'antd';
-import { getProducts, deleteProduct, getSidebar, getTotalProducts } from '../../../redux/actions';
+import { getProducts, deleteProduct } from '../../../redux/actions';
 import history from '../../../until/history';
 import { BsTrashFill } from 'react-icons/bs';
 import { IoEyeSharp } from 'react-icons/io5';
@@ -10,25 +10,15 @@ import { useTranslation } from 'react-i18next';
 
 import './styles.scss';
 
-const ListUser = ({
-  getProducts,
-  deleteProduct,
-  productsData,
-  getSidebar,
-  sidebarData,
-  totalProduct,
-  getTotalProducts,
-}) => {
+const ListUser = ({ getProducts, deleteProduct, productsData, totalProduct }) => {
   const { t } = useTranslation();
   const [current, setCurrent] = useState(1);
-  const [isDeleted, setIsDeleted] = useState(false);
   const [search, setSearch] = useState('');
   const [searchKey, setSearchKey] = useState();
   const typingTimeoutRef = useRef(null);
 
   useEffect(() => {
     document.title = 'Vegist | Quản lý sản phẩm';
-    getSidebar();
   }, []);
 
   useEffect(() => {
@@ -36,10 +26,8 @@ const ListUser = ({
       page: current,
       limit: 10,
       searchKey: searchKey,
-      sortId: true,
     });
-    getTotalProducts({ searchKey: searchKey });
-  }, [current, searchKey, isDeleted]);
+  }, [current, searchKey]);
 
   const { Search } = Input;
 
@@ -54,6 +42,7 @@ const ListUser = ({
       setCurrent(1);
     }, 800);
   };
+
   function confirm(data) {
     Modal.confirm({
       title: 'Confirm',
@@ -65,23 +54,26 @@ const ListUser = ({
       okText: 'OK',
       cancelText: 'CANCEL',
       onOk() {
-        setIsDeleted(!isDeleted);
         deleteProduct({ id: data.id });
       },
       onCancel() {},
     });
   }
+
   const handelChangePage = (page) => {
     setCurrent(page);
   };
+
   const renderLocationProduct = () => {
-    const start = (current - 1) * 12 + 1;
+    const LIMIT = 10;
+    const start = (current - 1) * LIMIT + 1;
     let end;
-    if (productsData.length >= 12) {
-      end = (current - 1) * 12 + 12;
+    if (productsData.length >= LIMIT) {
+      end = (current - 1) * LIMIT + LIMIT;
     } else end = start + productsData.length - 1;
     return `${start} - ${end}`;
   };
+
   return (
     <>
       <section className="admin__listUser admin__products fadeIn">
@@ -110,76 +102,63 @@ const ListUser = ({
                   <td>Name</td>
                   <td>Price</td>
                   <td>Discount</td>
-                  <td>Size</td>
+                  <td>Current price</td>
                   <td>Category</td>
                   <td>Tag</td>
                   <td>Action</td>
                 </tr>
               </thead>
               <tbody>
-                {totalProduct?.length > 0 ? (
-                  productsData?.map((item, index) => (
-                    <>
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.oldPrice ? item.oldPrice : item.newPrice}</td>
-                        <td>
-                          {item.oldPrice
-                            ? Math.ceil(-1 + (item.newPrice / item.oldPrice) * 100)
-                            : 0}
-                          %
-                        </td>
-                        <td>{item.size || ''}</td>
-                        <td>
-                          {
-                            sidebarData?.categoryData?.find(
-                              (itemCategory) => (itemCategory.id = item.categoryId)
-                            ).name
-                          }
-                        </td>
-                        <td>
-                          {sidebarData?.tagsData?.find((itemTag) => (itemTag.id = item.tagId)).name}
-                        </td>
-                        <td>
-                          <button
-                            className="button"
-                            onClick={() => history.push(`/product/${item.id}`)}
-                          >
-                            <IoEyeSharp />
-                          </button>
-                          <button
-                            className="button"
-                            onClick={() => history.push(`/admin/products/edit/${item.id}`)}
-                          >
-                            <FaEdit />
-                          </button>
+                {totalProduct > 0 ? (
+                  productsData.map((item, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{item.name}</td>
+                      <td>{item.price.toLocaleString()}</td>
+                      <td>{item.sale}%</td>
+                      <td>{Math.ceil(item.price * (1 - item.sale / 100)).toLocaleString()}</td>
+                      <td>{item.categoryId.name}</td>
+                      <td>{item.tagId.name}</td>
+                      <td>
+                        <button
+                          className="button"
+                          onClick={() => history.push(`/product/${item.id}`)}
+                        >
+                          <IoEyeSharp />
+                        </button>
+                        <button
+                          className="button"
+                          onClick={() => history.push(`/admin/products/edit/${item.id}`)}
+                        >
+                          <FaEdit />
+                        </button>
 
-                          <button className="button" onClick={() => confirm(item)}>
-                            <BsTrashFill />
-                          </button>
-                        </td>
-                      </tr>
-                    </>
+                        <button className="button" onClick={() => confirm(item)}>
+                          <BsTrashFill />
+                        </button>
+                      </td>
+                    </tr>
                   ))
                 ) : (
-                  <Empty />
+                  <tr>
+                    <Empty />
+                  </tr>
                 )}
               </tbody>
             </table>
           </div>
           <div className="admin__listUser--pagination">
-            {totalProduct?.length > 10 && (
+            {totalProduct > 10 && (
               <section className="pagination">
                 <div className="pagination__result">
                   {t('products.Showing')} {renderLocationProduct()} {t('products.of')}{' '}
-                  {totalProduct.length} {t('products.result')}
+                  {totalProduct} {t('products.result')}
                 </div>
                 <Pagination
                   current={current}
                   onChange={handelChangePage}
-                  total={totalProduct?.length}
-                  defaultPageSize={12}
+                  total={totalProduct}
+                  defaultPageSize={10}
                 />
               </section>
             )}
@@ -192,20 +171,16 @@ const ListUser = ({
 
 const mapStateToProps = (state) => {
   const { deleteProduct, productsData, totalProduct } = state.productReducer;
-  const { sidebarData } = state.categoryReducer;
   return {
     deleteProduct,
     productsData,
-    sidebarData,
     totalProduct,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
-    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
     deleteProduct: (params) => dispatch(deleteProduct(params)),
-    getSidebar: (params) => dispatch(getSidebar(params)),
   };
 };
 

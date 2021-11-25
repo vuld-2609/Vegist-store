@@ -1,6 +1,11 @@
-@import '../../../../../scss/utilities/mixin';
-@import '../../../../../scss/utilities/variables';
+@import '../../../../scss/utilities/mixin';
+@import '../../../../scss/utilities/variables';
+
 .addProductAdmin {
+  &__container {
+    padding-bottom: 5rem;
+  }
+
   &__title {
     padding: 3rem 0;
     text-align: center;
