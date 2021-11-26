@@ -10,15 +10,9 @@ const title = [
   { id: 1, title: 'STT' },
   { id: 2, title: 'Image' },
   { id: 3, title: 'Name' },
-  { id: 4, title: 'Amount' },
+  { id: 4, title: 'Quantity' },
   { id: 5, title: 'Price' },
 ];
-
-const status = {
-  approval: 'approval',
-  shipping: 'shipping',
-  delivered: 'delivered',
-};
 
 function OrderDetail({ match, orderDetail, getOrderDetail }) {
   useEffect(() => {
@@ -26,60 +20,61 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
     getOrderDetail({ id: match.params.id });
   }, []);
 
-  const renderTotalPrice = () => {
-    let total = 0;
-    orderDetail?.cartData?.forEach((item) => (total += item.price));
-    return `$${total.toLocaleString()} VND`;
-  };
+  const { bill, billDetails } = orderDetail;
 
-  const datetime = moment(orderDetail.datetime).format('L');
+  const renderPaymentCode = (id) => {
+    let str = id.slice(-8).toUpperCase();
+    return `Vegist-${str}`;
+  };
 
   return (
     <section className="detail">
       <div className="detail__container">
         <h1 className="detail__title">ORDER DETAIL</h1>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Payment Code</h3>
-          <p>{`#${orderDetail.paymentCode}`}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">User Name</h3>
-          <p>{orderDetail.name}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Email</h3>
-          <p>{orderDetail.email}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Phone Number</h3>
-          <p>{orderDetail.phone}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Address</h3>
-          <p>{orderDetail.address}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">DateTime</h3>
-          <p>{datetime}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Total Price</h3>
-          <p>{renderTotalPrice()}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Order Payment</h3>
-          <p>{orderDetail.isPayment === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
-        </div>
-        <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Order Status</h3>
-          <p>
-            {orderDetail.status === status.approval
-              ? 'Đang duyệt'
-              : orderDetail.status === status.shipping
-              ? 'Đang vận chuyển'
-              : 'Đã giao hàng'}
-          </p>
-        </div>
+        {bill && (
+          <>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Payment Code</h3>
+              <p>{`#${renderPaymentCode(bill.id)}`}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Orderer's name</h3>
+              <p>{bill.userId.fullName}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Email</h3>
+              <p>{bill.userId.email}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Datetime</h3>
+              <p>{moment(bill.dateCreate).format('L')}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Recipient's name</h3>
+              <p>{bill.name}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Phone Number</h3>
+              <p>{bill.phoneNumber}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Address</h3>
+              <p>{bill.address}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Total Price</h3>
+              <p>{`$${bill.total.toLocaleString()} VND`}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Order Payment</h3>
+              <p>{bill.isCompleted === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
+            </div>
+            <div className="detail__wrapper">
+              <h3 className="detail__subtitle">Order Status</h3>
+              <p>{bill.status}</p>
+            </div>
+          </>
+        )}
         <div className="detail__wrapper">
           <h3 className="detail__subtitle">Products</h3>
           <div className="admin__listUser--tableNormal">
@@ -92,16 +87,16 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
                 </tr>
               </thead>
               <tbody>
-                {orderDetail?.cartData?.length &&
-                  orderDetail?.cartData?.map((item, index) => (
+                {billDetails?.length &&
+                  billDetails?.map((item, index) => (
                     <tr className="table__row">
                       <td>{index + 1}</td>
                       <td>
-                        <img src={item?.img[0]} alt="img" className="detail__img" />
+                        <img src={item.productId?.imgs[0]} alt="img" className="detail__img" />
                       </td>
-                      <td>{item.name}</td>
-                      <td>{item.amount}</td>
-                      <td>{`$${item.price.toLocaleString()}`}</td>
+                      <td>{item.productId?.name}</td>
+                      <td>{item.quantity}</td>
+                      <td>{`$${item.productId?.price.toLocaleString()} VND`}</td>
                     </tr>
                   ))}
               </tbody>
