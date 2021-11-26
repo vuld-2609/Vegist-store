@@ -14,8 +14,6 @@ import {
   CREATE_COMMENT,
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT_SUCCESS,
-  GET_COUNT_COMMENT_FAIL,
-  GET_COUNT_COMMENT_SUCCESS,
 } from '../constants';
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -48,7 +46,9 @@ function* getProductDetailSaga(action) {
 
     yield put({
       type: GET_PRODUCT_DETAIL_SUCCESS,
-      payload: data,
+      payload: {
+        data:data
+      },
     });
   } catch (error) {
     yield put({
@@ -58,22 +58,34 @@ function* getProductDetailSaga(action) {
     toastError(error);
   }
 }
+
 function* createCommentSaga(action) {
   try {
     const response = yield axios.post(`${apiURL}/listComment`, action.payload);
+
+    // if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
+
     yield put({
       type: CREATE_COMMENT_SUCCESS,
-      payload: data,
+      payload: {
+        data: data
+      },
     });
+    toastSuccess(response.message);
+
   } catch (error) {
     yield put({
       type: CREATE_COMMENT_FAIL,
     });
+    toastError(error);
   }
 }
+
 function* getCommentSaga(action) {
   const { id, page, limit } = action.payload;
+
   try {
     const response = yield axios({
       method: 'GET',
@@ -82,27 +94,26 @@ function* getCommentSaga(action) {
         ...(page && { _page: page }),
         ...(limit && { _limit: limit }),
         ...(id && { idProduct: id }),
-        ...{ _sort: 'id', _order: 'desc' },
       },
     });
+
+    // if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
-    const responseData = yield axios.get(`${apiURL}/listComment?idProduct=${id}`);
-    const dataRes = responseData.data.length;
+    console.log("🚀 ~ file: productDetail.saga.js ~ line 103 ~ function*getCommentSaga ~ data", data)
+
     yield put({
       type: GET_COMMENT_SUCCESS,
-      payload: data,
-    });
-    yield put({
-      type: GET_COUNT_COMMENT_SUCCESS,
-      payload: dataRes,
+      payload: {
+        data:data,
+        total:response.total
+      },
     });
   } catch (error) {
     yield put({
       type: GET_COMMENT_FAIL,
     });
-    yield put({
-      type: GET_COUNT_COMMENT_FAIL,
-    });
+    toastError(error);
   }
 }
 

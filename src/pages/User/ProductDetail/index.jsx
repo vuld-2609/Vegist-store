@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  getProductDetail,
-  getInfo,
-  createComment,
-  getComment,
-  getBill,
-} from '../../../redux/actions';
+import { getProductDetail, createComment, getComment } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
-import { toastSuccess, toastError } from '../../../until/toast';
 
 import { GiShoppingBag } from 'react-icons/gi';
 import Slide from '../Home/Slide';
@@ -30,6 +23,7 @@ import {
   Radio,
   InputNumber,
   Pagination,
+  Spin,
 } from 'antd';
 import moment from 'moment';
 
@@ -40,34 +34,28 @@ const ProductDetail = ({
   match,
   getProductDetail,
   productDetail,
-  getInfo,
-  infoUser,
   comments,
   getComment,
   listComment,
-  countComment,
-  billData,
-  getBill,
 }) => {
-  // console.log('billData', billData);
-  const product = productDetail.product;
-  const sales =  product?.sales>0 &&  Math.ceil(((product?.price - (product?.price * (10/100)))));
-  const productId = Number(match.params.id);
-  const [info, setInfo] = useState(JSON.parse(localStorage.getItem('profile')));
+  console.log("🚀 ~ file: index.jsx ~ line 41 ~ listComment", listComment)
+  const product = productDetail.data?.product;
+  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (10 / 100));
+  const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
   const [isShowFormComment, setIsShowFormComment] = useState(false);
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
+  document.title = 'Vegist | Trang Chi tiết';
 
   useEffect(() => {
     getProductDetail(productId);
-    getInfo(info?.email);
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth'
-    })
+      behavior: 'smooth',
+    });
   }, [productId]);
 
   useEffect(() => {
@@ -77,14 +65,6 @@ const ProductDetail = ({
       limit: 5,
     });
   }, [listComment, current, productId]);
-
-  useEffect(() => {
-    document.title = 'Vegist | Trang Chi tiết';
-    getBill({
-      user: info?.email,
-      isPayment: true,
-    });
-  }, [productId]);
 
   const { Panel } = Collapse;
 
@@ -121,27 +101,12 @@ const ProductDetail = ({
   const handleSubmitForm = (value) => {};
 
   const handleSubmitFormComment = (value) => {
-    if (info) {
-      if (billData?.cartData?.find((item) => item.id === productId) ) {
-        createComment({
-          ...value,
-          idUser: infoUser.id,
-          idProduct: productId,
-          datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-          rate: rateValue,
-          fullName:info.fullName,
-          avatar:info.avatar
-        });
-        
-      toastSuccess('Thanks for your comment !');
-      setIsShowFormComment(false);
-      } else {
-        toastError("You didn't bought this product ago !");
-        setIsShowFormComment(false);
-      }
-    } else {
-      toastError("You don't login !");
-    }
+    createComment({
+      ...value,
+      idProduct: productId,
+      rate: rateValue,
+    });
+    setIsShowFormComment(false);
   };
 
   const renderProductDetail = () => {
@@ -184,21 +149,16 @@ const ProductDetail = ({
                   {t('productDetail.Availability')}:{' '}
                   <span> {t('productDetail.Availability__stock')}</span>
                 </p>
-                <p className="spanColor"> 
-                  <span>{`${ sales | product?.price.toLocaleString()} USD`} </span>
-                  <span className="product-item__price--old">{product?.sales && `${product?.sales } %`}</span>
+                <p className="spanColor">
+                  <span>{`${sales | product?.price.toLocaleString()} USD`} </span>
+                  <span className="product-item__price--old">
+                    {product?.sales && `${product?.sales} %`}
+                  </span>
                 </p>
                 <p className="gray-color">{t('productDetail.Hurry')}</p>
                 <p className="gray-color">{t('productDetail.description')}</p>
               </div>
               <Form name="validate_other" onFinish={handleSubmitForm}>
-                <Form.Item name="radio-button" label={<p>{t('productDetail.Size')}</p>}>
-                  <Radio.Group defaultValue={'5'}>
-                    <Radio.Button value="5">5 KG</Radio.Button>
-                    <Radio.Button value="10">10 KG</Radio.Button>
-                    <Radio.Button value="15">15 KG</Radio.Button>
-                  </Radio.Group>
-                </Form.Item>
                 <Form.Item name="radio" label={<p>{t('productDetail.Material')}</p>}>
                   <Radio.Group defaultValue={'a'}>
                     <Radio.Button value="a">CANADA</Radio.Button>
@@ -261,135 +221,141 @@ const ProductDetail = ({
   return (
     <>
       <section className="productDetail">
-        <div className="container">
-          <Row gutter={[30, 0]}>
-            <Col md={24} lg={18}>
-              {renderProductDetail()}
-            </Col>
-            <Col md={24} lg={6}>
-              <ul className="productDetail__service">
-                {service.map((item, index) => (
-                  <>
-                    <li
-                      key={`service-${item.id}-${index}`}
-                      className="productDetail__service--item"
-                    >
-                      <div className="productDetail__service--item-inner">
-                        <span>{item.icon}</span>
-                        <p className="title">{item.name}</p>
-                        <p>{item.content}</p>
-                      </div>
-                    </li>
-                  </>
-                ))}
-              </ul>
-            </Col>
-          </Row>
-        </div>
+        {productDetail.load ? (
+          <div className="loading">
+            <Spin />
+          </div>
+        ) : (
+          <div className="container">
+            <Row gutter={[30, 0]}>
+              <Col md={24} lg={18}>
+                {renderProductDetail()}
+              </Col>
+              <Col md={24} lg={6}>
+                <ul className="productDetail__service">
+                  {service.map((item, index) => (
+                    <>
+                      <li
+                        key={`service-${item.id}-${index}`}
+                        className="productDetail__service--item"
+                      >
+                        <div className="productDetail__service--item-inner">
+                          <span>{item.icon}</span>
+                          <p className="title">{item.name}</p>
+                          <p>{item.content}</p>
+                        </div>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              </Col>
+            </Row>
+          </div>
+        )}
         <div className="productDetail__description">
           <div className="container">
-                <div className="review__content">
-                  <p>{t('productDetail.Review__customer')}</p>
-                  <Rate disabled defaultValue={5} />
-                  <Collapse
-                    activeKey={`${isShowFormComment === true ? 1 : ''}`}
-                    destroyInactivePanel
-                    ghost
-                    bordered={false}
-                    onChange={callback}
-                  >
-                    <Panel
-                      showArrow={false}
-                      header={<p className="write__content">{t('productDetail.Review')}</p>}
-                      key="1"
-                    >
-                      <div className="review__content--form">
-                        <Form onFinish={handleSubmitFormComment}>
-                          <p>{t('productDetail.Review__rating')}</p>
-                          <Rate onChange={(value) => handleChangRate(value)} />
-                          <p>{t('productDetail.Review__title')}</p>
-                          <Form.Item
-                            name="title"
-                            rules={[
-                              {
-                                required: true,
-                                message: t('productDetail.Review__validate.title'),
-                              },
-                            ]}
-                          >
-                            <Input />
-                          </Form.Item>
-                          <p>{t('productDetail.Review__body')}</p>
-                          <Form.Item
-                            name="content"
-                            rules={[
-                              {
-                                max: 1000,
-                                message: t('productDetail.Review__validate.content'),
-                              },
-                            ]}
-                          >
-                            <Input.TextArea />
-                          </Form.Item>
-                          <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                              {t('productDetail.Review__submit')}
-                            </Button>
-                          </Form.Item>
-                        </Form>
-                      </div>
-                    </Panel>
-                  </Collapse>
-                  <List
-                    className="comment-list"
-                    header={`${countComment} replies`}
-                    itemLayout="horizontal"
-                    dataSource={comments}
-                    renderItem={(item) => (
-                      <li>
-                        <Comment
-                          author={item.fullName}
-                          avatar={
-                            item?.avatar
-                          }
-                          content={
-                            <>
-                              <div>
-                                <Rate disabled value={item.rate} />
-                              </div>
-                              <div>
-                                <p>{item.title}</p>
-                                <span>{item.content}</span>
-                              </div>
-                            </>
-                          }
-                          datetime={
-                            <Tooltip title={item.datetime}>
-                              <span>{item.datetime}</span>
-                            </Tooltip>
-                          }
-                          rate={item.rate}
-                        />
-                      </li>
-                    )}
-                  />
-                  {countComment > 0 && (
-                    <Pagination
-                      total={countComment}
-                      defaultCurrent={1}
-                      current={current}
-                      defaultPageSize={5}
-                      onChange={(page) => {
-                        setCurrent(page);
-                        window.scrollTo({
-                          top: 0,
-                          left: 0,
-                          behavior: 'smooth'
-                        });
-                      }}
-                    />
+            <div className="review__content">
+              <p>{t('productDetail.Review__customer')}</p>
+              <Rate disabled defaultValue={1} />
+              <Collapse
+                activeKey={`${isShowFormComment === true ? 1 : ''}`}
+                destroyInactivePanel
+                ghost
+                bordered={false}
+                onChange={callback}
+              >
+                <Panel
+                  showArrow={false}
+                  header={<p className="write__content">{t('productDetail.Review')}</p>}
+                  key="1"
+                >
+                  <div className="review__content--form">
+                    <Form onFinish={handleSubmitFormComment}>
+                      <p>{t('productDetail.Review__rating')}</p>
+                      <Rate defaultValue={5}  allowClear={false} onChange={(value) => handleChangRate(value)} />
+                      <p>{t('productDetail.Review__title')}</p>
+                      <Form.Item
+                        name="title"
+                        rules={[
+                          {
+                            required: true,
+                            message: t('productDetail.Review__validate.title'),
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <p>{t('productDetail.Review__body')}</p>
+                      <Form.Item
+                        name="content"
+                        rules={[
+                          {
+                            max: 1000,
+                            message: t('productDetail.Review__validate.content'),
+                          },
+                        ]}
+                      >
+                        <Input.TextArea />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                          {t('productDetail.Review__submit')}
+                        </Button>
+                      </Form.Item>
+                    </Form>
+                  </div>
+                </Panel>
+              </Collapse>
+                <List
+                  className="comment-list"
+                  header={`1 replies`}
+                  itemLayout="horizontal"
+                  dataSource={comments?.data}
+                  renderItem={(item) => (
+                    <li>
+                      <Comment
+                        author={item.fullName}
+                        avatar={
+                          'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+                        }
+                        content={
+                          <>
+                            <div>
+                              <Rate disabled value={item.rate} />
+                            </div>
+                            <div>
+                              <p>{item.title}</p>
+                              <span>{item.content}</span>
+                            </div>
+                          </>
+                        }
+                        datetime={
+                          <Tooltip title={item.date}>
+                            <span>{item.date}</span>
+                          </Tooltip>
+                        }
+                        rate={item.rate}
+                      />
+                    </li>
                   )}
-                </div>
+                />
+              {comments.data > 0 && (
+                <Pagination
+                  total={comments.total}
+                  defaultCurrent={1}
+                  current={current}
+                  defaultPageSize={5}
+                  onChange={(page) => {
+                    setCurrent(page);
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: 'smooth',
+                    });
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div className="productDetail__related">
@@ -397,7 +363,7 @@ const ProductDetail = ({
             <p>Related Product</p>
             <div className="productDetail__related--item">
               <Slide
-                data={productDetail.relatedProduct}
+                data={productDetail.data?.relatedProduct}
                 type="product"
                 xl={4}
                 lg={4}
@@ -414,7 +380,7 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productDetail, comments, listComment, countComment } = state.productDetailReducer;
+  const { productDetail, comments, listComment } = state.productDetailReducer;
   const { infoUser } = state.accountReducer;
   const { billData } = state.paymentReducer;
   return {
@@ -422,17 +388,14 @@ const mapStateToProps = (state) => {
     infoUser,
     comments,
     listComment,
-    countComment,
     billData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProductDetail: (params) => dispatch(getProductDetail(params)),
-    getInfo: (params) => dispatch(getInfo(params)),
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
-    getBill: (params) => dispatch(getBill(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
