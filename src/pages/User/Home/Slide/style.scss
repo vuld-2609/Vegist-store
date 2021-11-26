@@ -123,6 +123,7 @@
 
 .slideShow {
   position: relative;
+  z-index: 1;
 
   &__img {
     min-height: 54rem;

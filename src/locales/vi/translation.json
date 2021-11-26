@@ -1,391 +1,393 @@
 {
-    "header_text": {
-        "free": "Giao hàng miễn phí",
-        "order": "Đặt hàng từ tất cả mặt hàng"
+  "header_text": {
+    "free": "Giao hàng miễn phí",
+    "order": "Đặt hàng từ tất cả mặt hàng",
+    "search": "Hiển thị tất cả kết quả"
+  },
+  "language": {
+    "name": "Ngôn ngữ",
+    "english": "Tiếng Anh",
+    "vietnam": "Tiếng Việt"
+  },
+  "Home": "Trang chủ",
+  "Logout": "Đăng xuất",
+  "Shop": "Cửa hàng",
+  "Collection": "Bộ sưu tập",
+  "About Us": "Về chúng tôi",
+  "Faq's": "Hỏi đáp",
+  "Blog": "Nhật ký",
+  "Account": "Tài khoản",
+  "Register": "Đăng ký",
+  "Login": "Đăng nhập",
+  "Hotline": "Đường dây nóng",
+  "Free delivery": "Giao hàng miễn phí",
+  "Cash On Delivery": "Thanh toán khi nhận hàng",
+  "30 Days Returns": "Đổi trả trong 30 ngày",
+  "Online Support": "Hỗ trợ trực tuyến",
+  "Address": "Địa chỉ",
+  "Contact": "Liên hệ",
+  "Cart": "Giỏ hàng",
+  "Add card success": "Thêm vào giỏ hàng thành công",
+  "Categories": {
+    "Top_Categories": {
+      "name": "Danh mục hàng đầu",
+      "Fruits": "Trái cây",
+      "Fast Foods": "Thức ăn nhanh",
+      "Vegetables": "Rau củ",
+      "Salads": "Salads",
+      "Bestseller": "Siêu giảm giá"
     },
-    "language": {
-        "name": "Ngôn ngữ",
-        "english": "Tiếng Anh",
-        "vietnam": "Tiếng Việt"
+    "Services": {
+      "name": "Dịch vụ",
+      "About Vegist": "Giới thiệu về Vvegist",
+      "Faq's": "Câu hỏi thường gặp",
+      "Contact Us": "Liên hệ với chúng tôi",
+      "News": "Tin tức",
+      "Sitemap": "Bản đồ"
     },
-    "Home": "Trang chủ",
-    "Logout": "Đăng xuất",
-    "Shop": "Cửa hàng",
-    "Collection": "Bộ sưu tập",
-    "About Us": "Về chúng tôi",
-    "Faq's": "Hỏi đáp",
-    "Blog": "Nhật ký",
-    "Account": "Tài khoản",
-    "Register": "Đăng ký",
-    "Login": "Đăng nhập",
-    "Hotline": "Đường dây nóng",
-    "Free delivery": "Giao hàng miễn phí",
-    "Cash On Delivery": "Thanh toán khi nhận hàng",
-    "30 Days Returns": "Đổi trả trong 30 ngày",
-    "Online Support": "Hỗ trợ trực tuyến",
-    "Address": "Địa chỉ",
-    "Contact": "Liên hệ",
-    "Cart": "Giỏ hàng",
-    "Add card success": "Thêm vào giỏ hàng thành công",
-    "Categories": {
-        "Top_Categories": {
-            "name": "Danh mục hàng đầu",
-            "Fruits": "Trái cây",
-            "Fast Foods": "Thức ăn nhanh",
-            "Vegetables": "Rau củ",
-            "Salads": "Salads",
-            "Bestseller": "Siêu giảm giá"
-        },
-        "Services": {
-            "name": "Dịch vụ",
-            "About Vegist": "Giới thiệu về Vvegist",
-            "Faq's": "Câu hỏi thường gặp",
-            "Contact Us": "Liên hệ với chúng tôi",
-            "News": "Tin tức",
-            "Sitemap": "Bản đồ"
-        },
-        "Privacy_Terms": {
-            "name": "Điều khoản & quyền riêng tư",
-            "Payment policy": "Chính sách thanh toán",
-            "Privacy policy": "Chính sách bảo mật",
-            "Return policy": "Chính sách hoàn trả",
-            "shipping policy": "Chính sách mua sắm",
-            "Terms & Conditions": "Điều khoản và điều kiện"
-        },
-        "My_Account": {
-            "name": "Tài khoản của tôi",
-            "My Account": "Tài khoản của tôi",
-            "My Cart": "Giỏ hàng của tôi",
-            "Order History": "Lịch sử đặt hàng",
-            "My Wishlist": "Yêu thích của tôi",
-            "My Address": "Địa chỉ của tôi"
-        }
+    "Privacy_Terms": {
+      "name": "Điều khoản & quyền riêng tư",
+      "Payment policy": "Chính sách thanh toán",
+      "Privacy policy": "Chính sách bảo mật",
+      "Return policy": "Chính sách hoàn trả",
+      "shipping policy": "Chính sách mua sắm",
+      "Terms & Conditions": "Điều khoản và điều kiện"
     },
-    "register": {
-        "create": "Tạo tài khoản",
-        "text": "Vui lòng đăng ký chi tiết tài khoản bên dưới",
-        "button register": "TẠO TÀI KHOẢN",
-        "already": "Đã có tài khoản ?",
-        "button login": "Đăng nhập"
+    "My_Account": {
+      "name": "Tài khoản của tôi",
+      "My Account": "Tài khoản của tôi",
+      "My Cart": "Giỏ hàng của tôi",
+      "Order History": "Lịch sử đặt hàng",
+      "My Wishlist": "Yêu thích của tôi",
+      "My Address": "Địa chỉ của tôi"
+    }
+  },
+  "register": {
+    "create": "Tạo tài khoản",
+    "text": "Vui lòng đăng ký chi tiết tài khoản bên dưới",
+    "button register": "TẠO TÀI KHOẢN",
+    "already": "Đã có tài khoản ?",
+    "button login": "Đăng nhập"
+  },
+  "login": {
+    "create": "Đăng nhập",
+    "text": "Vui lòng đăng nhập chi tiết tài khoản",
+    "button register": "ĐĂNG NHẬP",
+    "already": "Chưa có tài khoản ?",
+    "button login": "Tạo tài khoản",
+    "forgot": "Bạn đã quên mật khẩu ?"
+  },
+  "Terms & Conditions": {
+    "title": "Điều khoản và điều kiện",
+    "content": "Sự riêng tư và bảo mật của bạn không quan trọng đối với chúng tôi. Để biết thêm thông tin về cách chúng tôi sử dụng dữ liệu của bạn, hãy đọc",
+    "privacy": "Chính sách bảo mật"
+  },
+  "validate": {
+    "first": "Tên không được để trống !",
+    "last": "Họ không được để trống !",
+    "email": {
+      "required": "Email không được để trống !",
+      "regex": "Email không hợp lệ !",
+      "max": "Email không được vượt quá 50 kí tự !"
     },
-    "login": {
-        "create": "Đăng nhập",
-        "text": "Vui lòng đăng nhập chi tiết tài khoản",
-        "button register": "ĐĂNG NHẬP",
-        "already": "Chưa có tài khoản ?",
-        "button login": "Tạo tài khoản",
-        "forgot": "Bạn đã quên mật khẩu ?"
+    "password": {
+      "password": "password",
+      "required": "Mật khẩu không được để trống !",
+      "regex": "Mật khẩu không được nhỏ hơn 8 kí tự !"
     },
-    "Terms & Conditions": {
-        "title": "Điều khoản và điều kiện",
-        "content": "Sự riêng tư và bảo mật của bạn không quan trọng đối với chúng tôi. Để biết thêm thông tin về cách chúng tôi sử dụng dữ liệu của bạn, hãy đọc",
-        "privacy": "Chính sách bảo mật"
+    "zipCode": "ZIP code phải chứa 6 chữ số !",
+    "address": {
+      "required": "Địa chỉ không được để trống !",
+      "max": "Địa chỉ không được vượt quá 100 kí tự !"
     },
-    "validate": {
-        "first": "Tên không được để trống !",
-        "last": "Họ không được để trống !",
-        "email": {
-            "required": "Email không được để trống !",
-            "regex": "Email không hợp lệ !",
-            "max": "Email không được vượt quá 50 kí tự !"
-        },
-        "password": {
-            "password": "password",
-            "required": "Mật khẩu không được để trống !",
-            "regex": "Mật khẩu không được nhỏ hơn 8 kí tự !"
-        },
-        "zipCode": "ZIP code phải chứa 6 chữ số !",
-        "address": {
-            "required": "Địa chỉ không được để trống !",
-            "max": "Địa chỉ không được vượt quá 100 kí tự !"
-        },
-        "phone": {
-            "required": "Số điện thoại không được để trống !",
-            "regex": "Số điện thoại không hợp lệ !"
-        },
-        "firstName": {
-            "max": "Họ và tên lót không được vượt quá 50 kí tự !",
-            "required": "Họ và tên lót không được để trống !"
-        },
-        "lastName": {
-            "max": "Tên không được vượt quá 20 kí tự !",
-            "required": "Tên không được để trống !"
-        },
-        "name": {
-            "max": "Tên sản phẩm được vượt quá 50 kí tự !",
-            "required": "Tên sản phẩm không được để trống !"
-        },
-        "category": {
-            "required": "Dòng sản phẩm không được để trống !"
-        },
-        "tag": {
-            "required": "Thẻ tag không được để trống !"
-        },
-        "origin": {
-            "required": "Xuất sứ không được để trống !"
-        },
-        "size": {
-            "regex": "Kích cỡ tối thiểu là 1kg, tối đa 99kg !",
-            "required": "Kích cỡ không được để trống !"
-        },
-        "price": {
-            "regex": "Đơn giá tối thiểu là 10.000, tối đa là 99.000.000 !",
-            "required": "Đơn giá không được để trống !"
-        },
-        "image": {
-            "required": "Hãy chọn 4 ảnh !"
-        },
-        "Short description": {
-            "required": "Mô tả ngắn không được để trống !"
-        }
+    "phone": {
+      "required": "Số điện thoại không được để trống !",
+      "regex": "Số điện thoại không hợp lệ !"
     },
-
-    "home": {
-        "banner": {
-            "shop now": "mua sắm ngay",
-            "fresh fruit vegetable": "Trái cây tươi, rau ",
-            "on our product": "Trên sản phẩm của chúng tôi",
-            "Vegetable Eggplant": "Rau cà tím ",
-            "100% Fresh food": "100% thực phẩm tươi"
-        },
-
-        "countdown": {
-            "title": "Ưu đãi trong ngày!",
-            "thumbnail": "Chúng tôi cung cấp một ưu đãi hấp dẫn mỗi dịp lễ hội",
-            "day": "ngày",
-            "hrs": "giờ",
-            "min": "phút",
-            "sec": "giây",
-            "shop collection": "bộ sưu tập cửa hàng"
-        },
-        "product": {
-            "Special Product": "Sản phẩm đặc biệt",
-            "New Product": "Sản phẩm mới",
-            "Bestseller": "Sản phẩm bán chạy nhất"
-        },
-        "shopify": {
-            "title": "Nhận các ưu đãi mới nhất",
-            "sub": "Và nhận phiếu giảm giá 20% cho lần mua sắm đầu tiên",
-            "placeholder": "Nhập địa chỉ email của bạn",
-            "subscribe": "Đăng ký"
-        },
-        "category": {
-            "title": "Cửa hàng theo thể loại"
-        }
+    "firstName": {
+      "max": "Họ và tên lót không được vượt quá 50 kí tự !",
+      "required": "Họ và tên lót không được để trống !"
+    },
+    "lastName": {
+      "max": "Tên không được vượt quá 20 kí tự !",
+      "required": "Tên không được để trống !"
+    },
+    "name": {
+      "max": "Tên sản phẩm được vượt quá 50 kí tự !",
+      "required": "Tên sản phẩm không được để trống !"
     },
     "category": {
-        "Baker's Rack": "Baker's Rack",
-        "Breakfast": "Bữa ăn sáng",
-        "Dairy & Chesse": "Sữa & Phô mai",
-        "Dinner": "Bữa tối",
-        "Featured Product": "Sản phẩm nổi bật",
-        "Fresh Fruits": "Trái cây tươi ",
-        "Fresh Meat": "Thịt tươi sống ",
-        "Fresh Vegetable": "Rau quả tươi",
-        "Green Seafood": "Hải sản xanh",
-        "New Product": "Sản phẩm mới",
-        "Sea & Fish": "Cá biển",
-        "Organic Juice ": "Nước trái cây ",
-        "Organic Dryfruit": "Quả khô hữu cơ"
+      "required": "Dòng sản phẩm không được để trống !"
     },
-    "tags": {
-        "Almond": "Hạnh nhân",
-        "banana": "chuối",
-        "bitrrot": "cà rốt",
-        "blackberry": "blackberry",
-        "chikoo": "chikoo",
-        "guava": "Ổi",
-        "juice": "Nước ép",
-        "minirrot": "minirrot",
-        "mussel": "trai",
-        "onion": "củ hành",
-        "organic-food": "thực phẩm hữu cơ"
+    "tag": {
+      "required": "Thẻ tag không được để trống !"
+    },
+    "origin": {
+      "required": "Xuất sứ không được để trống !"
+    },
+    "size": {
+      "regex": "Kích cỡ tối thiểu là 1kg, tối đa 99kg !",
+      "required": "Kích cỡ không được để trống !"
+    },
+    "price": {
+      "regex": "Đơn giá tối thiểu là 10.000, tối đa là 99.000.000 !",
+      "required": "Đơn giá không được để trống !"
+    },
+    "image": {
+      "required": "Hãy chọn 4 ảnh !"
+    },
+    "Short description": {
+      "required": "Mô tả ngắn không được để trống !"
+    }
+  },
+
+  "home": {
+    "banner": {
+      "shop now": "mua sắm ngay",
+      "fresh fruit vegetable": "Trái cây tươi, rau ",
+      "on our product": "Trên sản phẩm của chúng tôi",
+      "Vegetable Eggplant": "Rau cà tím ",
+      "100% Fresh food": "100% thực phẩm tươi"
+    },
+
+    "countdown": {
+      "title": "Ưu đãi trong ngày!",
+      "thumbnail": "Chúng tôi cung cấp một ưu đãi hấp dẫn mỗi dịp lễ hội",
+      "day": "ngày",
+      "hrs": "giờ",
+      "min": "phút",
+      "sec": "giây",
+      "shop collection": "bộ sưu tập cửa hàng"
+    },
+    "product": {
+      "Special Product": "Sản phẩm đặc biệt",
+      "New Product": "Sản phẩm mới",
+      "Bestseller": "Sản phẩm bán chạy nhất"
+    },
+    "shopify": {
+      "title": "Nhận các ưu đãi mới nhất",
+      "sub": "Và nhận phiếu giảm giá 20% cho lần mua sắm đầu tiên",
+      "placeholder": "Nhập địa chỉ email của bạn",
+      "subscribe": "Đăng ký"
+    },
+    "category": {
+      "title": "Cửa hàng theo thể loại"
+    }
+  },
+  "category": {
+    "Baker's Rack": "Baker's Rack",
+    "Breakfast": "Bữa ăn sáng",
+    "Dairy & Chesse": "Sữa & Phô mai",
+    "Dinner": "Bữa tối",
+    "Featured Product": "Sản phẩm nổi bật",
+    "Fresh Fruits": "Trái cây tươi ",
+    "Fresh Meat": "Thịt tươi sống ",
+    "Fresh Vegetable": "Rau quả tươi",
+    "Green Seafood": "Hải sản xanh",
+    "New Product": "Sản phẩm mới",
+    "Sea & Fish": "Cá biển",
+    "Organic Juice ": "Nước trái cây ",
+    "Organic Dryfruit": "Quả khô hữu cơ"
+  },
+  "tags": {
+    "Almond": "Hạnh nhân",
+    "banana": "chuối",
+    "bitrrot": "cà rốt",
+    "blackberry": "blackberry",
+    "chikoo": "chikoo",
+    "guava": "Ổi",
+    "juice": "Nước ép",
+    "minirrot": "minirrot",
+    "mussel": "trai",
+    "onion": "củ hành",
+    "organic-food": "thực phẩm hữu cơ"
+  },
+  "products": {
+    "sort by": "Sắp xếp theo",
+    "Featured": "Đặc sắc",
+    "Best Selling": "Bán chạy nhất",
+    "Price, low to high": "Giá tỪ thấp đến cao",
+    "Price, high to low": "Giá từ cao đến thấp",
+    "Date, new to old": "Sản phẩm mới",
+    "Categories": "Thể loại",
+    "Filter by Price": "Lọc theo giá",
+    "Filter by Tags": "Lọc theo thẻ",
+    "Showing": "Hiển thị",
+    "of": "trên",
+    "result": "kết quả",
+    "placeholder": "Chọn một loại",
+    "Anything...": "Bất cứ thứ gì..."
+  },
+  "productDetail": {
+    "Review": "Viết đánh giá",
+    "Review__customer": "Đánh giá của khách hàng",
+    "Review__rating": "Đánh giá",
+    "Review__title": "Tiêu đề",
+    "Review__body": "Nội dung đánh giá không quá 1000 kí tự",
+    "Review__submit": "Xác nhận",
+    "Review__validate": {
+      "title": "Vui lòng nhập tiêu đề !",
+      "content": "Nội dung không được quá 1000 kí tự"
+    },
+    "Availability": "Trạng thái",
+    "Availability__stock": "Còn hàng",
+    "Availability__new": "Mới",
+    "Hurry up": "Nhanh lên !",
+    "Size": "Kích thước",
+    "Material": "Xuất xứ",
+    "Quantity": "Số lượng",
+    "Share": "Chia sẻ",
+    "description": "Nó có quả nhỏ hơn quả bưởi, vỏ mỏng, khi chín thường có màu da cam, có vị ngọt hoặc hơi chua. Loài cam là một cây lai được trồng từ xưa, có thể lai giống giữa loài bưởi (Citrus maxima) và quýt (Citrus reticulata)."
+  },
+  "cart": {
+    "Yes": "Đồng ý",
+    "No": "Huỷ",
+    "Are you sure delete this product?": "Bạn có muốn xoá sản phẩm này không?",
+    "Warning": "Cảnh báo",
+    "You can only order up to 30 products": "Bạn chỉ có thể mua tối đa 30 sản phẩm.",
+    "My Cart": "Giỏ hàng của tôi",
+    "item": "Sản phẩm",
+    "Size": "Kích thước",
+    "Clear Cart": "Dọn dẹp giỏ hàng",
+    "Continue Shopping": "Tiếp tục mua sắm",
+    "Subtotal": "Tổng phụ",
+    "Total": "Tổng",
+    "Shipping Info": "Thông tin vận chuyển",
+    "Country": "Quốc gia",
+    "Zip/Postal code": "Mã zip / mã bưu điện",
+    "The shopping cart has no products": "Giỏ hàng chưa có sản phẩm nào",
+    "Do you want to delete all products": "Bạn có muốn xoá tất cả sản phẩm không?",
+    "Checkout": "Thanh toán"
+  },
+  "Profile": {
+    "welcome": "Chào mừng",
+    "edit": "Thay đổi mật khẩu",
+    "inner": "Mật khẩu hiện tại",
+    "new": "Mật khẩu mới",
+    "confirm": "Xác nhận mật khẩu",
+    "confirm_pw": "Mật khẩu bạn nhập đã trùng với mật khẩu cũ !",
+    "confirm_pwNew": "Mật khẩu không giống !",
+    "max": "Không được quá 20 kí tự !",
+    "submit": "Submit",
+    "account": {
+      "title": "Chi tiết tài khoản",
+      "name": "Tên",
+      "address": "Địa chỉ",
+      "phone": "Số điện thoại",
+      "edit": "CHỈNH SỬA",
+      "first": "Tên",
+      "last": "Họ",
+      "cancel": "Đóng",
+      "save": "Lưu",
+      "password": "Mật khẩu",
+      "role": "Quyền",
+      "user": "Người dùng",
+      "admin": "Quản trị viên"
+    }
+  },
+  "orderHistory": {
+    "title": "Lịch sử đặt hàng",
+    "content": "Bạn chưa đặt sản phảm nào !"
+  },
+  "payments": {
+    "breadcrumb": {
+      "Cart": "Giỏ hàng",
+      "Information": "Thông tin",
+      "Shipping": "Vận chuyển",
+      "Payment": "Thanh toán"
+    },
+    "information": {
+      "check": "Giữ cho tôi cập nhật tin tức và ưu đãi.",
+      "Country/region": "Quốc gia / khu vực",
+      "First name": "Họ và tên lót",
+      "Last name": "Tên",
+      "Address": "Địa chỉ",
+      "Phone": "Số điện thoại",
+      "ZIP code": "Mã bưu chính",
+      "Continue to shipping": "Tiếp tục giao hàng",
+      "Return to cart": "Quay lại giỏ hàng"
+    },
+    "shipping": {
+      "Contact": "Liên hệ",
+      "Ship to": "Vận chuyển đến",
+      "Change": "Thay đổi",
+      "Shipping method": "Loại hình vận chuyển",
+      "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.": "Giỏ hàng của bạn đã được cập nhật và phí vận chuyển trước đó không hợp lệ. Chọn một tỷ lệ mới.",
+      "Standard": "Tiêu chuẩn",
+      "Continue to payment": "Tiếp tục thanh toán",
+      "Return to information": "Quay lại thông tin"
+    },
+    "payment": {
+      "Method": "Kiểu",
+      "Payment": "Thanh toán",
+      "All transactions are secure and encrypted": "Tất cả các giao dịch đều được bảo mật và mã hóa.",
+      "This store can only pay with COD": "Cửa hàng này chỉ có thể thanh toán bằng COD",
+      "Credit card": "Thẻ tín dụng",
+      "Cash on Delivery (COD)": "Thu tiền khi giao hàng (COD)",
+      "Billing address": "Địa chỉ thanh toán",
+      "Select the address that matches your card or payment method.": "Chọn địa chỉ phù hợp với thẻ hoặc phương thức thanh toán của bạn.",
+      "Same as shipping address": "Tương tự như địa chỉ giao hàng",
+      "Use a different billing address": "Sử dụng một địa chỉ thanh toán khác",
+      "Complete order": "Kết thúc đặt hàng",
+      "Return to shipping": "Quay lại giao hàng"
+    }
+  },
+  "infoCart": {
+    "Discount": "Giảm giá",
+    "Discount code": "Mã giảm giá",
+    "Apply": "Áp dụng",
+    "Subtotal": "Tổng phụ",
+    "Shipping cost": "Giá vận chuyển",
+    "Calculated at next step": "Tính toán ở bước tiếp theo",
+    "Total": "Tổng cộng"
+  },
+  "success": {
+    "Order Success": "Đặt hàng thành công",
+    "Thanks": "Cảm ơn bạn đã cho Vegist cơ hội được phục vụ. Vui lòng theo dõi bằng cách nhấp vào",
+    "Order Management": "Quản lý đơn hàng",
+    "Order": "Đơn hàng",
+    "Receiver": "Người nhận",
+    "Delivery address": "Địa chỉ nhận hàng",
+    "Staff will call to confirm before delivery": "Nhân viên sẽ gọi xác nhận trước khi giao",
+    "Estimated delivery time": "Thời gian giao hàng dự kiến",
+    "day": "ngày",
+    "Total amount": "Tổng tiền",
+    "Payment type": "Hình thức thanh toán",
+    "Order Cancellation": "Huỷ đơn hàng",
+    "When you need help, please call": "Khi cần hỗ trợ, vui lòng gọi",
+    "Products purchased": "Sản phẩm đã mua",
+    "amount": "Số lượng",
+    "return to home page": "Về trang chủ"
+  },
+  "admin": {
+    "listUser": {
+      "title": "DANH SÁCH NGƯỜI DÙNG"
+    },
+    "listProduct": {
+      "title": "DANH SÁCH SẢN PHẨM"
     },
     "products": {
-        "sort by": "Sắp xếp theo",
-        "Featured": "Đặc sắc",
-        "Best Selling": "Bán chạy nhất",
-        "Price, low to high": "Giá tỪ thấp đến cao",
-        "Price, high to low": "Giá từ cao đến thấp",
-        "Date, new to old": "Sản phẩm mới",
-        "Categories": "Thể loại",
-        "Filter by Price": "Lọc theo giá",
-        "Filter by Tags": "Lọc theo thẻ",
-        "Showing": "Hiển thị",
-        "of": "trên",
-        "result": "kết quả",
-        "placeholder": "Chọn một loại",
-        "Anything...": "Bất cứ thứ gì..."
-    },
-    "productDetail": {
-        "Review": "Viết đánh giá",
-        "Review__customer": "Đánh giá của khách hàng",
-        "Review__rating": "Đánh giá",
-        "Review__title": "Tiêu đề",
-        "Review__body": "Nội dung đánh giá không quá 1000 kí tự",
-        "Review__submit": "Xác nhận",
-        "Review__validate": {
-            "title": "Vui lòng nhập tiêu đề !",
-            "content": "Nội dung không được quá 1000 kí tự"
-        },
-        "Availability": "Trạng thái",
-        "Availability__stock": "Còn hàng",
-        "Availability__new": "Mới",
-        "Hurry up": "Nhanh lên !",
-        "Size": "Kích thước",
-        "Material": "Xuất xứ",
-        "Quantity": "Số lượng",
-        "Share": "Chia sẻ",
-        "description": "Nó có quả nhỏ hơn quả bưởi, vỏ mỏng, khi chín thường có màu da cam, có vị ngọt hoặc hơi chua. Loài cam là một cây lai được trồng từ xưa, có thể lai giống giữa loài bưởi (Citrus maxima) và quýt (Citrus reticulata)."
-    },
-    "cart": {
-        "Yes": "Đồng ý",
-        "No": "Huỷ",
-        "Are you sure delete this product?": "Bạn có muốn xoá sản phẩm này không?",
-        "Warning": "Cảnh báo",
-        "You can only order up to 30 products": "Bạn chỉ có thể mua tối đa 30 sản phẩm.",
-        "My Cart": "Giỏ hàng của tôi",
-        "item": "Sản phẩm",
-        "Size": "Kích thước",
-        "Clear Cart": "Dọn dẹp giỏ hàng",
-        "Continue Shopping": "Tiếp tục mua sắm",
-        "Subtotal": "Tổng phụ",
-        "Total": "Tổng",
-        "Shipping Info": "Thông tin vận chuyển",
-        "Country": "Quốc gia",
-        "Zip/Postal code": "Mã zip / mã bưu điện",
-        "The shopping cart has no products": "Giỏ hàng chưa có sản phẩm nào",
-        "Do you want to delete all products": "Bạn có muốn xoá tất cả sản phẩm không?",
-        "Checkout": "Thanh toán"
-    },
-    "Profile": {
-        "welcome": "Chào mừng",
-        "edit": "Thay đổi mật khẩu",
-        "inner": "Mật khẩu hiện tại",
-        "new": "Mật khẩu mới",
-        "confirm": "Xác nhận mật khẩu",
-        "confirm_pw": "Mật khẩu bạn nhập đã trùng với mật khẩu cũ !",
-        "confirm_pwNew": "Mật khẩu không giống !",
-        "max": "Không được quá 20 kí tự !",
-        "submit": "Submit",
-        "account": {
-            "title": "Chi tiết tài khoản",
-            "name": "Tên",
-            "address": "Địa chỉ",
-            "phone": "Số điện thoại",
-            "edit": "CHỈNH SỬA",
-            "first": "Tên",
-            "last": "Họ",
-            "cancel": "Đóng",
-            "save": "Lưu",
-            "password": "Mật khẩu",
-            "role": "Quyền",
-            "user": "Người dùng",
-            "admin": "Quản trị viên"
-        }
-    },
-    "orderHistory": {
-        "title": "Lịch sử đặt hàng",
-        "content": "Bạn chưa đặt sản phảm nào !"
-    },
-    "payments": {
-        "breadcrumb": {
-            "Cart": "Giỏ hàng",
-            "Information": "Thông tin",
-            "Shipping": "Vận chuyển",
-            "Payment": "Thanh toán"
-        },
-        "information": {
-            "check": "Giữ cho tôi cập nhật tin tức và ưu đãi.",
-            "Country/region": "Quốc gia / khu vực",
-            "First name": "Họ và tên lót",
-            "Last name": "Tên",
-            "Address": "Địa chỉ",
-            "Phone": "Số điện thoại",
-            "ZIP code": "Mã bưu chính",
-            "Continue to shipping": "Tiếp tục giao hàng",
-            "Return to cart": "Quay lại giỏ hàng"
-        },
-        "shipping": {
-            "Contact": "Liên hệ",
-            "Ship to": "Vận chuyển đến",
-            "Change": "Thay đổi",
-            "Shipping method": "Loại hình vận chuyển",
-            "Your cart has been updated and the previous shipping rate isn’t valid. Select a new rate.": "Giỏ hàng của bạn đã được cập nhật và phí vận chuyển trước đó không hợp lệ. Chọn một tỷ lệ mới.",
-            "Standard": "Tiêu chuẩn",
-            "Continue to payment": "Tiếp tục thanh toán",
-            "Return to information": "Quay lại thông tin"
-        },
-        "payment": {
-            "Method": "Kiểu",
-            "Payment": "Thanh toán",
-            "All transactions are secure and encrypted": "Tất cả các giao dịch đều được bảo mật và mã hóa.",
-            "This store can only pay with COD": "Cửa hàng này chỉ có thể thanh toán bằng COD",
-            "Credit card": "Thẻ tín dụng",
-            "Cash on Delivery (COD)": "Thu tiền khi giao hàng (COD)",
-            "Billing address": "Địa chỉ thanh toán",
-            "Select the address that matches your card or payment method.": "Chọn địa chỉ phù hợp với thẻ hoặc phương thức thanh toán của bạn.",
-            "Same as shipping address": "Tương tự như địa chỉ giao hàng",
-            "Use a different billing address": "Sử dụng một địa chỉ thanh toán khác",
-            "Complete order": "Kết thúc đặt hàng",
-            "Return to shipping": "Quay lại giao hàng"
-        }
-    },
-    "infoCart": {
-        "Discount": "Giảm giá",
-        "Discount code": "Mã giảm giá",
-        "Apply": "Áp dụng",
-        "Subtotal": "Tổng phụ",
-        "Shipping cost": "Giá vận chuyển",
-        "Calculated at next step": "Tính toán ở bước tiếp theo",
-        "Total": "Tổng cộng"
-    },
-    "success": {
-        "Order Success": "Đặt hàng thành công",
-        "Thanks": "Cảm ơn bạn đã cho Vegist cơ hội được phục vụ. Vui lòng theo dõi bằng cách nhấp vào",
-        "Order Management": "Quản lý đơn hàng",
-        "Order": "Đơn hàng",
-        "Receiver": "Người nhận",
-        "Delivery address": "Địa chỉ nhận hàng",
-        "Staff will call to confirm before delivery": "Nhân viên sẽ gọi xác nhận trước khi giao",
-        "Estimated delivery time": "Thời gian giao hàng dự kiến",
-        "day": "ngày",
-        "Total amount": "Tổng tiền",
-        "Payment type": "Hình thức thanh toán",
-        "Order Cancellation": "Huỷ đơn hàng",
-        "When you need help, please call": "Khi cần hỗ trợ, vui lòng gọi",
-        "Products purchased": "Sản phẩm đã mua",
-        "amount": "Số lượng",
-        "return to home page": "Về trang chủ"
-    },
-    "admin": {
-        "listUser": {
-            "title": "DANH SÁCH NGƯỜI DÙNG"
-        },
-        "listProduct": {
-            "title": "DANH SÁCH SẢN PHẨM"
-        },
-        "products": {
-            "More new products": "Thêm mới sản phẩm",
-            "Enter product name": "Nhập tên sản phẩm",
-            "Product's name": "Tên sản phẩm",
-            "Product Line": "Dòng sản phẩm",
-            "Select product line": "Chọn dòng sản phẩm",
-            "Unit price": "Đơn giá",
-            "Enter unit price": "Nhập đơn giá...",
-            "New price": "Đơn giá mới",
-            "Enter new price": "Nhập đơn giá mới",
-            "Size": "Size",
-            "Select...": "Chọn...",
-            "Origin": "Xuất sứ",
-            "Tag": "Thẻ",
-            "Select tag": "Chọn thẻ",
-            "Image": "Ảnh",
-            "Short description": "Mô tả ngắn",
-            "Enter short description": "Nhập mô tả ngắn...",
-            "Describe": "Mô tả",
-            "Enter describe": "Nhập mô tả...",
-            "Add new": "Thêm mới"
-        }
+      "More new products": "Thêm mới sản phẩm",
+      "Enter product name": "Nhập tên sản phẩm",
+      "Product's name": "Tên sản phẩm",
+      "Product Line": "Dòng sản phẩm",
+      "Select product line": "Chọn dòng sản phẩm",
+      "Enter sale": "Nhập khuyến mãi...",
+      "Price": "Đơn giá",
+      "Enter price": "Nhập đơn giá...",
+      "Select...": "Chọn...",
+      "Unit": "Đơn vị tính",
+      "Select unit": "Chọn đơn vị tính...",
+      "Origin": "Xuất sứ",
+      "Tag": "Thẻ",
+      "Sale": "Khuyến mãi",
+      "Select tag": "Chọn thẻ",
+      "Image": "Ảnh",
+      "Short description": "Mô tả ngắn",
+      "Enter short description": "Nhập mô tả ngắn...",
+      "Describe": "Mô tả",
+      "Enter describe": "Nhập mô tả...",
+      "Add new": "Thêm mới"
     }
+  }
 }

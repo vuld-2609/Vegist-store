@@ -49,6 +49,7 @@ const ProductDetail = ({
   billData,
   getBill,
 }) => {
+  // console.log('billData', billData);
   const product = productDetail.product;
   const sales =  product?.sales>0 &&  Math.ceil(((product?.price - (product?.price * (10/100)))));
   const productId = Number(match.params.id);

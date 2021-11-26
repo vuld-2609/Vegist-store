@@ -1,10 +1,11 @@
 import {
   GET_PRODUCT_HOME,
   GET_PRODUCTS,
-  GET_TOTAL_PRODUCTS,
   CREATE_PRODUCTS,
   UPDATE_PRODUCTS,
   DELETE_PRODUCTS,
+  SET_VALUE_SEARCH,
+  SET_FLAG_SEARCH_CHANGE,
 } from '../constants';
 
 export function getProductHome(params) {
@@ -21,12 +22,6 @@ export function getProducts(params) {
   };
 }
 
-export function getTotalProducts(params) {
-  return {
-    type: GET_TOTAL_PRODUCTS,
-    payload: params,
-  };
-}
 export function createProduct(params) {
   return {
     type: CREATE_PRODUCTS,
@@ -44,6 +39,20 @@ export function updateProduct(params) {
 export function deleteProduct(params) {
   return {
     type: DELETE_PRODUCTS,
+    payload: params,
+  };
+}
+
+export function setValueSearch(params) {
+  return {
+    type: SET_VALUE_SEARCH,
+    payload: params,
+  };
+}
+
+export function setFlagSearchChange(params) {
+  return {
+    type: SET_FLAG_SEARCH_CHANGE,
     payload: params,
   };
 }

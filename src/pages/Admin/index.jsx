@@ -23,7 +23,7 @@ const Admin = () => {
   };
   return (
     <>
-      <div className="admin" style={{ width: 256 }}>
+      <div className="admin-navbar" style={{ width: 256 }}>
         <Menu
           inlineCollapsed={collapsed}
           defaultSelectedKeys={['1']}
@@ -47,6 +47,13 @@ const Admin = () => {
             onClick={() => history.push('/admin/products')}
           >
             {t('admin.listProduct.title')}
+          </Menu.Item>
+          <Menu.Item
+            key="4"
+            icon={<ContainerOutlined />}
+            onClick={() => history.push('/admin/listOrder')}
+          >
+            LIST ORDER
           </Menu.Item>
           <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
             <Menu.Item key="5">Option 5</Menu.Item>

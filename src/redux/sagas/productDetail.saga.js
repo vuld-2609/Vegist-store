@@ -2,6 +2,7 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import axiosClient from '../config/axiosClient';
 import { all } from 'redux-saga/effects';
+import { toastSuccess, toastError } from '../../until/toast';
 
 import {
   GET_PRODUCT_DETAIL,
@@ -24,19 +25,25 @@ function* getProductDetailSaga(action) {
 
   try {
     const [response, responseNew] = yield all([
-      axiosClient.get(
-        `/user/products/617caa214b52be531c1cd018`,
-      ),
-      
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/products?news=true`,
+        url: `user/products/${productId}`,
+      }),
+      axiosClient({
+        method: 'GET',
+        url: `user/products?isNew=true`,
       }),
     ]);
 
+    if (
+      (response.status === 'failed' && response.error) ||
+      (responseNew.status === 'failed' && responseNew.error)
+    )
+      throw new Error(response.error);
+
     const data = {
       product: response.data.product,
-      relatedProduct: responseNew.data,
+      relatedProduct: responseNew.data.products,
     };
 
     yield put({
@@ -48,6 +55,7 @@ function* getProductDetailSaga(action) {
       type: GET_PRODUCT_DETAIL_FAIL,
       payload: error,
     });
+    toastError(error);
   }
 }
 function* createCommentSaga(action) {

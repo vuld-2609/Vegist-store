@@ -1,17 +1,19 @@
+import { Checkbox, Col, Row, Select } from 'antd';
+import { Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Formik, Form, Field } from 'formik';
-import { Checkbox, Input, Row, Col, Select } from 'antd';
+import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import PaymentBreadcrumb from './component/PaymentBreadcrumb';
-import CustomField from './component/CustomField';
-import VietNam from '../../../assets/images/vietnam.svg';
 import English from '../../../assets/images/english.svg';
-import './styles.scss';
+import VietNam from '../../../assets/images/vietnam.svg';
 import { createBill, getInfo } from '../../../redux/actions';
+import CustomField from './component/CustomField';
+import PaymentBreadcrumb from './component/PaymentBreadcrumb';
+import './styles.scss';
 
 const Information = ({ getInfo, infoUser, cartData, createBill }) => {
+  console.log('Log :  infoUser', infoUser);
   const { Option } = Select;
   const { t } = useTranslation();
   const [valueSelect, setValueSelect] = useState('vi');
@@ -21,7 +23,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
     getInfo({ email: user.email });
   }, []);
 
-  const handleSubmitForm = values => {
+  const handleSubmitForm = (values) => {
     const { firstName, lastName, ...other } = values;
     const paymentCode = `ARYA${infoUser.id}${Math.floor(
       Math.random() * values.zipCode + infoUser.id
@@ -32,8 +34,10 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
       country: valueSelect,
       cartData: [...cartData.cartData],
       cartId: cartData.id,
+      datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
+      status: 'approval',
       paymentCode,
-      ...other
+      ...other,
     };
     createBill({ ...dataForm });
   };
@@ -52,7 +56,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
               address: infoUser?.address || '',
               zipCode: infoUser?.zipCode || '',
               phone: infoUser?.phone || '',
-              check: true
+              check: true,
             }}
             validationSchema={Yup.object({
               email: Yup.string()
@@ -71,9 +75,9 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
               address: Yup.string()
                 .required(t('validate.address.required'))
                 .max(100, t('validate.address.max')),
-              zipCode: Yup.string().matches(/([0-9]{6})/, t('validate.zipCode'))
+              zipCode: Yup.string().matches(/([0-9]{6})/, t('validate.zipCode')),
             })}
-            onSubmit={values => handleSubmitForm(values)}
+            onSubmit={(values) => handleSubmitForm(values)}
             enableReinitialize
           >
             <Form>
@@ -129,7 +133,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
                           defaultValue="vi"
                           style={{ width: '100%' }}
                           className="form__control--select"
-                          onChange={value => setValueSelect(value)}
+                          onChange={(value) => setValueSelect(value)}
                         >
                           <Option value="vi">
                             <img src={VietNam} className="header__language--img" />
@@ -168,17 +172,17 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { infoUser } = state.accountReducer;
   const { cartData } = state.cartReducer;
   const { billData } = state.paymentReducer;
   return { infoUser, cartData, billData };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getInfo: params => dispatch(getInfo(params)),
-    createBill: params => dispatch(createBill(params))
+    getInfo: (params) => dispatch(getInfo(params)),
+    createBill: (params) => dispatch(createBill(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Information);

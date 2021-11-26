@@ -1,9 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import history from '../../until/history';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';
@@ -185,22 +183,21 @@ function* getInfoSaga(action) {
 function* loginSaga(action) {
   try {
     const { email, password } = action.payload;
-    const {status,error,data} = yield axiosClient.post(`/user/auth/login`,{email,password});
-    if(status==='failed' && error.message){
-      throw new Error(error.message)
+    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { email, password });
+    if (status === 'failed' && error.message) {
+      throw new Error(error.message);
     }
-    if(data.token && status==='success'){
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('profile', JSON.stringify(data.user))
-      toastSuccess('Đăng Nhập Thành Công')
-      data.user.role === "admin" ? history.push('/admin') : history.push('/')
+    if (data.token && status === 'success') {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('profile', JSON.stringify(data.user));
+      toastSuccess('Đăng Nhập Thành Công');
+      data.user.role === 'admin' ? history.push('/admin') : history.push('/');
     }
-      yield put({
-        type: GET_USER_ACCOUNT_SUCCESS,
-      });
-    
+    yield put({
+      type: GET_USER_ACCOUNT_SUCCESS,
+    });
   } catch (error) {
-    toastError(error.message)
+    toastError(error.message);
     yield put({
       type: GET_USER_ACCOUNT_FAIL,
       payload: error,

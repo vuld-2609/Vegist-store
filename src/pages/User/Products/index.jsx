@@ -5,7 +5,7 @@ import { Col, Pagination, Row, Select } from 'antd';
 import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { getProducts, getTotalProducts } from '../../../redux/actions';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
 import ProductItem from '../../../components/ProductItem';
 import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
@@ -18,7 +18,14 @@ const arrSelect = [
   { title: 'Date, new to old', value: 'date' },
 ];
 
-const Products = ({ getProducts, productsData, getTotalProducts, totalProduct }) => {
+const Products = ({
+  getProducts,
+  productsData,
+  valueSearch,
+  setValueSearch,
+  flagSearchChange,
+  totalProduct,
+}) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
   const { t } = useTranslation();
@@ -32,19 +39,41 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
     sort: null,
   });
 
-  if (width >= 1200) {
+  // if (width >= 1200) {
+  //   window.scrollTo({
+  //     top: 430,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else if (width >= 992) {
+  //   window.scrollTo({
+  //     top: 380,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // } else {
+  //   window.scrollTo({
+  //     top: 340,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
+
+  if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({
       top: 430,
       left: 0,
       behavior: 'smooth',
     });
-  } else if (width >= 992) {
+  }
+  if (width >= 992 && !flagSearchChange) {
     window.scrollTo({
       top: 380,
       left: 0,
       behavior: 'smooth',
     });
-  } else {
+  }
+  if (!flagSearchChange) {
     window.scrollTo({
       top: 340,
       left: 0,
@@ -53,6 +82,14 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
   }
 
   useEffect(() => {
+    return () => {
+      setValueSearch('');
+    };
+  }, []);
+
+  useEffect(() => {
+    document.title = 'Vegist | Trang Sản phẩm';
+
     getProducts({
       page: currentPage,
       limit: 12,
@@ -60,18 +97,9 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
       price: filterProducts.price,
       tag: filterProducts.tag,
       sort: filterProducts.sort,
+      searchKey: valueSearch,
     });
-  }, [filterProducts, currentPage]);
-
-  useEffect(() => {
-    document.title = 'Vegist | Trang Sản phẩm';
-    getTotalProducts({
-      category: filterProducts.category,
-      price: filterProducts.price,
-      tag: filterProducts.tag,
-      sort: filterProducts.sort,
-    });
-  }, [filterProducts, currentPage]);
+  }, [filterProducts, currentPage, valueSearch]);
 
   const handelChangePage = (page) => {
     setCurrentPage(page);
@@ -105,7 +133,7 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
                 filterProducts={filterProducts}
                 setFilterProducts={setFilterProducts}
                 setCurrentPage={setCurrentPage}
-                totalProduct={totalProduct}
+                products={productsData}
                 setBannerData={setBannerData}
               />
             </div>
@@ -159,23 +187,23 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
                 <div className="list__content">
                   <Row gutter={[16, 16]}>
                     {productsData.map((item) => (
-                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12}>
+                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12} key={item.id}>
                         <ProductItem data={item} />
                       </Col>
                     ))}
                   </Row>
                 </div>
               </section>
-              {totalProduct.length > 0 && (
+              {totalProduct > 0 && (
                 <section className="pagination">
                   <div className="pagination__result">
                     {t('products.Showing')} {renderLocationProduct()} {t('products.of')}{' '}
-                    {totalProduct.length} {t('products.result')}
+                    {totalProduct} {t('products.result')}
                   </div>
                   <Pagination
                     current={currentPage}
                     onChange={handelChangePage}
-                    total={totalProduct?.length}
+                    total={totalProduct}
                     defaultPageSize={12}
                   />
                 </section>
@@ -189,16 +217,19 @@ const Products = ({ getProducts, productsData, getTotalProducts, totalProduct })
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct } = state.productReducer;
+  const { productsData, valueSearch, flagSearchChange, totalProduct } = state.productReducer;
   return {
     productsData,
+    valueSearch,
+    flagSearchChange,
     totalProduct,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
-    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
+    setValueSearch: (params) => dispatch(setValueSearch(params)),
+    setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

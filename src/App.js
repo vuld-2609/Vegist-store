@@ -25,7 +25,9 @@ import Success from './pages/User/Success';
 import ListUser from './pages/Admin/ListUser';
 import HomeAdmin from './pages/Admin/HomeAdmin';
 import ProductsAdmin from './pages/Admin/ProductsAdmin';
-import AddProductAdmin from './pages/Admin/ProductsAdmin/components/AddProduct';
+import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
+import ListOrder from './pages/Admin/ListOrder';
+import OrderDetail from './pages/Admin/ListOrder/OrderDetail/OrderDetail';
 
 function App() {
   return (
@@ -49,6 +51,8 @@ function App() {
           {/* ADMIN */}
           <PrivateLayout exact path="/admin" component={HomeAdmin} />
           <PrivateLayout exact path="/admin/listUser" component={ListUser} />
+          <PrivateLayout exact path="/admin/listOrder" component={ListOrder} />
+          <PrivateLayout exact path="/admin/listOrder/:id" component={OrderDetail} />
           <PrivateLayout exact path="/admin/products" component={ProductsAdmin}></PrivateLayout>
           <PrivateLayout
             exact
