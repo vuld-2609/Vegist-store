@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from 'antd';
 import { connect } from 'react-redux';
-import { getCartData } from '../../redux/actions';
+import { getCartData, setValueSearch } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 
 import history from '../../until/history';
@@ -197,6 +197,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getCartData: (params) => dispatch(getCartData(params)),
+    setValueSearch: (params) => dispatch(setValueSearch(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
