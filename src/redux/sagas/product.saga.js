@@ -70,7 +70,7 @@ function* getProductHomeSaga() {
 
 function* getProductSaga(action) {
   try {
-    const { page, limit, category, price, tag, sort, searchKey } = action.payload;
+    const { page, limit, category, price, tag, sort, searchKey, news, hot } = action.payload;
     const { status, error, data } = yield axiosClient({
       method: 'GET',
       url: `user/products`,
@@ -80,10 +80,11 @@ function* getProductSaga(action) {
         ...(category && { categoryId: category }),
         ...(price && { price_gte: price[0], price_lte: price[1] }),
         ...(tag && { tagId: tag }),
-        ...(sort === 'bestSelling' && { sale: true }),
+        ...(sort === 'bestSelling' && { _sort: 'sale', _order: 'asc' }),
         ...(sort === 'priceLowToHigh' && { _sort: 'price', _order: 'asc' }),
         ...(sort === 'priceHighToLow' && { _sort: 'price', _order: 'desc' }),
-        ...(sort === 'date' && { isNew: true }),
+        ...(sort === 'news' && { new: true }),
+        ...(sort === 'hot' && { hot: true }),
         ...(searchKey && { q: searchKey }),
       },
     });
