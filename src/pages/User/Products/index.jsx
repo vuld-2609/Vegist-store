@@ -27,6 +27,7 @@ const Products = ({
   flagSearchChange,
   totalProduct,
 }) => {
+  console.log('Log :  valueSearch', valueSearch);
   const { width } = useWindowDimensions();
   const { Option } = Select;
   const { t } = useTranslation();

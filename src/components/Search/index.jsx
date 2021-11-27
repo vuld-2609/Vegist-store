@@ -14,6 +14,7 @@ function Search({
   setFlagSearchChange,
   setValueSearch,
   productsData,
+  getProducts,
 }) {
   const { t, i18n } = useTranslation();
 
@@ -44,8 +45,8 @@ function Search({
     setFlag(false);
     setFlagSearchChange(false);
     if (value === '') toastError(t('validate.search.required'));
-    else if (value !== '' && !totalProduct.length) history.push('/notfound');
-    else history.push('/products');
+    else if (totalProduct) history.push('/products');
+    else history.push('/notFound');
   };
 
   const handleClickSearchItem = (id) => {
@@ -61,7 +62,7 @@ function Search({
           value={value}
           placeholder="Search..."
           className="header__search--input"
-          onChange={handleChangeSearch}
+          onChange={(e) => handleChangeSearch(e)}
         ></input>
         <div className="icon icon-round" onClick={handleClickSearch}>
           <BiSearch />

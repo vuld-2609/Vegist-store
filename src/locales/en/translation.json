@@ -27,6 +27,7 @@
   "Contact": "Contact",
   "Cart": "Cart",
   "Add card success": "Add card success",
+  "notFound": "No search results for",
   "Categories": {
     "Top_Categories": {
       "name": "Top Categories",
@@ -43,59 +44,6 @@
       "Contact Us": "Contact Us",
       "News": "News",
       "Sitemap": "Sitemap"
-    },
-    "Home": "Home",
-    "Shop": "Shop",
-    "Collection": "Collection",
-    "About Us": "About Us",
-    "Faq's": "Faq's",
-    "Blog": "Blog",
-    "Account": "Account",
-    "Register": "Register",
-    "Login": "Login",
-    "Hotline": "Hotline",
-    "Free delivery": "Free delivery",
-    "Cash On Delivery": "Cash On Delivery",
-    "30 Days Returns": "30 Days Returns",
-    "Online Support": "Online Support",
-    "Address": "Address",
-    "Contact": "Contact",
-    "Cart": "Cart",
-    "Add card success": "Add card success",
-    "notFound": "No search results for",
-    "Categories": {
-        "Top_Categories": {
-            "name": "Top Categories",
-            "Fruits": "Fruits",
-            "Fast Foods": "Fast Foods",
-            "Vegetables": "Vegetables",
-            "Salads": "Salads",
-            "Bestseller": "Bestseller"
-        },
-        "Services": {
-            "name": "Services",
-            "About Vegist": "About Vegist",
-            "Faq's": "Faq's",
-            "Contact Us": "Contact Us",
-            "News": "News",
-            "Sitemap": "Sitemap"
-        },
-        "Privacy_Terms": {
-            "name": "Privacy & Terms",
-            "Payment policy": "Payment policy",
-            "Privacy policy": "Privacy policy",
-            "Return policy": "Return policy",
-            "shipping policy": "shipping policy",
-            "Terms & Conditions": "Terms & Conditions"
-        },
-        "My_Account": {
-            "name": "My Account",
-            "My Account": "My Account",
-            "My Cart": "My Cart",
-            "Order History": "Order History",
-            "My Wishlist": "My Wishlist",
-            "My Address": "My Address"
-        }
     },
     "My_Account": {
       "name": "My Account",
@@ -144,66 +92,9 @@
       "required": "Password can't be blank !",
       "max": "The address cannot exceed 100 characters !"
     },
-    "validate": {
-        "first": "First name can't be blank !",
-        "last": "Last name can't be blank !",
-        "email": {
-            "required": "Email can't be blank !",
-            "regex": "Invalid email field !",
-            "max": "Email cannot exceed 50 characters !"
-        },
-        "password": {
-            "password": "password",
-            "required": "Password can't be blank !",
-            "regex": "Password must not be less than 8 characters !"
-        },
-        "zipCode": "ZIP code must contain 6 digits !",
-        "address": {
-            "required": "Password can't be blank !",
-            "max": "The address cannot exceed 100 characters !"
-        },
-        "phone": {
-            "required": "Phone can't be blank !",
-            "regex": "Invalid phone number !"
-        },
-        "firstName": {
-            "max": "First name must not exceed 50 characters !",
-            "required": "First name can't be blank !"
-        },
-        "lastName": {
-            "max": "Last name must not exceed 20 characters !",
-            "required": "Last name can't be blank !"
-        },
-        "name": {
-            "max": "Name must not exceed 50 characters !",
-            "required": "Name can't be blank !"
-        },
-        "category": {
-            "required": "Product line can't be blank !"
-        },
-        "tag": {
-            "required": "Tag can't be blank !"
-        },
-        "origin": {
-            "required": "Origin can't be blank !"
-        },
-        "size": {
-            "regex": "Minimum size is 1kg, maximum 99kg !",
-            "required": "Size can't be blank !"
-        },
-        "price": {
-            "regex": "Minimum price is 10.000, maximum 99.000.000 !",
-            "required": "Price can't be blank !"
-        },
-        "image": {
-            "required": "Choose 4 pictures !"
-        },
-        "Short description": {
-            "required": "Short description can't be blank !"
-        },
-        "search": {
-            "required": "You have not entered a keyword !"
-        }
+    "phone": {
+      "required": "Phone can't be blank !",
+      "regex": "Invalid phone number !"
     },
     "firstName": {
       "max": "First name must not exceed 50 characters !",
@@ -239,8 +130,12 @@
     },
     "Short description": {
       "required": "Short description can't be blank !"
+    },
+    "search": {
+      "required": "You have not entered a keyword !"
     }
   },
+
   "home": {
     "banner": {
       "shop now": "shop now",

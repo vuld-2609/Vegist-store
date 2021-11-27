@@ -28,6 +28,7 @@
   "Contact": "Liên hệ",
   "Cart": "Giỏ hàng",
   "Add card success": "Thêm vào giỏ hàng thành công",
+  "notFound": "Không có kết quả tìm kiếm cho từ khóa",
   "Categories": {
     "Top_Categories": {
       "name": "Danh mục hàng đầu",
@@ -39,65 +40,11 @@
     },
     "Services": {
       "name": "Dịch vụ",
-      "About Vegist": "Giới thiệu về Vvegist",
+      "About Vegist": "Giới thiệu về Vegist",
       "Faq's": "Câu hỏi thường gặp",
       "Contact Us": "Liên hệ với chúng tôi",
       "News": "Tin tức",
       "Sitemap": "Bản đồ"
-    },
-    "Home": "Trang chủ",
-    "Logout": "Đăng xuất",
-    "Shop": "Cửa hàng",
-    "Collection": "Bộ sưu tập",
-    "About Us": "Về chúng tôi",
-    "Faq's": "Hỏi đáp",
-    "Blog": "Nhật ký",
-    "Account": "Tài khoản",
-    "Register": "Đăng ký",
-    "Login": "Đăng nhập",
-    "Hotline": "Đường dây nóng",
-    "Free delivery": "Giao hàng miễn phí",
-    "Cash On Delivery": "Thanh toán khi nhận hàng",
-    "30 Days Returns": "Đổi trả trong 30 ngày",
-    "Online Support": "Hỗ trợ trực tuyến",
-    "Address": "Địa chỉ",
-    "Contact": "Liên hệ",
-    "Cart": "Giỏ hàng",
-    "Add card success": "Thêm vào giỏ hàng thành công",
-    "notFound": "Không có kết quả tìm kiếm cho từ khóa",
-    "Categories": {
-        "Top_Categories": {
-            "name": "Danh mục hàng đầu",
-            "Fruits": "Trái cây",
-            "Fast Foods": "Thức ăn nhanh",
-            "Vegetables": "Rau củ",
-            "Salads": "Salads",
-            "Bestseller": "Siêu giảm giá"
-        },
-        "Services": {
-            "name": "Dịch vụ",
-            "About Vegist": "Giới thiệu về Vvegist",
-            "Faq's": "Câu hỏi thường gặp",
-            "Contact Us": "Liên hệ với chúng tôi",
-            "News": "Tin tức",
-            "Sitemap": "Bản đồ"
-        },
-        "Privacy_Terms": {
-            "name": "Điều khoản & quyền riêng tư",
-            "Payment policy": "Chính sách thanh toán",
-            "Privacy policy": "Chính sách bảo mật",
-            "Return policy": "Chính sách hoàn trả",
-            "shipping policy": "Chính sách mua sắm",
-            "Terms & Conditions": "Điều khoản và điều kiện"
-        },
-        "My_Account": {
-            "name": "Tài khoản của tôi",
-            "My Account": "Tài khoản của tôi",
-            "My Cart": "Giỏ hàng của tôi",
-            "Order History": "Lịch sử đặt hàng",
-            "My Wishlist": "Yêu thích của tôi",
-            "My Address": "Địa chỉ của tôi"
-        }
     },
     "My_Account": {
       "name": "Tài khoản của tôi",
@@ -146,66 +93,9 @@
       "required": "Địa chỉ không được để trống !",
       "max": "Địa chỉ không được vượt quá 100 kí tự !"
     },
-    "validate": {
-        "first": "Tên không được để trống !",
-        "last": "Họ không được để trống !",
-        "email": {
-            "required": "Email không được để trống !",
-            "regex": "Email không hợp lệ !",
-            "max": "Email không được vượt quá 50 kí tự !"
-        },
-        "password": {
-            "password": "password",
-            "required": "Mật khẩu không được để trống !",
-            "regex": "Mật khẩu không được nhỏ hơn 8 kí tự !"
-        },
-        "zipCode": "ZIP code phải chứa 6 chữ số !",
-        "address": {
-            "required": "Địa chỉ không được để trống !",
-            "max": "Địa chỉ không được vượt quá 100 kí tự !"
-        },
-        "phone": {
-            "required": "Số điện thoại không được để trống !",
-            "regex": "Số điện thoại không hợp lệ !"
-        },
-        "firstName": {
-            "max": "Họ và tên lót không được vượt quá 50 kí tự !",
-            "required": "Họ và tên lót không được để trống !"
-        },
-        "lastName": {
-            "max": "Tên không được vượt quá 20 kí tự !",
-            "required": "Tên không được để trống !"
-        },
-        "name": {
-            "max": "Tên sản phẩm được vượt quá 50 kí tự !",
-            "required": "Tên sản phẩm không được để trống !"
-        },
-        "category": {
-            "required": "Dòng sản phẩm không được để trống !"
-        },
-        "tag": {
-            "required": "Thẻ tag không được để trống !"
-        },
-        "origin": {
-            "required": "Xuất sứ không được để trống !"
-        },
-        "size": {
-            "regex": "Kích cỡ tối thiểu là 1kg, tối đa 99kg !",
-            "required": "Kích cỡ không được để trống !"
-        },
-        "price": {
-            "regex": "Đơn giá tối thiểu là 10.000, tối đa là 99.000.000 !",
-            "required": "Đơn giá không được để trống !"
-        },
-        "image": {
-            "required": "Hãy chọn 4 ảnh !"
-        },
-        "Short description": {
-            "required": "Mô tả ngắn không được để trống !"
-        },
-        "search": {
-            "required": "Bạn chưa nhập từ khóa !"
-        }
+    "phone": {
+      "required": "Số điện thoại không được để trống !",
+      "regex": "Số điện thoại không hợp lệ !"
     },
     "firstName": {
       "max": "Họ và tên lót không được vượt quá 50 kí tự !",
@@ -241,6 +131,9 @@
     },
     "Short description": {
       "required": "Mô tả ngắn không được để trống !"
+    },
+    "search": {
+      "required": "Bạn chưa nhập từ khóa !"
     }
   },
 
