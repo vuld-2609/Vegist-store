@@ -12,14 +12,14 @@ function Profile() {
 
   return (
     <>
-         <Tabs tabPosition='left'>
-          <TabPane tab="Tab 1" key="1">
-            <CartManage/>
-          </TabPane>
-          <TabPane tab="Tab 2" key="2">
-            <InfoManage/>
-          </TabPane>
-        </Tabs>
+      <Tabs tabPosition='left'>
+        <TabPane tab="Info Manage" key="1">
+          <InfoManage/>
+        </TabPane>
+        <TabPane tab="Order Manage" key="2">
+          <CartManage/>
+        </TabPane>
+    </Tabs>
     </>
   );
 }

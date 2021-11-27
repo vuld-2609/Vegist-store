@@ -14,6 +14,14 @@ import {
   UPDATE_PAYMENTS_FAIL,
   GET_ORDER_DETAIL_SUCCESS,
   GET_ORDER_DETAIL_FAIL,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
+  GET_ORDER_USER_SUCCESS,
+  GET_ORDER_USER_FAIL,
+  GET_ORDER_USER,
+  GET_BILL_DETAIL_USER,
+  GET_BILL_DETAIL_USER_SUCCESS,
+  GET_BILL_DETAIL_USER_FAIL
 } from '../constants';
 
 const initialState = {
@@ -24,6 +32,15 @@ const initialState = {
   deleteData: {},
   updateData: {},
   orderDetail: {},
+  orderUser:{
+    data:[],
+    load:false,
+    total:''
+  },
+  billDetailUser:{
+    data:[],
+    load:false,
+  }
 };
 
 export default function paymentReducer(state = initialState, action) {
@@ -84,6 +101,81 @@ export default function paymentReducer(state = initialState, action) {
     case GET_ORDER_DETAIL_FAIL: {
       return state;
     }
+
+    case CANCEL_ORDER_SUCCESS:{
+      return {
+        ...state,
+      }
+    }
+
+    case CANCEL_ORDER_FAIL: {
+      return state;
+    }
+
+    case GET_ORDER_USER:{
+      return {
+        ...state,
+        orderUser:{
+          ...state.orderUser,
+          load:true
+        }
+      }
+    }
+
+    case GET_ORDER_USER_SUCCESS :{
+      const {bills,total} = action.payload.data;
+
+      return {
+        ...state,
+        orderUser: {
+          ...state.orderUser,
+          data:bills,
+          load:false,
+          total:total
+        }
+      }
+    }
+
+    case GET_ORDER_USER_FAIL :{
+      return {
+        ...state,
+        orderUser: {
+          ...state.orderUser,
+          load:false
+        }
+      }
+    }
+
+    case GET_BILL_DETAIL_USER :{
+      return {
+        ...state,
+        billDetailUser: {
+          load:true
+        }
+      }
+    }
+
+    case GET_BILL_DETAIL_USER_SUCCESS :{
+      const {billDetails} = action.payload.data;
+      return {
+        ...state,
+        billDetailUser: {
+          ...state.billDetailUser,
+          data:billDetails,
+          load:false
+        }
+      }
+    }
+
+    case GET_BILL_DETAIL_USER_FAIL :{
+      return {
+        ...state,
+        billDetailUser: {
+          load:false
+        }
+      }
+    }
+
     default:
       return state;
   }

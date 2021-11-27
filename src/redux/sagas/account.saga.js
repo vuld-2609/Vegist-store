@@ -209,25 +209,30 @@ function* loginSaga(action) {
 function* editProfileSaga(action) {
   try {
     const { id, first, last, password, phone, address, token } = action.payload;
-    const response = yield axios.patch(`${apiURL}/userList/${id}`, {
+    const { status, error, data } = yield axios.patch(`${apiURL}/userList/${id}`, {
       last,
       first,
       phone,
       address,
       password,
     });
-    const data = response.data;
+
+    // if (status === 'failed' && error.message) {
+    //   throw new Error(error.message);
+    // }
 
     localStorage.setItem('profile', JSON.stringify({ ...data, password: '', token: token }));
     yield put({
       type: EDIT_PROFILE_SUCCESS,
       payload: data,
     });
+    toastSuccess(status)
   } catch (error) {
     yield put({
       type: EDIT_PROFILE_FAIL,
       payload: error,
     });
+    toastError(error);
   }
 }
 

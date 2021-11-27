@@ -6,6 +6,9 @@ import {
   DELETE_PAYMENTS,
   UPDATE_PAYMENTS,
   GET_ORDER_DETAIL,
+  CANCEL_ORDER,
+  GET_ORDER_USER,
+  GET_BILL_DETAIL_USER
 } from '../constants';
 
 export function createBill(params) {
@@ -54,3 +57,25 @@ export function getOrderDetail(params) {
     payload: params,
   };
 }
+
+export function cancelOrderUser(params) {
+  return {
+    type: CANCEL_ORDER,
+    payload: params,
+  }
+}
+
+export function getOrderUser(params) {
+  return {
+    type: GET_ORDER_USER,
+    payload: params,
+  }
+}
+
+export function getBillDetailUser(params) {
+  return {
+    type: GET_BILL_DETAIL_USER,
+    payload: params,
+  }
+}
+

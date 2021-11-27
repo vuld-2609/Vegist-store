@@ -42,9 +42,7 @@ function InfoManage(prop) {
 
   const handleSubmitPassword = (values) => {
       editProfile({
-        id: infoUser.id,
         password: values.password,
-        token: JSON.parse(localStorage.getItem('profile')).token,
       });
       setIsShowChangePw(false);
   };
@@ -56,7 +54,7 @@ function InfoManage(prop) {
   const arrProfile = [
     {
       id: 1,
-      title: t('Profile.account.first'),
+      title: 'Full Name',
       content: user?.fullName,
       type: 'name',
       last: 'last',
@@ -164,7 +162,7 @@ function InfoManage(prop) {
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(rule, value) {
-                                    if (!value || getFieldValue('passwordInner') === value) {
+                                    if (value && getFieldValue('passwordInner') === value) {
                                       return Promise.reject(t('Profile.confirm_pw'));
                                     }
 
@@ -190,7 +188,7 @@ function InfoManage(prop) {
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(rule, value) {
-                                    if (!value || getFieldValue('passwordNew') === value) {
+                                    if (getFieldValue('passwordNew') === value) {
                                       return Promise.resolve();
                                     }
 
@@ -209,16 +207,6 @@ function InfoManage(prop) {
                           </FormAnt>
                         </Panel>
                       </Collapse>
-                    </li>
-                    <li>
-                      <span
-                        onClick={() => {
-                          history.push('/');
-                          localStorage.clear();
-                        }}
-                      >
-                        {t('Logout')}
-                      </span>
                     </li>
                   </ul>
                 </div>

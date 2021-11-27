@@ -2,6 +2,8 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import history from '../../until/history';
+import { toastError } from '../../until/toast';
+import axiosClient from '../config/axiosClient';
 
 import {
   CREATE_BILL,
@@ -25,6 +27,15 @@ import {
   GET_ORDER_DETAIL,
   GET_ORDER_DETAIL_SUCCESS,
   GET_ORDER_DETAIL_FAIL,
+  GET_ORDER_USER,
+  GET_ORDER_USER_SUCCESS,
+  GET_ORDER_USER_FAIL,
+  CANCEL_ORDER,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
+  GET_BILL_DETAIL_USER,
+  GET_BILL_DETAIL_USER_SUCCESS,
+  GET_BILL_DETAIL_USER_FAIL,
 } from '../constants';
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -213,6 +224,83 @@ function* getOrderDetail(action) {
   }
 }
 
+function* cancelOrderUserSaga(action) {
+  try {
+    const { billId } = action.payload;
+    const response = yield axiosClient.patch(`user/bill/${billId}`)
+
+    const data = response.data;
+
+    yield put({
+      type: CANCEL_ORDER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: CANCEL_ORDER_FAIL,
+      payload: error,
+    });
+    toastError(error)
+  }
+}
+
+function* getOrderUserSaga(action) {
+  try {
+    const { page,search,status,limit } = action.payload;
+
+    const response = yield axiosClient({
+      method: 'GET',
+      url: `user/bill`,
+      params: {
+          ...(search && { q: search }),
+          ...(limit && { _limit: limit }),
+          ...(page && { _page: page }),
+        ...(status && status !== 'all' && { status }),
+      },
+    });
+
+    const data = response.data;
+
+    yield put({
+      type: GET_ORDER_USER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: GET_ORDER_USER_FAIL,
+      payload: error,
+    });
+    toastError(error)
+  }
+}
+
+function* getBillDetailUserSaga(action) {
+  try {
+    const billId = action.payload;
+
+    const response = yield axiosClient.get(`/user/bill/${billId}`)
+   
+    const data = response.data;
+
+    yield put({
+      type: GET_BILL_DETAIL_USER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: GET_BILL_DETAIL_USER_FAIL,
+      payload: error,
+    });
+    toastError(error)
+  }
+}
+
 export default function* paymentSaga() {
   yield takeEvery(CREATE_BILL, createBill);
   yield takeEvery(UPDATE_BILL, updateBillSaga);
@@ -221,4 +309,7 @@ export default function* paymentSaga() {
   yield takeEvery(DELETE_PAYMENTS, deletePayments);
   yield takeEvery(UPDATE_PAYMENTS, updatePayments);
   yield takeEvery(GET_ORDER_DETAIL, getOrderDetail);
+  yield takeEvery(GET_ORDER_USER, getOrderUserSaga);
+  yield takeEvery(CANCEL_ORDER, cancelOrderUserSaga);
+  yield takeEvery(GET_BILL_DETAIL_USER, getBillDetailUserSaga);
 }
