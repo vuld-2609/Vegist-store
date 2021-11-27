@@ -2,30 +2,30 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import history from '../../until/history';
-
 import {
   CREATE_BILL,
   CREATE_BILL_FAIL,
   CREATE_BILL_SUCCESS,
+  DELETE_PAYMENTS,
+  DELETE_PAYMENTS_FAIL,
+  DELETE_PAYMENTS_SUCCESS,
   GET_BILL,
   GET_BILL_FAIL,
   GET_BILL_SUCCESS,
+  GET_ORDER_DETAIL,
+  GET_ORDER_DETAIL_FAIL,
+  GET_ORDER_DETAIL_SUCCESS,
+  GET_PAYMENTS,
+  GET_PAYMENTS_FAIL,
+  GET_PAYMENTS_SUCCESS,
   UPDATE_BILL,
   UPDATE_BILL_FAIL,
   UPDATE_BILL_SUCCESS,
-  GET_PAYMENTS,
-  GET_PAYMENTS_SUCCESS,
-  GET_PAYMENTS_FAIL,
-  DELETE_PAYMENTS,
-  DELETE_PAYMENTS_SUCCESS,
-  DELETE_PAYMENTS_FAIL,
   UPDATE_PAYMENTS,
-  UPDATE_PAYMENTS_SUCCESS,
   UPDATE_PAYMENTS_FAIL,
-  GET_ORDER_DETAIL,
-  GET_ORDER_DETAIL_SUCCESS,
-  GET_ORDER_DETAIL_FAIL,
+  UPDATE_PAYMENTS_SUCCESS,
 } from '../constants';
+import axiosClient from './../config/axiosClient';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -114,32 +114,45 @@ function* getBillSaga(action) {
 function* getPayments(action) {
   try {
     const { page, limit, search, status } = action.payload;
-    const [responseData, responseTotal] = yield all([
-      axios({
-        method: 'GET',
-        url: `${apiURL}/payments`,
-        params: {
-          ...(page && { _page: page }),
-          ...(limit && { _limit: limit }),
-          ...(search && { q: search }),
-          // ...(status && { status: status }),
-          ...(status && status !== 'all' ? { status: status } : { status: null }),
-        },
-      }),
-      axios({
-        method: 'GET',
-        url: `${apiURL}/payments`,
-        params: {
-          ...(search && { q: search }),
-          // ...(status && { status: status }),
-          ...(status && status !== 'all' ? { status: status } : { status: null }),
-        },
-      }),
-    ]);
-    const data = {
-      payments: responseData.data,
-      total: responseTotal.data.length,
-    };
+    // const [responseData, responseTotal] = yield all([
+    //   axios({
+    //     method: 'GET',
+    //     url: `${apiURL}/payments`,
+    //     params: {
+    //       ...(page && { _page: page }),
+    //       ...(limit && { _limit: limit }),
+    //       ...(search && { q: search }),
+    //       // ...(status && { status: status }),
+    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
+    //     },
+    //   }),
+    //   axios({
+    //     method: 'GET',
+    //     url: `${apiURL}/payments`,
+    //     params: {
+    //       ...(search && { q: search }),
+    //       // ...(status && { status: status }),
+    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
+    //     },
+    //   }),
+    // ]);
+    // const data = {
+    //   payments: responseData.data,
+    //   total: responseTotal.data.length,
+    // };
+
+    const response = yield axiosClient({
+      method: 'GET',
+      url: `/admin/bill`,
+      params: {
+        ...(page && { _page: page }),
+        ...(limit && { _limit: limit }),
+        ...(search && { q: search }),
+        ...(status && status !== 'Tất cả' ? { status: status } : { status: null }),
+      },
+    });
+
+    const data = response.data;
 
     yield put({
       type: GET_PAYMENTS_SUCCESS,
@@ -156,7 +169,7 @@ function* getPayments(action) {
 function* deletePayments(action) {
   try {
     const { id } = action.payload;
-    const response = yield axios.delete(`${apiURL}/payments/${id}`);
+    const response = yield axiosClient.delete(`/admin/bill/${id}`);
     const data = response.data;
 
     yield put({
@@ -174,7 +187,7 @@ function* deletePayments(action) {
 function* updatePayments(action) {
   try {
     const { id, status } = action.payload;
-    const response = yield axios.patch(`${apiURL}/payments/${id}`, {
+    const response = yield axiosClient.patch(`/admin/bill/updateStatus/${id}`, {
       status,
     });
     const data = response.data;
@@ -194,7 +207,7 @@ function* updatePayments(action) {
 function* getOrderDetail(action) {
   try {
     const { id } = action.payload;
-    const response = yield axios.get(`${apiURL}/payments/${id}`);
+    const response = yield axiosClient.get(`/admin/bill/${id}`);
 
     const data = response.data;
 

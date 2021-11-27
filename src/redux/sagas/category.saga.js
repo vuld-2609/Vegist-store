@@ -1,6 +1,6 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
 import { all } from 'redux-saga/effects';
+import axiosClient from '../config/axiosClient';
 
 import {
   GET_CATEGORY,
@@ -8,28 +8,26 @@ import {
   GET_CATEGORY_SUCCESS,
   GET_SIDEBAR,
   GET_SIDEBAR_FAIL,
-  GET_SIDEBAR_SUCCESS
+  GET_SIDEBAR_SUCCESS,
 } from '../constants';
-
-const apiURL = process.env.REACT_APP_API_URL;
 
 function* getCategorySaga() {
   try {
-    const response = yield axios({
+    const { data, status, error } = yield axiosClient({
       method: 'GET',
-      url: `${apiURL}/Category`
+      url: `/user/Category`,
     });
 
-    const data = response.data;
+    if (status === 'failed' && error) throw new Error(error.message);
 
     yield put({
       type: GET_CATEGORY_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: GET_CATEGORY_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }
@@ -37,29 +35,35 @@ function* getCategorySaga() {
 function* getSidebarSaga() {
   try {
     const [responseCategory, responseTags] = yield all([
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/Category`
+        url: `/user/Category`,
       }),
-      axios({
+      axiosClient({
         method: 'GET',
-        url: `${apiURL}/tags`
-      })
+        url: `/user/tags`,
+      }),
     ]);
 
+    if (
+      (responseCategory.status === 'failed' && responseCategory.error) ||
+      (responseTags.status === 'failed' && responseTags.error)
+    )
+      throw new Error(responseTags.error);
+
     const data = {
-      categoryData: responseCategory.data,
-      tagsData: responseTags.data
+      categoryData: responseCategory.data.categories,
+      tagsData: responseTags.data.tags,
     };
 
     yield put({
       type: GET_SIDEBAR_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     yield put({
       type: GET_SIDEBAR_FAIL,
-      payload: error
+      payload: error,
     });
   }
 }

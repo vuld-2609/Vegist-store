@@ -32,3 +32,17 @@
     }
   }
 }
+
+.admin {
+  width: 100%;
+
+  &__nav {
+    position: fixed;
+    width: 256px;
+  }
+
+  &__wrapper {
+    padding-left: 256px;
+    width: calc(100% -256px);
+  }
+}

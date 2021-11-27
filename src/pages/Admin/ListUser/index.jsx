@@ -100,26 +100,26 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
               <tbody>
                 {listUser[0]?.length > 0 ? (
                   listUser[0]?.map((item, index) => (
-                    <>
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.email}</td>
-                        <td>{item.address}</td>
-                        <td>{item.phone}</td>
-                        <td>
-                          <div>
-                            <ModalModify item={item} />
-                            <Button type="primary" onClick={() => confirm(item)}>
-                              <FaTrashAlt />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    </>
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td>{item.address}</td>
+                      <td>{item.phone}</td>
+                      <td>
+                        <div>
+                          <ModalModify item={item} />
+                          <Button type="primary" onClick={() => confirm(item)}>
+                            <FaTrashAlt />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
                   ))
                 ) : (
-                  <Empty />
+                  <tr>
+                    <Empty />
+                  </tr>
                 )}
               </tbody>
             </table>

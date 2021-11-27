@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch } from 'react-icons/bi';
 import { connect } from 'react-redux';
-import { getTotalProducts, setFlagSearchChange, setValueSearch } from '../../redux/actions';
+import { setFlagSearchChange, setValueSearch, getProducts } from '../../redux/actions';
 import history from '../../until/history';
 import { toastError } from '../../until/toast';
 import './styles.scss';
@@ -11,9 +11,9 @@ function Search({
   value,
   setValue,
   totalProduct,
-  getTotalProducts,
   setFlagSearchChange,
   setValueSearch,
+  productsData,
 }) {
   const { t, i18n } = useTranslation();
 
@@ -33,7 +33,7 @@ function Search({
 
     typingTimeoutRef.current = setTimeout(() => {
       if (e.target.value)
-        getTotalProducts({
+        getProducts({
           searchKey: e.target.value,
         });
     }, 300);
@@ -67,9 +67,9 @@ function Search({
           <BiSearch />
         </div>
 
-        {value && totalProduct.length && flag ? (
+        {value && totalProduct && flag ? (
           <ul className="header__search--list">
-            {totalProduct.map((item) => (
+            {productsData.map((item) => (
               <li
                 className="header__search--item"
                 key={item.id}
@@ -85,7 +85,7 @@ function Search({
             <li className="header__search--item">
               <p className="header__search--result" onClick={handleClickSearch}>{`${t(
                 'header_text.search'
-              )} (${totalProduct.length})`}</p>
+              )} (${totalProduct})`}</p>
             </li>
           </ul>
         ) : null}
@@ -95,16 +95,17 @@ function Search({
 }
 
 const mapStateToProps = (state) => {
-  const { totalProduct } = state.productReducer;
+  const { productsData, totalProduct } = state.productReducer;
   return {
+    productsData,
     totalProduct,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     setValueSearch: (params) => dispatch(setValueSearch(params)),
-    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
     setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
+    getProducts: (params) => dispatch(getProducts(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

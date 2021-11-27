@@ -25,7 +25,7 @@ import Success from './pages/User/Success';
 import ListUser from './pages/Admin/ListUser';
 import HomeAdmin from './pages/Admin/HomeAdmin';
 import ProductsAdmin from './pages/Admin/ProductsAdmin';
-import AddProductAdmin from './pages/Admin/ProductsAdmin/components/AddProduct';
+import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
 import ListOrder from './pages/Admin/ListOrder';
 import OrderDetail from './pages/Admin/ListOrder/OrderDetail/OrderDetail';
 import NotFound from './components/NotFound/NotFound';

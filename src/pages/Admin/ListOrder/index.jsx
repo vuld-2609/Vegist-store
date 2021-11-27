@@ -6,10 +6,11 @@ import Row from './components/Row/index';
 import './styles.scss';
 
 const arrStatus = [
-  { id: 1, title: 'Đang duyệt', value: 'approval' },
-  { id: 2, title: 'Đang vận chuyển', value: 'shipping' },
-  { id: 3, title: 'Đã giao hàng', value: 'delivered' },
-  { id: 4, title: 'Tất cả', value: 'all' },
+  { id: 1, value: 'Đợi xác nhận' },
+  { id: 2, value: 'Đã xác nhận' },
+  { id: 3, value: 'Đang vận chuyển' },
+  { id: 4, value: 'Đã giao hàng' },
+  { id: 5, value: 'Tất cả' },
 ];
 
 const title = [
@@ -30,7 +31,7 @@ function ListOrder({
   updateData,
   updatePayments,
 }) {
-  const { payments, total } = paymentsData;
+  const { bills, total } = paymentsData;
 
   const { Option } = Select;
   const { Search } = Input;
@@ -110,7 +111,7 @@ function ListOrder({
           >
             {arrStatus.map((item, index) => (
               <Option value={item.value} key={`option-${index}`}>
-                {item.title}
+                {item.value}
               </Option>
             ))}
           </Select>
@@ -134,10 +135,9 @@ function ListOrder({
             </tr>
           </thead>
           <tbody>
-            {payments?.length ? (
-              payments?.map((item, index) => (
+            {bills?.length ? (
+              bills?.map((item, index) => (
                 <Row
-                  payments={payments}
                   item={item}
                   index={index}
                   arrStatus={arrStatus}
@@ -146,13 +146,15 @@ function ListOrder({
                 />
               ))
             ) : (
-              <Empty />
+              <tr>
+                <Empty />
+              </tr>
             )}
           </tbody>
         </table>
       </div>
       <div className="pagination">
-        {payments?.length ? (
+        {bills?.length ? (
           <Pagination
             current={current}
             onChange={(page) => setCurrent(page)}
