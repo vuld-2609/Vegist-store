@@ -73,7 +73,8 @@ function* getProductHomeSaga() {
 
 function* getProductSaga(action) {
   try {
-    const { page, limit, category, price, tag, sort, searchKey, news, hot } = action.payload;
+    const { page, limit, category, price, tag, sort, searchKey } = action.payload;
+    console.log('Log :  searchKey', searchKey);
     const { status, error, data } = yield axiosClient({
       method: 'GET',
       url: `user/products`,

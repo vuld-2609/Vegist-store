@@ -4,6 +4,7 @@ import { BiSearch } from 'react-icons/bi';
 import { connect } from 'react-redux';
 import { setFlagSearchChange, setValueSearch, getProducts } from '../../redux/actions';
 import history from '../../until/history';
+import { toastError } from '../../until/toast';
 import './styles.scss';
 
 function Search({
@@ -13,6 +14,7 @@ function Search({
   setFlagSearchChange,
   setValueSearch,
   productsData,
+  getProducts,
 }) {
   const { t, i18n } = useTranslation();
 
@@ -42,7 +44,9 @@ function Search({
     setValueSearch(value);
     setFlag(false);
     setFlagSearchChange(false);
-    history.push('/products');
+    if (value === '') toastError(t('validate.search.required'));
+    else if (totalProduct) history.push('/products');
+    else history.push('/notFound');
   };
 
   const handleClickSearchItem = (id) => {
@@ -58,7 +62,7 @@ function Search({
           value={value}
           placeholder="Search..."
           className="header__search--input"
-          onChange={handleChangeSearch}
+          onChange={(e) => handleChangeSearch(e)}
         ></input>
         <div className="icon icon-round" onClick={handleClickSearch}>
           <BiSearch />
@@ -72,10 +76,10 @@ function Search({
                 key={item.id}
                 onClick={() => handleClickSearchItem(item.id)}
               >
-                {item.img && <img src={item.img[0]} alt="img" className="header__search--img" />}
+                {item.imgs && <img src={item.imgs[0]} alt="img" className="header__search--img" />}
                 <div className="header__search--wrapper">
                   <span>{item.name}</span>
-                  <span>{`$${item.newPrice.toLocaleString()} USD`}</span>
+                  <span>{`$${item.price.toLocaleString()} USD`}</span>
                 </div>
               </li>
             ))}

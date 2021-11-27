@@ -28,6 +28,7 @@
   "Contact": "Liên hệ",
   "Cart": "Giỏ hàng",
   "Add card success": "Thêm vào giỏ hàng thành công",
+  "notFound": "Không có kết quả tìm kiếm cho từ khóa",
   "Categories": {
     "Top_Categories": {
       "name": "Danh mục hàng đầu",
@@ -39,19 +40,11 @@
     },
     "Services": {
       "name": "Dịch vụ",
-      "About Vegist": "Giới thiệu về Vvegist",
+      "About Vegist": "Giới thiệu về Vegist",
       "Faq's": "Câu hỏi thường gặp",
       "Contact Us": "Liên hệ với chúng tôi",
       "News": "Tin tức",
       "Sitemap": "Bản đồ"
-    },
-    "Privacy_Terms": {
-      "name": "Điều khoản & quyền riêng tư",
-      "Payment policy": "Chính sách thanh toán",
-      "Privacy policy": "Chính sách bảo mật",
-      "Return policy": "Chính sách hoàn trả",
-      "shipping policy": "Chính sách mua sắm",
-      "Terms & Conditions": "Điều khoản và điều kiện"
     },
     "My_Account": {
       "name": "Tài khoản của tôi",
@@ -138,6 +131,9 @@
     },
     "Short description": {
       "required": "Mô tả ngắn không được để trống !"
+    },
+    "search": {
+      "required": "Bạn chưa nhập từ khóa !"
     }
   },
 

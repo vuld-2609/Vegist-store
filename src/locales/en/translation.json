@@ -27,6 +27,7 @@
   "Contact": "Contact",
   "Cart": "Cart",
   "Add card success": "Add card success",
+  "notFound": "No search results for",
   "Categories": {
     "Top_Categories": {
       "name": "Top Categories",
@@ -43,14 +44,6 @@
       "Contact Us": "Contact Us",
       "News": "News",
       "Sitemap": "Sitemap"
-    },
-    "Privacy_Terms": {
-      "name": "Privacy & Terms",
-      "Payment policy": "Payment policy",
-      "Privacy policy": "Privacy policy",
-      "Return policy": "Return policy",
-      "shipping policy": "shipping policy",
-      "Terms & Conditions": "Terms & Conditions"
     },
     "My_Account": {
       "name": "My Account",
@@ -137,8 +130,12 @@
     },
     "Short description": {
       "required": "Short description can't be blank !"
+    },
+    "search": {
+      "required": "You have not entered a keyword !"
     }
   },
+
   "home": {
     "banner": {
       "shop now": "shop now",
