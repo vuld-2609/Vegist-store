@@ -15,7 +15,8 @@ const arrSelect = [
   { title: 'Best Selling', value: 'bestSelling' },
   { title: 'Price, low to high', value: 'priceLowToHigh' },
   { title: 'Price, high to low', value: 'priceHighToLow' },
-  { title: 'Date, new to old', value: 'date' },
+  { title: 'New', value: 'news' },
+  { title: 'Hot', value: 'hot' },
 ];
 
 const Products = ({
