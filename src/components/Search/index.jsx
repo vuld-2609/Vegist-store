@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch } from 'react-icons/bi';
 import { connect } from 'react-redux';
-import { setFlagSearchChange, setValueSearch, getProducts } from '../../redux/actions';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../redux/actions';
 import history from '../../until/history';
 import { toastError } from '../../until/toast';
 import './styles.scss';

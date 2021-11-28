@@ -5,7 +5,6 @@ import { setValueSearch } from '../../redux/actions';
 import './styles.scss';
 
 function NotFound({ valueSearch }) {
-  console.log('Log :  valueSearch', valueSearch);
   const { t, i18n } = useTranslation();
   return <h1 className="notfound__title">{`${t('notFound')} '${valueSearch}'`}</h1>;
 }
