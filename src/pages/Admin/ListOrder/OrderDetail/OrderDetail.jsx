@@ -63,7 +63,7 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">Total Price</h3>
-              <p>{`$${bill.total.toLocaleString()} VND`}</p>
+              <p>{`${bill.total.toLocaleString()} VND`}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">Order Payment</h3>
@@ -96,7 +96,7 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
                       </td>
                       <td>{item.productId?.name}</td>
                       <td>{item.quantity}</td>
-                      <td>{`$${item.productId?.price.toLocaleString()} VND`}</td>
+                      <td>{`${item.productId?.price.toLocaleString()} VND`}</td>
                     </tr>
                   ))}
               </tbody>

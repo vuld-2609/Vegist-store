@@ -25,7 +25,7 @@ function Row({ item, index, arrStatus, handleChangeStatus, handleClickDelete }) 
         <td>{index + 1}</td>
         <td>{renderPaymentCode(item.id)}</td>
         <td>{item.userId.fullName}</td>
-        <td>{item.total}</td>
+        <td>{`${item.total.toLocaleString()} VND`}</td>
         <td>{renderDatetime(item.dataCreate)}</td>
         <td>
           <div>

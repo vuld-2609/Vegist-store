@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import './styles.scss';
-import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
-import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { connect } from 'react-redux';
-import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
-import ProductItem from '../../../components/ProductItem';
-import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
+import ProductItem from '../../../components/ProductItem';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
+import useWindowDimensions from '../../../until/width';
+import Sidebar from './Sidebar';
+import './styles.scss';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
@@ -27,7 +27,6 @@ const Products = ({
   flagSearchChange,
   totalProduct,
 }) => {
-  console.log('Log :  valueSearch', valueSearch);
   const { width } = useWindowDimensions();
   const { Option } = Select;
   const { t } = useTranslation();
