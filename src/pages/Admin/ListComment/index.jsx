@@ -71,7 +71,7 @@ function ListComponent({ comments, getComment, productsData, getProducts }) {
   const renderNameProduct = (idProduct) => {
     let string = '';
     const index = productsData.findIndex((item) => item.id === idProduct);
-    string = productsData[index].name;
+    string = productsData[index]?.name;
     return string;
   };
 
