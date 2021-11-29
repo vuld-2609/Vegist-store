@@ -10,7 +10,7 @@ import Star from '../Star';
 import './styles.scss';
 import { toastSuccess } from '../../until/toast';
 
-const ProductItem = ({ data, addCart }) => {
+const ProductItem = ({ data, addCart, getCartData }) => {
   const { t } = useTranslation();
   const { id, name, rate, price, sale, status, imgs } = data;
 
@@ -19,26 +19,11 @@ const ProductItem = ({ data, addCart }) => {
     setAuthData(() => JSON.parse(localStorage.getItem('profile')));
   }, []);
 
-  const handleAddToCart = ({ id, name, price, imgs }) => {
+  const handleAddToCart = ({ id }) => {
     if (!authData) {
       history.push('/login');
     } else {
-      let arrData = [];
-      const productItem = { id, name, price, imgs, amount: 1 };
-      const cartData = JSON.parse(localStorage.getItem('CartData'));
-      if (cartData && cartData.length) {
-        const findItem = cartData.find((item) => item.id === id);
-        if (findItem) {
-          const indexItem = cartData.findIndex((item) => item.id === id);
-          cartData.splice(indexItem, 1, {
-            ...findItem,
-            amount: parseInt(findItem.amount) + 1,
-          });
-          arrData = [...cartData];
-        } else arrData = [...cartData, productItem];
-      } else arrData.push(productItem);
-      addCart({ user: authData.email, cartData: [...arrData] });
-      toastSuccess(`😍 ${t('Add card success')}!`);
+      addCart({ productId: id, quantity: 1 });
     }
   };
 

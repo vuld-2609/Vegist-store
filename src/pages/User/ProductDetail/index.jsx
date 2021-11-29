@@ -6,6 +6,7 @@ import {
   createComment,
   getComment,
   getBill,
+  addCart,
 } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
@@ -27,8 +28,8 @@ import {
   Rate,
   Form,
   Radio,
-  InputNumber,
   Pagination,
+  Modal,
 } from 'antd';
 import moment from 'moment';
 
@@ -47,6 +48,7 @@ const ProductDetail = ({
   countComment,
   billData,
   getBill,
+  addCart,
 }) => {
   // console.log('billData', billData);
   const product = productDetail.product;
@@ -56,10 +58,12 @@ const ProductDetail = ({
   // eslint-disable-next-line no-unused-vars
   const [info, setInfo] = useState(JSON.parse(localStorage.getItem('profile')));
   const [rateValue, setRateValue] = useState();
+  const [valueQuantity, setValueQuantity] = useState(1);
   const [isShowFormComment, setIsShowFormComment] = useState(false);
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
+  const { confirm } = Modal;
 
   useEffect(() => {
     getProductDetail(productId);
@@ -153,6 +157,45 @@ const ProductDetail = ({
       toastError("You don't login !");
     }
   };
+
+  const modalInc = () => {
+    confirm({
+      title: `${t('cart.You can only order up to 30 products')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(30);
+      },
+    });
+  };
+
+  const modalDec = () => {
+    confirm({
+      title: `${t('cart.You can only order a minimum of 1 product')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(1);
+      },
+    });
+  };
+
+  const onChangeInput = (e) => {
+    let value = parseInt(e);
+    if (isNaN(value)) {
+      value = '';
+    } else if (value > 30) {
+      modalInc();
+    } else if (value <= 0) {
+      modalDec();
+    }
+    setValueQuantity(value);
+  };
+
+  const handleAddToCart = () => {
+    addCart({ productId: product.id, quantity: valueQuantity });
+  };
+
   const renderProductDetail = () => {
     return (
       <>
@@ -228,9 +271,11 @@ const ProductDetail = ({
                   </Radio.Group>
                 </Form.Item>
                 <Form.Item label={<p>{t('productDetail.Quantity')}</p>}>
-                  <Form.Item name="input-number" noStyle>
-                    <InputNumber defaultValue={1} min={1} max={10} />
-                  </Form.Item>
+                  <input
+                    type="number"
+                    value={valueQuantity}
+                    onChange={(e) => onChangeInput(e.target.value)}
+                  />
                 </Form.Item>
                 <div className="productDetail__btn">
                   <div className="productDetail__btn--item">
@@ -238,7 +283,7 @@ const ProductDetail = ({
                       <AiFillHeart />
                     </Tooltip>
                   </div>
-                  <div className="productDetail__btn--item">
+                  <div className="productDetail__btn--item" onClick={() => handleAddToCart()}>
                     <Tooltip title="ADD TO CART" color="black" key="white">
                       <GiShoppingBag />
                     </Tooltip>
@@ -466,6 +511,7 @@ const mapDispatchToProps = (dispatch) => {
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
     getBill: (params) => dispatch(getBill(params)),
+    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
