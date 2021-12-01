@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FaTrash } from 'react-icons/fa';
-import { Modal } from 'antd';
+import { Modal, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { updateCart, deleteCart } from '../../../../redux/actions';
 import './styles.scss';
-import { addCart } from '../../../../redux/actions';
-const CartItem = ({ data, addCart, handleDeleteCart }) => {
+import history from '../../../../until/history';
+
+const CartItem = ({ item, updateCart, deleteCart }) => {
   const { confirm } = Modal;
   const { t } = useTranslation();
-  const [valueInput, setValueInput] = useState(data.amount);
-  // eslint-disable-next-line no-unused-vars
-  const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [valueInput, setValueInput] = useState(item.quantity);
 
   const contentModal = (data) => (
     <div className="modal">
-      <div className="modal__img">
-        <img src={data.img[0]} alt="modal"></img>
-      </div>
-      <div className="modal__content">
-        <h3>{data.name}</h3>
-        {data.size && (
-          <p>
-            <span>{t('cart.Size')}</span> {data.size}
-          </p>
-        )}
-        <p>{`$${data.price.toLocaleString()}`}</p>
-      </div>
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <div className="modal__img ">
+            <img src={data.imgs[0]} alt="modal" className=""></img>
+          </div>
+        </Col>
+        <Col span={12}>
+          <div className="modal__content">
+            <h3>{data.name}</h3>
+            <p>
+              <span>{t('cart.Unit')}</span>1 {data.unit}
+            </p>
+            <p>{`$${data.price.toLocaleString()}`}</p>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 
-  const modalInc = (data, value) => {
+  const modalInc = (data) => {
     confirm({
       title: `${t('cart.You can only order up to 30 products')}`,
       content: <>{contentModal(data)}</>,
@@ -39,7 +43,7 @@ const CartItem = ({ data, addCart, handleDeleteCart }) => {
         setValueInput(30);
       },
       onCancel() {
-        setValueInput(30);
+        setValueInput(1);
       },
     });
   };
@@ -51,18 +55,12 @@ const CartItem = ({ data, addCart, handleDeleteCart }) => {
       okText: `${t('cart.Yes')}`,
       cancelText: `${t('cart.No')}`,
       onOk() {
-        handleDeleteCart(data.id, 'single');
+        deleteCart({ id: item._id });
       },
       onCancel() {
-        setValueInput(1);
+        setValueInput(value);
       },
     });
-  };
-  const updateCart = (data, value) => {
-    const cartData = JSON.parse(localStorage.getItem('CartData'));
-    const indexItem = cartData.findIndex((item) => item.id === data.id);
-    cartData.splice(indexItem, 1, { ...data, amount: value });
-    addCart({ user: infoUser.email, cartData });
   };
 
   const handleChangeInput = (e, data) => {
@@ -70,16 +68,16 @@ const CartItem = ({ data, addCart, handleDeleteCart }) => {
     if (isNaN(value)) {
       setValueInput('');
     } else if (value > 0 && value <= 30) {
-      updateCart(data, value);
+      updateCart({ id: item._id, productId: data._id, quantity: value });
       setValueInput(value);
     } else if (value > 30) {
       value = value - 1;
       modalInc(data, value);
-      updateCart(data, 30);
+      updateCart({ id: item._id, productId: data._id, quantity: value });
     } else if (value <= 0) {
       value = value + 1;
       modalDec(data, value);
-      updateCart(data, 1);
+      updateCart({ id: item._id, productId: data._id, quantity: value });
     }
   };
 
@@ -88,7 +86,7 @@ const CartItem = ({ data, addCart, handleDeleteCart }) => {
     setValueInput(value);
     if (value > 30) {
       modalInc(data, value);
-    } else updateCart(data, value);
+    } else updateCart({ id: item._id, productId: data._id, quantity: value });
   };
 
   const handleDecreaseInput = (data) => {
@@ -96,61 +94,71 @@ const CartItem = ({ data, addCart, handleDeleteCart }) => {
     setValueInput(value);
     if (value <= 0) {
       modalDec(data, value);
-    } else updateCart(data, value);
+    } else updateCart({ id: item._id, productId: data._id, quantity: value });
   };
 
   return (
     <>
-      <tr className="cart__product--item">
-        <td className="cart__product--img">
-          <img src={data.img[0]} alt="anh cart" />
-        </td>
-        <td className="cart__product--info">
-          <h3>{data.name}</h3>
-          {data.size && (
+      {item && (
+        <tr className="cart__product--item">
+          <td
+            className="cart__product--img"
+            onClick={() => history.push(`/product/${item.productId._id}`)}
+          >
+            <img src={item.productId.imgs[0]} alt="anh cart" />
+          </td>
+          <td
+            className="cart__product--info"
+            onClick={() => history.push(`/product/${item.productId._id}`)}
+          >
+            <h3>{item.productId.name}</h3>
             <p>
-              <span>{t('cart.Size')}</span>
-              {data.size}
+              <span>{t('cart.Unit')}</span>1 {item.productId.unit}
             </p>
-          )}
-
-          <p>${data.price.toLocaleString()} VND</p>
-        </td>
-        <td className="cart__product--amount">
-          <div>
-            <button className="" onClick={() => handleDecreaseInput(data)}>
-              -
-            </button>
-            <input
-              value={valueInput}
-              className=""
-              type="number"
-              onChange={(e) => handleChangeInput(e, data)}
-            ></input>
-            <button className="" onClick={() => handleIncreaseInput(data)}>
-              +
-            </button>
-          </div>
-        </td>
-        <td className="cart__product--price">${(data.price * valueInput).toLocaleString()} VND</td>
-        <td className="cart__product--remove" onClick={() => modalDec(data, 0)}>
-          <FaTrash />
-        </td>
-      </tr>
+            <p>${item.productId.price.toLocaleString()} VND</p>
+          </td>
+          <td className="cart__product--amount">
+            <div>
+              <button className="" onClick={() => handleDecreaseInput(item.productId)}>
+                -
+              </button>
+              <input
+                value={valueInput}
+                className=""
+                type="number"
+                onChange={(e) => handleChangeInput(e, item.productId)}
+              ></input>
+              <button className="" onClick={() => handleIncreaseInput(item.productId)}>
+                +
+              </button>
+            </div>
+          </td>
+          <td className="cart__product--price">
+            ${(item.productId.price * valueInput).toLocaleString()} VND
+          </td>
+          <td
+            className="cart__product--remove"
+            onClick={() => modalDec(item.productId, item.quantity)}
+          >
+            <FaTrash />
+          </td>
+        </tr>
+      )}
     </>
   );
 };
 
 const mapStateToProps = (state) => {
-  const { addCartData } = state.cartReducer;
+  const { cartData } = state.cartReducer;
 
   return {
-    addCartData,
+    cartData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCart: (params) => dispatch(addCart(params)),
+    updateCart: (params) => dispatch(updateCart(params)),
+    deleteCart: (params) => dispatch(deleteCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

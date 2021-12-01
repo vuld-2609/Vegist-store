@@ -8,65 +8,55 @@ import { useTranslation } from 'react-i18next';
 import VietNam from '../../../assets/images/vietnam.svg';
 import English from '../../../assets/images/english.svg';
 import './styles.scss';
-import { addCart, getCartData } from '../../../redux/actions';
+import { clearCart, getCartData } from '../../../redux/actions';
 
-const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
+const Cart = ({ cartData, clearCart, getCartData }) => {
   const { t } = useTranslation();
-  // eslint-disable-next-line no-unused-vars
-  const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [totalItem, setTotalItem] = useState(0);
   const { Option } = Select;
 
   useEffect(() => {
-    getCartData({ user: infoUser?.email });
-  }, [addCartData]);
+    getCartData();
+  }, []);
+
+  useEffect(() => {
+    const count = cartData?.cartDetails?.reduce(
+      (total, currentValue) => {
+        return parseInt(total) + currentValue.quantity;
+      },
+      [0]
+    );
+    setTotalItem(count);
+  }, [cartData]);
 
   const handleCalculateToTal = () => {
     let total = 0;
-    cartData?.cartData?.forEach((element) => {
-      total = total + parseInt(element.price * element.amount);
+    cartData?.cartDetails?.forEach((element) => {
+      total += parseInt(element.productId.price * element.quantity);
     });
-
     return total;
-  };
-  const handleDeleteCart = (id, type) => {
-    let arrProduct = JSON.parse(localStorage.getItem('CartData'));
-    if (type === 'single') {
-      let indexId = arrProduct.findIndex((item) => item.id === id);
-      arrProduct.splice(indexId, 1);
-    } else arrProduct = [];
-    addCart({ user: infoUser.email, cartData: arrProduct });
   };
 
   return (
     <div className="cart fadeIn">
       <Breadcrumb title="Cart" />
       <div className="container cart__container">
-        {cartData?.cartData?.length ? (
+        {cartData?.cartDetails?.length ? (
           <Row gutter={[32, 24]} justify="end">
             <Col xl={17} lg={16} xs={24}>
               <section className="cart__product">
                 <div className="cart__product--title">
                   <h2>{t('cart.My Cart')}:</h2>
                   <p>
-                    {cartData?.cartData?.reduce(
-                      (total, currentValue) => {
-                        return parseInt(total) + currentValue.amount;
-                      },
-                      [0]
-                    )}{' '}
+                    {totalItem}
                     {t('cart.item')}
                   </p>
                 </div>
                 <table className="cart__table">
                   <tbody className="cart__product--list">
-                    {cartData?.cartData?.map((item) => (
-                      <CartItem
-                        data={item}
-                        handleDeleteCart={handleDeleteCart}
-                        key={`cart-${item.id}`}
-                      />
+                    {cartData?.cartDetails?.map((item) => (
+                      <CartItem item={item} key={`cart-${item._id}`} />
                     ))}
                   </tbody>
                 </table>
@@ -156,7 +146,7 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
         title={t('cart.Do you want to delete all products')}
         visible={isModalVisible}
         onOk={() => {
-          handleDeleteCart('', 'all');
+          clearCart({ cartId: cartData.cart._id });
           setIsModalVisible(false);
         }}
         onCancel={() => setIsModalVisible(false)}
@@ -166,18 +156,16 @@ const Cart = ({ addCartData, cartData, addCart, getCartData }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { cartData, addCartData } = state.cartReducer;
-
+  const { cartData } = state.cartReducer;
   return {
     cartData,
-    addCartData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearCart: (params) => dispatch(clearCart(params)),
     getCartData: (params) => dispatch(getCartData(params)),
-    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
