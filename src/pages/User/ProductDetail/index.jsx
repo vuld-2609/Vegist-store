@@ -38,9 +38,8 @@ const ProductDetail = ({
   getComment,
   listComment,
 }) => {
-  console.log("🚀 ~ file: index.jsx ~ line 41 ~ listComment", listComment)
   const product = productDetail.data?.product;
-  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (10 / 100));
+  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (product?.sales / 100));
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
   const [isShowFormComment, setIsShowFormComment] = useState(false);
@@ -60,11 +59,11 @@ const ProductDetail = ({
 
   useEffect(() => {
     getComment({
-      id: productId,
+      productId,
       page: current,
       limit: 5,
     });
-  }, [listComment, current, productId]);
+  }, [current, productId]);
 
   const { Panel } = Collapse;
 
@@ -100,11 +99,16 @@ const ProductDetail = ({
 
   const handleSubmitForm = (value) => {};
 
-  const handleSubmitFormComment = (value) => {
-    createComment({
+  const handleSubmitFormComment =  async (value) => {
+   await createComment({
       ...value,
-      idProduct: productId,
+      productId: productId,
       rate: rateValue,
+    });
+    getComment({
+      productId,
+      page: 1,
+      limit: 5,
     });
     setIsShowFormComment(false);
   };
@@ -144,7 +148,7 @@ const ProductDetail = ({
                 <p>{product?.name}</p>
               </div>
               <div className="productDetail__content--info">
-                <Rate disabled defaultValue={2} />
+                <Rate disabled defaultValue={product?.rate} />
                 <p className="spanColor">
                   {t('productDetail.Availability')}:{' '}
                   <span> {t('productDetail.Availability__stock')}</span>
@@ -256,7 +260,7 @@ const ProductDetail = ({
           <div className="container">
             <div className="review__content">
               <p>{t('productDetail.Review__customer')}</p>
-              <Rate disabled defaultValue={1} />
+              <Rate disabled defaultValue={comments?.rateTotal} />
               <Collapse
                 activeKey={`${isShowFormComment === true ? 1 : ''}`}
                 destroyInactivePanel
@@ -287,7 +291,7 @@ const ProductDetail = ({
                       </Form.Item>
                       <p>{t('productDetail.Review__body')}</p>
                       <Form.Item
-                        name="content"
+                        name="description"
                         rules={[
                           {
                             max: 1000,
@@ -308,13 +312,13 @@ const ProductDetail = ({
               </Collapse>
                 <List
                   className="comment-list"
-                  header={`1 replies`}
+                  header={`${comments.data?.length || 0} replies`}
                   itemLayout="horizontal"
-                  dataSource={comments?.data}
+                  dataSource={comments.data}
                   renderItem={(item) => (
                     <li>
                       <Comment
-                        author={item.fullName}
+                        author={item.usedId?.fullName}
                         avatar={
                           'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                         }
@@ -325,13 +329,13 @@ const ProductDetail = ({
                             </div>
                             <div>
                               <p>{item.title}</p>
-                              <span>{item.content}</span>
+                              <span>{item.description}</span>
                             </div>
                           </>
                         }
                         datetime={
-                          <Tooltip title={item.date}>
-                            <span>{item.date}</span>
+                          <Tooltip title={item.dateCreate}>
+                            <span>{item.dateCreate}</span>
                           </Tooltip>
                         }
                         rate={item.rate}
@@ -339,7 +343,7 @@ const ProductDetail = ({
                     </li>
                   )}
                 />
-              {comments.data > 0 && (
+              {comments.data?.length > 0 && (
                 <Pagination
                   total={comments.total}
                   defaultCurrent={1}
