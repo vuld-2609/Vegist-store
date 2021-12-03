@@ -63,9 +63,6 @@
     }
   }
   &__content {
-   
-
-
     &--title {
       p {
         font-weight: 600;
@@ -159,6 +156,9 @@
     padding: 3rem 0;
     
       .review__content {
+        min-height: 760px;
+        margin-bottom: 2rem;
+
         p {
           font-weight: 600;
         }

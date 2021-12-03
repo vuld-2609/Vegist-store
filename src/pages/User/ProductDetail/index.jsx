@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, createComment, getComment,addCart } from '../../../redux/actions';
+import { getProductDetail, createComment, getComment } from '../../../redux/actions';
+import {
+  getBill,
+  addCart,
+} from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
@@ -37,7 +41,7 @@ const ProductDetail = ({
   addCart,
 }) => {
   const product = productDetail.data?.product;
-  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (product?.sales / 100));
+  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * ( product?.sales / 100));
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
   const [valueQuantity, setValueQuantity] = useState(1);
@@ -59,11 +63,11 @@ const ProductDetail = ({
 
   useEffect(() => {
     getComment({
-      productId,
+      id: productId,
       page: current,
       limit: 5,
     });
-  }, [current, productId]);
+  }, [ current, productId]);
 
   const { Panel } = Collapse;
 
@@ -99,19 +103,14 @@ const ProductDetail = ({
 
   const handleSubmitForm = (value) => {};
 
-  const handleSubmitFormComment =  async (value) => {
+  const handleSubmitFormComment = async (value) => {
    await createComment({
       ...value,
-      productId: productId,
+      productId,
       rate: rateValue,
     });
 
-    getComment({
-      productId,
-      page: 1,
-      limit: 5,
-    });
-    
+    getComment({id:productId,limit:5,page:1})
     setIsShowFormComment(false);
   };
 
@@ -188,7 +187,7 @@ const ProductDetail = ({
                 <p>{product?.name}</p>
               </div>
               <div className="productDetail__content--info">
-                <Rate disabled defaultValue={product?.rate} />
+                <Rate disabled defaultValue={2} />
                 <p className="spanColor">
                   {t('productDetail.Availability')}:{' '}
                   <span> {t('productDetail.Availability__stock')}</span>
@@ -354,13 +353,13 @@ const ProductDetail = ({
               </Collapse>
                 <List
                   className="comment-list"
-                  header={`${comments.data?.length || 0} replies`}
+                  header={`${comments.data?.length} replies`}
                   itemLayout="horizontal"
-                  dataSource={comments.data}
+                  dataSource={comments?.data}
                   renderItem={(item) => (
                     <li>
                       <Comment
-                        author={item.usedId?.fullName}
+                        author={item.useId?.fullName}
                         avatar={
                           'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                         }
@@ -385,6 +384,7 @@ const ProductDetail = ({
                     </li>
                   )}
                 />
+            </div>
               {comments.data?.length > 0 && (
                 <Pagination
                   total={comments.total}
@@ -401,7 +401,6 @@ const ProductDetail = ({
                   }}
                 />
               )}
-            </div>
           </div>
         </div>
         <div className="productDetail__related">
@@ -437,6 +436,7 @@ const mapDispatchToProps = (dispatch) => {
     getProductDetail: (params) => dispatch(getProductDetail(params)),
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
+    getBill: (params) => dispatch(getBill(params)),
     addCart: (params) => dispatch(addCart(params)),
   };
 };
