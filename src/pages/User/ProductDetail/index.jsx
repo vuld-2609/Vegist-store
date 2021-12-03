@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, createComment, getComment } from '../../../redux/actions';
-import {
-  getBill,
-  addCart,
-} from '../../../redux/actions';
+import { getProductDetail, createComment, getComment , addCart, } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
@@ -37,7 +33,6 @@ const ProductDetail = ({
   getProductDetail,
   productDetail,
   comments,
-  getComment,
   addCart,
 }) => {
   const product = productDetail.data?.product;
@@ -110,7 +105,7 @@ const ProductDetail = ({
       rate: rateValue,
     });
 
-    getComment({id:productId,limit:5,page:1})
+    getComment({productId,limit:5,page:1})
     setIsShowFormComment(false);
   };
 
@@ -187,7 +182,7 @@ const ProductDetail = ({
                 <p>{product?.name}</p>
               </div>
               <div className="productDetail__content--info">
-                <Rate disabled defaultValue={2} />
+                <Rate disabled defaultValue={product?.rate} />
                 <p className="spanColor">
                   {t('productDetail.Availability')}:{' '}
                   <span> {t('productDetail.Availability__stock')}</span>
@@ -436,7 +431,6 @@ const mapDispatchToProps = (dispatch) => {
     getProductDetail: (params) => dispatch(getProductDetail(params)),
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
-    getBill: (params) => dispatch(getBill(params)),
     addCart: (params) => dispatch(addCart(params)),
   };
 };
