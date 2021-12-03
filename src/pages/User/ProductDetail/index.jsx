@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, createComment, getComment,addCart } from '../../../redux/actions';
+import { getProductDetail, createComment, getComment, addCart } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
