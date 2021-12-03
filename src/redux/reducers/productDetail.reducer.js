@@ -27,8 +27,6 @@ const initialState = {
 };
 
 export default function productDetailReducer(state = initialState, action) {
-  console.log("🚀 ~ file: productDetail.reducer.js ~ line 30 ~ productDetailReducer ~ action", action)
-  console.log("🚀 ~ file: productDetail.reducer.js ~ line 30 ~ productDetailReducer ~ state", state)
   switch (action.type) {
     case GET_PRODUCT_DETAIL: {
       return {

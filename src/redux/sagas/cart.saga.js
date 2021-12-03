@@ -1,66 +1,146 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
+import { toastError, toastSuccess } from '../../until/toast';
+import axiosClient from '../config/axiosClient';
 
 import {
   ADD_CART,
   ADD_CART_FAIL,
   ADD_CART_SUCCESS,
+  UPDATE_CART,
+  UPDATE_CART_FAIL,
+  UPDATE_CART_SUCCESS,
+  DELETE_CART,
+  DELETE_CART_FAIL,
+  DELETE_CART_SUCCESS,
+  CLEAR_CART,
+  CLEAR_CART_FAIL,
+  CLEAR_CART_SUCCESS,
   GET_CART,
   GET_CART_FAIL,
-  GET_CART_SUCCESS
+  GET_CART_SUCCESS,
 } from '../constants';
-
-const apiURL = process.env.REACT_APP_API_URL;
 
 function* addCartSaga(action) {
   try {
-    const { user, cartData } = action.payload;
-    let response;
-    const responseCheckUser = yield axios.get(`${apiURL}/carts?user=${user}`);
-    if (responseCheckUser.data.length) {
-      response = yield axios.patch(`${apiURL}/carts/${responseCheckUser.data[0].id}`, {
-        cartData
-      });
-    } else {
-      response = yield axios.post(`${apiURL}/carts`, action.payload);
+    const { status, error, data } = yield axiosClient.post(`user/cartDetail`, action.payload);
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
     }
-    const data = response.data;
+
     yield put({
       type: ADD_CART_SUCCESS,
-      payload: data
+      payload: data.cartDetails,
     });
-    localStorage.setItem('CartData', JSON.stringify(data.cartData));
+    toastSuccess(data.message);
   } catch (error) {
     yield put({
       type: ADD_CART_FAIL,
-      payload: error
+      payload: error,
     });
+    toastError(error);
   }
 }
 
-function* getCartDataSaga(action) {
+function* updateCartSaga(action) {
   try {
-    const { user } = action.payload;
-    const response = yield axios({
-      method: 'GET',
-      url: `${apiURL}/carts?user=${user}`
+    const { id, quantity, productId } = action.payload;
+    const { status, error, data } = yield axiosClient.patch(`user/cartDetail/${id}`, {
+      productId,
+      quantity,
     });
-    const data = response.data;
-    const dataCart = data[0]?.cartData || [];
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
+    yield put({
+      type: UPDATE_CART_SUCCESS,
+      payload: data.cartDetail,
+    });
+  } catch (error) {
+    yield put({
+      type: UPDATE_CART_FAIL,
+      payload: error,
+    });
+    toastError(error);
+  }
+}
+
+function* deleteCartSaga(action) {
+  try {
+    const { id } = action.payload;
+    const { status, error, data } = yield axiosClient.delete(`user/cartDetail/${id}`);
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+    toastSuccess(data.message);
+    yield put({
+      type: DELETE_CART_SUCCESS,
+      payload: { cartDetailId: id },
+    });
+  } catch (error) {
+    yield put({
+      type: DELETE_CART_FAIL,
+      payload: error,
+    });
+    toastError(error);
+  }
+}
+
+function* clearCartSaga(action) {
+  try {
+    const { cartId } = action.payload;
+    const { status, error, data } = yield axiosClient.delete(`user/cart/${cartId}`);
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
+    toastSuccess(data.message);
+
+    yield put({
+      type: CLEAR_CART_SUCCESS,
+      payload: [],
+    });
+  } catch (error) {
+    yield put({
+      type: CLEAR_CART_FAIL,
+      payload: error,
+    });
+    toastSuccess(error);
+  }
+}
+
+function* getCartDataSaga() {
+  try {
+    const { status, error, data } = yield axiosClient({
+      method: 'GET',
+      url: `/user/cart`,
+    });
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
     yield put({
       type: GET_CART_SUCCESS,
-      payload: data[0]
+      payload: data,
     });
-    localStorage.setItem('CartData', JSON.stringify(dataCart));
   } catch (error) {
     yield put({
       type: GET_CART_FAIL,
-      payload: error
+      payload: error,
     });
+    toastError(error);
   }
 }
 
 export default function* cartSaga() {
   yield takeEvery(ADD_CART, addCartSaga);
+  yield takeEvery(UPDATE_CART, updateCartSaga);
+  yield takeEvery(DELETE_CART, deleteCartSaga);
+  yield takeEvery(CLEAR_CART, clearCartSaga);
   yield takeEvery(GET_CART, getCartDataSaga);
 }

@@ -29,9 +29,9 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
       date,
       isPayment: true,
       type: 'success',
-      cartId: billData.cartId
+      cartId: billData.cartId,
     });
-    getCartData({ user: billData.user });
+    getCartData();
     history.push(`/success/${billData.id}`);
   };
 
@@ -96,17 +96,20 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
           </div>
           <div className="payments__content">
             <Radio.Group
-              onChange={e => setBillingAddress(e.target.value)}
+              onChange={(e) => setBillingAddress(e.target.value)}
               value={billingAddress}
               style={{ width: '100%' }}
             >
               <div className="payments__item">
-                <Radio value="Same as shipping address" onClick={e => setBillingAddress(e)}>
+                <Radio value="Same as shipping address" onClick={(e) => setBillingAddress(e)}>
                   {t('payments.payment.Same as shipping address')}
                 </Radio>
               </div>
               <div className="payments__item">
-                <Radio value="Use a different billing address" onClick={e => setBillingAddress(e)}>
+                <Radio
+                  value="Use a different billing address"
+                  onClick={(e) => setBillingAddress(e)}
+                >
                   {t('payments.payment.Use a different billing address')}
                 </Radio>
               </div>
@@ -132,17 +135,17 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { billData } = state.paymentReducer;
 
   return { billData };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getBill: params => dispatch(getBill(params)),
-    updateBill: params => dispatch(updateBill(params)),
-    getCartData: params => dispatch(getCartData(params))
+    getBill: (params) => dispatch(getBill(params)),
+    updateBill: (params) => dispatch(updateBill(params)),
+    getCartData: (params) => dispatch(getCartData(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);

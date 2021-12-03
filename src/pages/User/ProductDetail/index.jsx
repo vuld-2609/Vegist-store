@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getProductDetail, createComment, getComment } from '../../../redux/actions';
+import {
+  getBill,
+  addCart,
+} from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
@@ -16,16 +20,14 @@ import {
   Comment,
   Tooltip,
   List,
-  Text,
   Collapse,
   Rate,
   Form,
   Radio,
-  InputNumber,
   Pagination,
   Spin,
+  Modal,
 } from 'antd';
-import moment from 'moment';
 
 import './style.scss';
 
@@ -36,18 +38,19 @@ const ProductDetail = ({
   productDetail,
   comments,
   getComment,
-  listComment,
+  addCart,
 }) => {
-  console.log("🚀 ~ file: index.jsx ~ line 41 ~ listComment", listComment)
   const product = productDetail.data?.product;
-  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (10 / 100));
+  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * ( product?.sales / 100));
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
+  const [valueQuantity, setValueQuantity] = useState(1);
   const [isShowFormComment, setIsShowFormComment] = useState(false);
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
   document.title = 'Vegist | Trang Chi tiết';
+  const { confirm } = Modal;
 
   useEffect(() => {
     getProductDetail(productId);
@@ -64,7 +67,7 @@ const ProductDetail = ({
       page: current,
       limit: 5,
     });
-  }, [listComment, current, productId]);
+  }, [ current, productId]);
 
   const { Panel } = Collapse;
 
@@ -100,13 +103,53 @@ const ProductDetail = ({
 
   const handleSubmitForm = (value) => {};
 
-  const handleSubmitFormComment = (value) => {
-    createComment({
+  const handleSubmitFormComment = async (value) => {
+   await createComment({
       ...value,
-      idProduct: productId,
+      productId,
       rate: rateValue,
     });
+
+    getComment({id:productId,limit:5,page:1})
     setIsShowFormComment(false);
+  };
+
+  const modalInc = () => {
+    confirm({
+      title: `${t('cart.You can only order up to 30 products')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(30);
+      },
+    });
+  };
+
+  const modalDec = () => {
+    confirm({
+      title: `${t('cart.You can only order a minimum of 1 product')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(1);
+      },
+    });
+  };
+
+  const onChangeInput = (e) => {
+    let value = parseInt(e);
+    if (isNaN(value)) {
+      value = '';
+    } else if (value > 30) {
+      modalInc();
+    } else if (value <= 0) {
+      modalDec();
+    }
+    setValueQuantity(value);
+  };
+
+  const handleAddToCart = () => {
+    addCart({ productId: product.id, quantity: valueQuantity });
   };
 
   const renderProductDetail = () => {
@@ -167,9 +210,11 @@ const ProductDetail = ({
                   </Radio.Group>
                 </Form.Item>
                 <Form.Item label={<p>{t('productDetail.Quantity')}</p>}>
-                  <Form.Item name="input-number" noStyle>
-                    <InputNumber defaultValue={1} min={1} max={10} />
-                  </Form.Item>
+                  <input
+                    type="number"
+                    value={valueQuantity}
+                    onChange={(e) => onChangeInput(e.target.value)}
+                  />
                 </Form.Item>
                 <div className="productDetail__btn">
                   <div className="productDetail__btn--item">
@@ -177,7 +222,7 @@ const ProductDetail = ({
                       <AiFillHeart />
                     </Tooltip>
                   </div>
-                  <div className="productDetail__btn--item">
+                  <div className="productDetail__btn--item" onClick={() => handleAddToCart()}>
                     <Tooltip title="ADD TO CART" color="black" key="white">
                       <GiShoppingBag />
                     </Tooltip>
@@ -256,7 +301,7 @@ const ProductDetail = ({
           <div className="container">
             <div className="review__content">
               <p>{t('productDetail.Review__customer')}</p>
-              <Rate disabled defaultValue={1} />
+              <Rate disabled defaultValue={comments?.rateTotal} />
               <Collapse
                 activeKey={`${isShowFormComment === true ? 1 : ''}`}
                 destroyInactivePanel
@@ -287,7 +332,7 @@ const ProductDetail = ({
                       </Form.Item>
                       <p>{t('productDetail.Review__body')}</p>
                       <Form.Item
-                        name="content"
+                        name="description"
                         rules={[
                           {
                             max: 1000,
@@ -308,13 +353,13 @@ const ProductDetail = ({
               </Collapse>
                 <List
                   className="comment-list"
-                  header={`1 replies`}
+                  header={`${comments.data?.length} replies`}
                   itemLayout="horizontal"
                   dataSource={comments?.data}
                   renderItem={(item) => (
                     <li>
                       <Comment
-                        author={item.fullName}
+                        author={item.useId?.fullName}
                         avatar={
                           'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                         }
@@ -325,13 +370,13 @@ const ProductDetail = ({
                             </div>
                             <div>
                               <p>{item.title}</p>
-                              <span>{item.content}</span>
+                              <span>{item.description}</span>
                             </div>
                           </>
                         }
                         datetime={
-                          <Tooltip title={item.date}>
-                            <span>{item.date}</span>
+                          <Tooltip title={item.dateCreate}>
+                            <span>{item.dateCreate}</span>
                           </Tooltip>
                         }
                         rate={item.rate}
@@ -339,7 +384,8 @@ const ProductDetail = ({
                     </li>
                   )}
                 />
-              {comments.data > 0 && (
+            </div>
+              {comments.data?.length > 0 && (
                 <Pagination
                   total={comments.total}
                   defaultCurrent={1}
@@ -355,7 +401,6 @@ const ProductDetail = ({
                   }}
                 />
               )}
-            </div>
           </div>
         </div>
         <div className="productDetail__related">
@@ -380,15 +425,10 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productDetail, comments, listComment } = state.productDetailReducer;
-  const { infoUser } = state.accountReducer;
-  const { billData } = state.paymentReducer;
+  const { productDetail, comments, } = state.productDetailReducer;
   return {
     productDetail,
-    infoUser,
     comments,
-    listComment,
-    billData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -396,6 +436,8 @@ const mapDispatchToProps = (dispatch) => {
     getProductDetail: (params) => dispatch(getProductDetail(params)),
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
+    getBill: (params) => dispatch(getBill(params)),
+    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

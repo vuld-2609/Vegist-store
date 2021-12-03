@@ -40,6 +40,8 @@
     position: relative;
     @include bgc-image(17%);
     width: 17%;
+    cursor: pointer;
+
     img {
       @include absolute(0, '', '', 0);
       width: 100%;
@@ -47,6 +49,8 @@
     }
   }
   &--info {
+    cursor: pointer;
+
     h3 {
       font-size: 1.6rem;
       font-weight: 600;

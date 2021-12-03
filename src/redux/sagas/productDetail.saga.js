@@ -100,7 +100,6 @@ function* getCommentSaga(action) {
     // if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
-    console.log("🚀 ~ file: productDetail.saga.js ~ line 103 ~ function*getCommentSaga ~ data", data)
 
     yield put({
       type: GET_COMMENT_SUCCESS,
