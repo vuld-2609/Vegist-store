@@ -24,7 +24,6 @@ const Sidebar = ({
   const [isFilter, setIsFilter] = useState(false);
   const [arrFilter, setArrFilter] = useState([]);
   const [priceValue, setPriceValue] = useState([]);
-  const refTotalProduct = useRef(JSON.parse(JSON.stringify(products)));
 
   useEffect(() => {
     getSidebar();
@@ -114,7 +113,7 @@ const Sidebar = ({
   };
 
   const renderFilterCategory = () => {
-    return sidebarData?.categoryData?.map((item, index) => (
+    return sidebarData?.categoryData?.map((item) => (
       <Checkbox
         value={item.id}
         className="sidebar__categories--item"
@@ -122,10 +121,7 @@ const Sidebar = ({
       >
         <div className="sidebar__categories--item-content">
           <span>{t(`category.${item.name}`)}</span>
-          <span>
-            ({refTotalProduct.current.filter((element) => element.categoryId.id === item.id).length}
-            )
-          </span>
+          <span>({item.totalProducts})</span>
         </div>
       </Checkbox>
     ));

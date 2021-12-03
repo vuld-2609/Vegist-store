@@ -9,25 +9,23 @@ import './styles.scss';
 const InfoCart = ({ getCartData, cartData }) => {
   const location = useLocation();
   const { t } = useTranslation();
-  // eslint-disable-next-line no-unused-vars
-  const [infoUser, setInfoUser] = useState(JSON.parse(localStorage.getItem('profile')));
   useEffect(() => {
-    getCartData({ user: infoUser.email });
+    getCartData();
   }, []);
 
   const renderCartData = (cartData) => {
-    return cartData?.map((item, index) => (
+    return cartData?.cartDetail?.map((item, index) => (
       <tr className="infoCart__cart--item" key={index}>
         <td className="infoCart__cart--img">
           <img src={item.img[0]} alt="anh"></img>
-          <span className="infoCart__cart--amount">{item.amount}</span>
+          <span className="infoCart__cart--amount">{item.quantity}</span>
         </td>
         <td className="infoCart__cart--name">
           <h5>{item.name}</h5>
           {item.size && <p>{item.size}</p>}
         </td>
         <td className="infoCart__cart--price">
-          ${(item.amount * item.price).toLocaleString()} VND
+          ${(item.quantity * item.price).toLocaleString()} VND
         </td>
       </tr>
     ));
@@ -36,7 +34,7 @@ const InfoCart = ({ getCartData, cartData }) => {
   const handleCalculateToTal = (cartData) => {
     let total = 0;
     cartData?.forEach((element) => {
-      total = total + parseInt(element.price * element.amount);
+      total = total + parseInt(element.price * element.quantity);
     });
 
     return total;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, createComment, getComment } from '../../../redux/actions';
+import { getProductDetail, createComment, getComment,addCart } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
@@ -16,16 +16,14 @@ import {
   Comment,
   Tooltip,
   List,
-  Text,
   Collapse,
   Rate,
   Form,
   Radio,
-  InputNumber,
   Pagination,
   Spin,
+  Modal,
 } from 'antd';
-import moment from 'moment';
 
 import './style.scss';
 
@@ -36,17 +34,19 @@ const ProductDetail = ({
   productDetail,
   comments,
   getComment,
-  listComment,
+  addCart,
 }) => {
   const product = productDetail.data?.product;
   const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * (product?.sales / 100));
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
+  const [valueQuantity, setValueQuantity] = useState(1);
   const [isShowFormComment, setIsShowFormComment] = useState(false);
   const [current, setCurrent] = useState(1);
   const { t } = useTranslation();
   const { TabPane } = Tabs;
   document.title = 'Vegist | Trang Chi tiết';
+  const { confirm } = Modal;
 
   useEffect(() => {
     getProductDetail(productId);
@@ -105,12 +105,52 @@ const ProductDetail = ({
       productId: productId,
       rate: rateValue,
     });
+
     getComment({
       productId,
       page: 1,
       limit: 5,
     });
+    
     setIsShowFormComment(false);
+  };
+
+  const modalInc = () => {
+    confirm({
+      title: `${t('cart.You can only order up to 30 products')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(30);
+      },
+    });
+  };
+
+  const modalDec = () => {
+    confirm({
+      title: `${t('cart.You can only order a minimum of 1 product')}`,
+      content: <></>,
+      okText: `${t('cart.Yes')}`,
+      onOk() {
+        setValueQuantity(1);
+      },
+    });
+  };
+
+  const onChangeInput = (e) => {
+    let value = parseInt(e);
+    if (isNaN(value)) {
+      value = '';
+    } else if (value > 30) {
+      modalInc();
+    } else if (value <= 0) {
+      modalDec();
+    }
+    setValueQuantity(value);
+  };
+
+  const handleAddToCart = () => {
+    addCart({ productId: product.id, quantity: valueQuantity });
   };
 
   const renderProductDetail = () => {
@@ -171,9 +211,11 @@ const ProductDetail = ({
                   </Radio.Group>
                 </Form.Item>
                 <Form.Item label={<p>{t('productDetail.Quantity')}</p>}>
-                  <Form.Item name="input-number" noStyle>
-                    <InputNumber defaultValue={1} min={1} max={10} />
-                  </Form.Item>
+                  <input
+                    type="number"
+                    value={valueQuantity}
+                    onChange={(e) => onChangeInput(e.target.value)}
+                  />
                 </Form.Item>
                 <div className="productDetail__btn">
                   <div className="productDetail__btn--item">
@@ -181,7 +223,7 @@ const ProductDetail = ({
                       <AiFillHeart />
                     </Tooltip>
                   </div>
-                  <div className="productDetail__btn--item">
+                  <div className="productDetail__btn--item" onClick={() => handleAddToCart()}>
                     <Tooltip title="ADD TO CART" color="black" key="white">
                       <GiShoppingBag />
                     </Tooltip>
@@ -384,15 +426,10 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productDetail, comments, listComment } = state.productDetailReducer;
-  const { infoUser } = state.accountReducer;
-  const { billData } = state.paymentReducer;
+  const { productDetail, comments, } = state.productDetailReducer;
   return {
     productDetail,
-    infoUser,
     comments,
-    listComment,
-    billData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -400,6 +437,7 @@ const mapDispatchToProps = (dispatch) => {
     getProductDetail: (params) => dispatch(getProductDetail(params)),
     createComment: (params) => dispatch(createComment(params)),
     getComment: (params) => dispatch(getComment(params)),
+    addCart: (params) => dispatch(addCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

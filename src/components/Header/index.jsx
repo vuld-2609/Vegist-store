@@ -23,36 +23,21 @@ import Search from '../Search';
 
 const { Option } = Select;
 
-const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
+const Header = ({ getCartData, cartData, userDataEdited }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  const [selectData, setSelectData] = useState([]);
   const [totalItemInCart, setTotalItemInCart] = useState(0);
   const [showNavbar, setShowNavbar] = useState(false);
   const [authData, setAuthData] = useState();
-  const options = selectData.map((d) => (
-    <Option key={d.value} value={d.value}>
-      {d.text}
-    </Option>
-  ));
-
   const [value, setValue] = useState(''); //State lưu từ nhập vào từ ô search
 
   useEffect(() => {
-    if (authData) getCartData({ user: authData.email });
+    if (authData) getCartData();
   }, [authData]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('CartData'));
-    setTotalItemInCart(
-      cart?.reduce(
-        (total, currentValue) => {
-          return parseInt(total) + currentValue.amount;
-        },
-        [0]
-      )
-    );
-  }, [cartData, location, addCartData]);
+    setTotalItemInCart(cartData?.cartDetails?.length);
+  }, [cartData]);
 
   useEffect(() => {
     setAuthData(() => JSON.parse(localStorage.getItem('profile')));
@@ -194,12 +179,11 @@ const Header = ({ getCartData, cartData, addCartData, userDataEdited }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { cartData, addCartData } = state.cartReducer;
+  const { cartData } = state.cartReducer;
   const { userDataEdited } = state.accountReducer;
   return {
     userDataEdited,
     cartData,
-    addCartData,
   };
 };
 const mapDispatchToProps = (dispatch) => {

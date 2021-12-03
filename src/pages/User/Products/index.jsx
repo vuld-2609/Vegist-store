@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import './styles.scss';
-import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
-import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { connect } from 'react-redux';
-import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
-import ProductItem from '../../../components/ProductItem';
-import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
+import ProductItem from '../../../components/ProductItem';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
+import useWindowDimensions from '../../../until/width';
+import Sidebar from './Sidebar';
+import './styles.scss';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
   { title: 'Best Selling', value: 'bestSelling' },
   { title: 'Price, low to high', value: 'priceLowToHigh' },
   { title: 'Price, high to low', value: 'priceHighToLow' },
-  { title: 'Date, new to old', value: 'date' },
+  { title: 'New', value: 'news' },
+  { title: 'Hot', value: 'hot' },
 ];
 
 const Products = ({
@@ -38,26 +39,6 @@ const Products = ({
     tag: null,
     sort: null,
   });
-
-  // if (width >= 1200) {
-  //   window.scrollTo({
-  //     top: 430,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else if (width >= 992) {
-  //   window.scrollTo({
-  //     top: 380,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else {
-  //   window.scrollTo({
-  //     top: 340,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }
 
   if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({

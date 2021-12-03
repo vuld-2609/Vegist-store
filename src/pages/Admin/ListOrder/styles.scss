@@ -1,7 +1,7 @@
 @import '../../../scss/styles.scss';
 
 .order {
-  width: 60%;
+  width: 90%;
   margin: 40px auto 0;
   padding: 40px 0;
 
@@ -24,12 +24,13 @@
   }
 
   &__filter {
-    @include flex;
+    @include flex(flex-end, center, '', '');
     margin-bottom: 20px;
   }
 
   &__sort {
-    @include flex;
+    @include flex('', center, '', '');
+    margin-right: 20px;
 
     &--title {
       margin-right: 12px;
@@ -42,9 +43,9 @@
 }
 
 .table {
+  width: 100%;
+  overflow-x: auto;
   &__row {
-    background-color: $white;
-
     &:hover {
       background-color: $light-gray;
     }
