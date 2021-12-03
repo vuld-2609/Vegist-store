@@ -1,9 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import history from '../../until/history';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';

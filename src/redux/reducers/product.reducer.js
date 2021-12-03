@@ -3,8 +3,6 @@ import {
   GET_PRODUCT_HOME_SUCCESS,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_FAIL,
-  GET_TOTAL_PRODUCTS_SUCCESS,
-  GET_TOTAL_PRODUCTS_FAIL,
   CREATE_PRODUCTS_SUCCESS,
   CREATE_PRODUCTS_FAIL,
   UPDATE_PRODUCTS_SUCCESS,
@@ -18,7 +16,7 @@ import {
 const initialState = {
   productHome: {},
   productsData: [],
-  totalProduct: [],
+  totalProduct: 0,
   addProduct: {},
   updateProduct: {},
   deleteProduct: {},
@@ -39,17 +37,10 @@ export default function productReducer(state = initialState, action) {
     case GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        productsData: [...action.payload],
+        productsData: [...action.payload.products],
+        totalProduct: action.payload.totalProduct,
       };
     case GET_PRODUCTS_FAIL: {
-      return state;
-    }
-    case GET_TOTAL_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        totalProduct: [...action.payload],
-      };
-    case GET_TOTAL_PRODUCTS_FAIL: {
       return state;
     }
     case CREATE_PRODUCTS_SUCCESS:
@@ -69,10 +60,8 @@ export default function productReducer(state = initialState, action) {
       return state;
     }
     case DELETE_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        deleteProduct: { ...action.payload },
-      };
+      const data = state.productsData.filter((item) => item.id !== action.payload);
+      return { ...state, productsData: [...data] };
     case DELETE_PRODUCTS_FAIL: {
       return state;
     }

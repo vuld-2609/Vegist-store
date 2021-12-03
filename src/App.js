@@ -25,9 +25,10 @@ import Success from './pages/User/Success';
 import ListUser from './pages/Admin/ListUser';
 import HomeAdmin from './pages/Admin/HomeAdmin';
 import ProductsAdmin from './pages/Admin/ProductsAdmin';
-import AddProductAdmin from './pages/Admin/ProductsAdmin/components/AddProduct';
+import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
 import ListOrder from './pages/Admin/ListOrder';
 import OrderDetail from './pages/Admin/ListOrder/OrderDetail/OrderDetail';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <DefaultLayout exact path="/product/:id" component={ProductDetail} />
           <DefaultLayout exact path="/profile" component={Profile} />
           <DefaultLayout exact path="/success/:id" component={Success} />
+          <DefaultLayout exact path="/notfound" component={NotFound} />
 
           <PaymentLayout exact path="/infoPayment" component={Information} />
           <PaymentLayout exact path="/shipping" component={Shipping} />

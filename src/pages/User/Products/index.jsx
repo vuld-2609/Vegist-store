@@ -1,36 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import './styles.scss';
-import Sidebar from './Sidebar';
 import { Col, Pagination, Row, Select } from 'antd';
-import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CgLayoutGrid, CgLayoutGridSmall, CgLayoutList } from 'react-icons/cg';
 import { connect } from 'react-redux';
-import {
-  getProducts,
-  getTotalProducts,
-  setFlagSearchChange,
-  setValueSearch,
-} from '../../../redux/actions';
-import ProductItem from '../../../components/ProductItem';
-import useWindowDimensions from '../../../until/width';
 import Breadcrumb from '../../../components/Breadcrumb';
+import ProductItem from '../../../components/ProductItem';
+import { getProducts, setFlagSearchChange, setValueSearch } from '../../../redux/actions';
+import useWindowDimensions from '../../../until/width';
+import Sidebar from './Sidebar';
+import './styles.scss';
 
 const arrSelect = [
   { title: 'Featured', value: 'featured' },
   { title: 'Best Selling', value: 'bestSelling' },
   { title: 'Price, low to high', value: 'priceLowToHigh' },
   { title: 'Price, high to low', value: 'priceHighToLow' },
-  { title: 'Date, new to old', value: 'date' },
+  { title: 'New', value: 'news' },
+  { title: 'Hot', value: 'hot' },
 ];
 
 const Products = ({
   getProducts,
   productsData,
-  getTotalProducts,
-  totalProduct,
   valueSearch,
   setValueSearch,
   flagSearchChange,
+  totalProduct,
 }) => {
   const { width } = useWindowDimensions();
   const { Option } = Select;
@@ -44,26 +39,6 @@ const Products = ({
     tag: null,
     sort: null,
   });
-
-  // if (width >= 1200) {
-  //   window.scrollTo({
-  //     top: 430,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else if (width >= 992) {
-  //   window.scrollTo({
-  //     top: 380,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // } else {
-  //   window.scrollTo({
-  //     top: 340,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }
 
   if (width >= 1200 && !flagSearchChange) {
     window.scrollTo({
@@ -95,13 +70,6 @@ const Products = ({
 
   useEffect(() => {
     document.title = 'Vegist | Trang Sản phẩm';
-    getTotalProducts({
-      category: filterProducts.category,
-      price: filterProducts.price,
-      tag: filterProducts.tag,
-      sort: filterProducts.sort,
-      searchKey: valueSearch,
-    });
 
     getProducts({
       page: currentPage,
@@ -146,7 +114,7 @@ const Products = ({
                 filterProducts={filterProducts}
                 setFilterProducts={setFilterProducts}
                 setCurrentPage={setCurrentPage}
-                totalProduct={totalProduct}
+                products={productsData}
                 setBannerData={setBannerData}
               />
             </div>
@@ -200,23 +168,23 @@ const Products = ({
                 <div className="list__content">
                   <Row gutter={[16, 16]}>
                     {productsData.map((item) => (
-                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12}>
+                      <Col xl={24 / numberOfProduct} lg={8} sm={12} xs={12} key={item.id}>
                         <ProductItem data={item} />
                       </Col>
                     ))}
                   </Row>
                 </div>
               </section>
-              {totalProduct.length > 0 && (
+              {totalProduct > 0 && (
                 <section className="pagination">
                   <div className="pagination__result">
                     {t('products.Showing')} {renderLocationProduct()} {t('products.of')}{' '}
-                    {totalProduct.length} {t('products.result')}
+                    {totalProduct} {t('products.result')}
                   </div>
                   <Pagination
                     current={currentPage}
                     onChange={handelChangePage}
-                    total={totalProduct?.length}
+                    total={totalProduct}
                     defaultPageSize={12}
                   />
                 </section>
@@ -230,18 +198,17 @@ const Products = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productsData, totalProduct, valueSearch, flagSearchChange } = state.productReducer;
+  const { productsData, valueSearch, flagSearchChange, totalProduct } = state.productReducer;
   return {
     productsData,
-    totalProduct,
     valueSearch,
     flagSearchChange,
+    totalProduct,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (params) => dispatch(getProducts(params)),
-    getTotalProducts: (params) => dispatch(getTotalProducts(params)),
     setValueSearch: (params) => dispatch(setValueSearch(params)),
     setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };

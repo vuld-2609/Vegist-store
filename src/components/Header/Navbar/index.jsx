@@ -240,11 +240,9 @@ const Navbar = ({ setShowNavbar, showNavbar, setValue, setFlagSearchChange }) =>
   );
 };
 
-// export default Navbar;
-const mapStateToProps = (state) => {};
 const mapDispatchToProps = (dispatch) => {
   return {
     setFlagSearchChange: (params) => dispatch(setFlagSearchChange(params)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(null, mapDispatchToProps)(Navbar);

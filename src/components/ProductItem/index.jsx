@@ -10,48 +10,35 @@ import Star from '../Star';
 import './styles.scss';
 import { toastSuccess } from '../../until/toast';
 
-const ProductItem = ({ data, addCart }) => {
+const ProductItem = ({ data, addCart, getCartData }) => {
   const { t } = useTranslation();
+  const { id, name, rate, price, sale, status, imgs } = data;
 
   const [authData, setAuthData] = useState();
   useEffect(() => {
     setAuthData(() => JSON.parse(localStorage.getItem('profile')));
   }, []);
 
-  const handleAddToCart = ({ id, name, newPrice, img }) => {
+  const handleAddToCart = ({ id }) => {
     if (!authData) {
       history.push('/login');
     } else {
-      let arrData = [];
-      const productItem = { id, name, price: newPrice, img, amount: 1 };
-      const cartData = JSON.parse(localStorage.getItem('CartData'));
-      if (cartData.length) {
-        const findItem = cartData.find((item) => item.id === id);
-        if (findItem) {
-          const indexItem = cartData.findIndex((item) => item.id === id);
-          cartData.splice(indexItem, 1, {
-            ...findItem,
-            amount: parseInt(findItem.amount) + 1,
-          });
-          arrData = [...cartData];
-        } else arrData = [...cartData, productItem];
-      } else arrData.push(productItem);
-      addCart({ user: authData.email, cartData: [...arrData] });
-      toastSuccess(`😍 ${t('Add card success')}!`);
+      addCart({ productId: id, quantity: 1 });
     }
   };
 
-  let { id, name, rate, newPrice, oldPrice, news, img } = data;
-  const sales = oldPrice && Math.ceil((1 - newPrice / oldPrice) * 100);
+  const priceSale = () => {
+    return Math.ceil((price * sale) / 100);
+  };
 
   return (
     <div className="product-item">
       <div className="product-item__img">
         <a href="#" className="rotate-img">
-          {img && (
+          {imgs && (
             <>
-              <img src={img[0]} alt="anh" />
-              <img src={img[1]} alt="ANH" />
+              <img src={imgs[0]} alt="anh" />
+              <img src={imgs[1]} alt="ANH" />
             </>
           )}
         </a>
@@ -69,7 +56,6 @@ const ProductItem = ({ data, addCart }) => {
               <HiShoppingBag />
             </Tooltip>
           </span>
-
           <span
             onClick={() => history.push(`/product/${id}`)}
             className="icon icon-round product-item__widget-icon"
@@ -79,8 +65,8 @@ const ProductItem = ({ data, addCart }) => {
             </Tooltip>
           </span>
         </div>
-        {news && <span className="product-item--new ">New</span>}
-        {oldPrice && <span className="product-item--sale">{sales} %</span>}
+        {status.new && <span className="product-item--new ">New</span>}
+        {sale > 0 && <span className="product-item--sale">{sale} %</span>}
       </div>
       <div className="product-item__content">
         <Tooltip placement="topLeft" title={name}>
@@ -90,9 +76,9 @@ const ProductItem = ({ data, addCart }) => {
           <Star rate={rate}></Star>
         </div>
         <div className="product-item__price">
-          <span className="product-item__price--new">{`$${newPrice.toLocaleString()} USD`}</span>
-          {oldPrice && (
-            <span className="product-item__price--old">{` $${oldPrice.toLocaleString()} USD`}</span>
+          <span className="product-item__price--new">{`$${price.toLocaleString()} USD`}</span>
+          {sale > 0 && (
+            <span className="product-item__price--old">{` $${priceSale().toLocaleString()} USD`}</span>
           )}
         </div>
       </div>

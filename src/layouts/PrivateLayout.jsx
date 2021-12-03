@@ -18,9 +18,13 @@ function PrivateLayout({ component: Component, role, ...props }) {
       render={(routerProps) => (
         <>
           <div className="main">
-            <div id="admin">
-              <Admin {...routerProps} />
-              <Component {...routerProps} />
+            <div className="admin">
+              <div className="admin__nav">
+                <Admin {...routerProps} />
+              </div>
+              <div className="admin__wrapper">
+                <Component {...routerProps} />
+              </div>
             </div>
           </div>
         </>

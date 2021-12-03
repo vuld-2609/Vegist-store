@@ -16,38 +16,37 @@ const Sidebar = ({
   filterProducts,
   setFilterProducts,
   setCurrentPage,
-  totalProduct,
-  setBannerData
+  products,
+  setBannerData,
 }) => {
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const [isFilter, setIsFilter] = useState(false);
   const [arrFilter, setArrFilter] = useState([]);
   const [priceValue, setPriceValue] = useState([]);
-  const refTotalProduct = useRef(JSON.parse(JSON.stringify(totalProduct)));
 
   useEffect(() => {
     getSidebar();
   }, []);
 
-  const handelChangePrice = value => {
+  const handelChangePrice = (value) => {
     switch (value[0]) {
       case 1:
         setFilterProducts({
           ...filterProducts,
-          price: [0, 100000]
+          price: [0, 100000],
         });
         break;
       case 2:
         setFilterProducts({
           ...filterProducts,
-          price: [100001, 200000]
+          price: [100001, 200000],
         });
         break;
       case 3:
         setFilterProducts({
           ...filterProducts,
-          price: [200001, 400000]
+          price: [200001, 400000],
         });
         break;
       default:
@@ -58,27 +57,27 @@ const Sidebar = ({
     setPriceValue([...value]);
     setArrFilter({
       ...arrFilter,
-      price: [...tempFilter]
+      price: [...tempFilter],
     });
     setIsFilter(true);
     setCurrentPage(1);
   };
 
-  const handelChangeCategory = value => {
+  const handelChangeCategory = (value) => {
     const tempFilter = [];
-    const arr = sidebarData.categoryData.filter(item => value.indexOf(item.id) > -1);
+    const arr = sidebarData.categoryData.filter((item) => value.indexOf(item.id) > -1);
     setBannerData({ ...arr[0] });
-    arr.forEach(element => {
+    arr.forEach((element) => {
       tempFilter.push(element.name);
     });
 
     setArrFilter({
       ...arrFilter,
-      category: [...tempFilter]
+      category: [...tempFilter],
     });
     setFilterProducts({
       ...filterProducts,
-      category: value
+      category: value,
     });
     setIsFilter(true);
     setCurrentPage(1);
@@ -87,11 +86,11 @@ const Sidebar = ({
   const handelClickTag = ({ id, name }) => {
     setArrFilter({
       ...arrFilter,
-      tag: [name]
+      tag: [name],
     });
     setFilterProducts({
       ...filterProducts,
-      tag: id
+      tag: id,
     });
     setIsFilter(true);
     setCurrentPage(1);
@@ -106,7 +105,7 @@ const Sidebar = ({
       bestSelling: false,
       priceLowToHigh: false,
       priceHighToLow: false,
-      date: false
+      date: false,
     });
     setArrFilter([]);
     setPriceValue([]);
@@ -114,7 +113,7 @@ const Sidebar = ({
   };
 
   const renderFilterCategory = () => {
-    return sidebarData?.categoryData?.map((item, index) => (
+    return sidebarData?.categoryData?.map((item) => (
       <Checkbox
         value={item.id}
         className="sidebar__categories--item"
@@ -122,9 +121,7 @@ const Sidebar = ({
       >
         <div className="sidebar__categories--item-content">
           <span>{t(`category.${item.name}`)}</span>
-          <span>
-            ({refTotalProduct.current.filter(element => element.categoryId === item.id).length})
-          </span>
+          <span>({item.totalProducts})</span>
         </div>
       </Checkbox>
     ));
@@ -139,7 +136,7 @@ const Sidebar = ({
   };
 
   const renderFilterTag = () => {
-    return sidebarData?.tagsData?.map(item => (
+    return sidebarData?.tagsData?.map((item) => (
       <span
         className={`sidebar__tags--item ${
           filterProducts.tag === item.id ? 'sidebar__tags--item-active' : ''
@@ -245,15 +242,15 @@ const Sidebar = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { sidebarData } = state.categoryReducer;
   return {
-    sidebarData
+    sidebarData,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getSidebar: params => dispatch(getSidebar(params))
+    getSidebar: (params) => dispatch(getSidebar(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
