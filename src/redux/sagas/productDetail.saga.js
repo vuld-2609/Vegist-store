@@ -16,8 +16,6 @@ import {
   CREATE_COMMENT_SUCCESS,
 } from '../constants';
 
-const apiURL = process.env.REACT_APP_API_URL;
-
 function* getProductDetailSaga(action) {
   const productId = action.payload;
 
@@ -61,9 +59,10 @@ function* getProductDetailSaga(action) {
 
 function* createCommentSaga(action) {
   try {
-    const response = yield axios.post(`${apiURL}/listComment`, action.payload);
+    const {productId} = action.payload
+    const response = yield axiosClient.post(`user/review/${productId}`, action.payload);
 
-    // if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 
@@ -73,7 +72,8 @@ function* createCommentSaga(action) {
         data: data
       },
     });
-    toastSuccess(response.message);
+
+    toastSuccess(data.message);
 
   } catch (error) {
     yield put({
@@ -84,35 +84,34 @@ function* createCommentSaga(action) {
 }
 
 function* getCommentSaga(action) {
-  const { id, page, limit } = action.payload;
+  const { productId, page, limit } = action.payload;
 
   try {
-    const response = yield axios({
+    const response = yield axiosClient({
       method: 'GET',
-      url: `${apiURL}/listComment`,
+      url: `user/review/${productId}`,
       params: {
         ...(page && { _page: page }),
         ...(limit && { _limit: limit }),
-        ...(id && { idProduct: id }),
       },
     });
 
-    // if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 
     yield put({
       type: GET_COMMENT_SUCCESS,
       payload: {
-        data:data,
-        total:response.total
+        data:data.reviews,
+        total:data.total
       },
     });
   } catch (error) {
     yield put({
       type: GET_COMMENT_FAIL,
     });
-    toastError(error);
+    toastError(error.message);
   }
 }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getProductDetail, createComment, getComment , addCart, } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
+import { toastError } from '../../../until/toast';
 
 import { GiShoppingBag } from 'react-icons/gi';
 import Slide from '../Home/Slide';
@@ -26,6 +27,7 @@ import {
 } from 'antd';
 
 import './style.scss';
+import moment from 'moment';
 
 const ProductDetail = ({
   createComment,
@@ -34,6 +36,8 @@ const ProductDetail = ({
   productDetail,
   comments,
   addCart,
+  getComment,
+  listComment
 }) => {
   const product = productDetail.data?.product;
   const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * ( product?.sales / 100));
@@ -58,11 +62,11 @@ const ProductDetail = ({
 
   useEffect(() => {
     getComment({
-      id: productId,
+      productId,
       page: current,
       limit: 5,
     });
-  }, [ current, productId]);
+  }, [listComment, current, productId]);
 
   const { Panel } = Collapse;
 
@@ -98,15 +102,21 @@ const ProductDetail = ({
 
   const handleSubmitForm = (value) => {};
 
+ 
   const handleSubmitFormComment = async (value) => {
-   await createComment({
-      ...value,
-      productId,
-      rate: rateValue,
-    });
-
-    getComment({productId,limit:5,page:1})
-    setIsShowFormComment(false);
+    if(window.localStorage.getItem('token')){
+      await createComment({
+         ...value,
+         productId,
+         rate: rateValue,
+         dateCreate:moment()
+       });
+       // getComment({productId,limit:5,page:1})
+       setIsShowFormComment(false);
+    }else{
+      toastError('Bạn chưa đăng nhập')
+      setIsShowFormComment(false);
+    }
   };
 
   const modalInc = () => {
@@ -296,7 +306,6 @@ const ProductDetail = ({
           <div className="container">
             <div className="review__content">
               <p>{t('productDetail.Review__customer')}</p>
-              <Rate disabled defaultValue={comments?.rateTotal} />
               <Collapse
                 activeKey={`${isShowFormComment === true ? 1 : ''}`}
                 destroyInactivePanel
@@ -348,13 +357,13 @@ const ProductDetail = ({
               </Collapse>
                 <List
                   className="comment-list"
-                  header={`${comments.data?.length} replies`}
+                  header={`${comments.total || 0} replies`}
                   itemLayout="horizontal"
                   dataSource={comments?.data}
                   renderItem={(item) => (
                     <li>
                       <Comment
-                        author={item.useId?.fullName}
+                        author={item.userId?.fullName}
                         avatar={
                           'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                         }
@@ -370,8 +379,8 @@ const ProductDetail = ({
                           </>
                         }
                         datetime={
-                          <Tooltip title={item.dateCreate}>
-                            <span>{item.dateCreate}</span>
+                          <Tooltip title={moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}>
+                            <span>{moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}</span>
                           </Tooltip>
                         }
                         rate={item.rate}
@@ -420,10 +429,10 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productDetail, comments, } = state.productDetailReducer;
+  const { productDetail, comments,listComment } = state.productDetailReducer;
   return {
     productDetail,
-    comments,
+    comments,listComment
   };
 };
 const mapDispatchToProps = (dispatch) => {
