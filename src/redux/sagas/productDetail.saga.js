@@ -14,6 +14,12 @@ import {
   CREATE_COMMENT,
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT_SUCCESS,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  GET_COMMENT_ADMIN,
+  GET_COMMENT_ADMIN_SUCCESS,
+  GET_COMMENT_ADMIN_FAIL,
 } from '../constants';
 
 function* getProductDetailSaga(action) {
@@ -45,7 +51,7 @@ function* getProductDetailSaga(action) {
     yield put({
       type: GET_PRODUCT_DETAIL_SUCCESS,
       payload: {
-        data:data
+        data: data,
       },
     });
   } catch (error) {
@@ -59,7 +65,7 @@ function* getProductDetailSaga(action) {
 
 function* createCommentSaga(action) {
   try {
-    const {productId} = action.payload
+    const { productId } = action.payload;
     const response = yield axiosClient.post(`user/review/${productId}`, action.payload);
 
     if (response.status === 'failed' && response.error) throw new Error(response.error);
@@ -69,12 +75,11 @@ function* createCommentSaga(action) {
     yield put({
       type: CREATE_COMMENT_SUCCESS,
       payload: {
-        data: data
+        data: data,
       },
     });
 
     toastSuccess(data.message);
-
   } catch (error) {
     yield put({
       type: CREATE_COMMENT_FAIL,
@@ -103,8 +108,8 @@ function* getCommentSaga(action) {
     yield put({
       type: GET_COMMENT_SUCCESS,
       payload: {
-        data:data.reviews,
-        total:data.total
+        data: data.reviews,
+        total: data.total,
       },
     });
   } catch (error) {
@@ -115,8 +120,56 @@ function* getCommentSaga(action) {
   }
 }
 
+function* getCommentAdminSaga(action) {
+  const { search, page, limit } = action.payload;
+
+  try {
+    const response = yield axiosClient({
+      method: 'GET',
+      url: `/admin/review`,
+      params: {
+        ...(page && { _page: page }),
+        ...(limit && { _limit: limit }),
+        ...(search && { q: search }),
+      },
+    });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
+    const data = response.data;
+
+    yield put({
+      type: GET_COMMENT_ADMIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    yield put({
+      type: GET_COMMENT_ADMIN_FAIL,
+    });
+  }
+}
+
+function* deleteCommentSaga(action) {
+  const { id } = action.payload;
+  try {
+    const response = yield axiosClient.delete(`/admin/review/${id}`);
+    const data = response.data;
+
+    yield put({
+      type: DELETE_COMMENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    yield put({
+      type: DELETE_COMMENT_FAIL,
+    });
+  }
+}
+
 export default function* productDetailSaga() {
   yield takeEvery(GET_PRODUCT_DETAIL, getProductDetailSaga);
   yield takeEvery(CREATE_COMMENT, createCommentSaga);
   yield takeEvery(GET_COMMENT, getCommentSaga);
+  yield takeEvery(DELETE_COMMENT, deleteCommentSaga);
+  yield takeEvery(GET_COMMENT_ADMIN, getCommentAdminSaga);
 }
