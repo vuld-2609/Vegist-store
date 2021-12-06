@@ -35,7 +35,7 @@ function* getProductDetailSaga(action) {
       (response.status === 'failed' && response.error) ||
       (responseNew.status === 'failed' && responseNew.error)
     )
-      throw new Error(response.error);
+      throw new Error(response.error.message);
 
     const data = {
       product: response.data.product,
@@ -53,7 +53,7 @@ function* getProductDetailSaga(action) {
       type: GET_PRODUCT_DETAIL_FAIL,
       payload: error,
     });
-    toastError(error);
+    toastError(error.message);
   }
 }
 
@@ -62,7 +62,7 @@ function* createCommentSaga(action) {
     const {productId} = action.payload
     const response = yield axiosClient.post(`user/review/${productId}`, action.payload);
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -79,7 +79,7 @@ function* createCommentSaga(action) {
     yield put({
       type: CREATE_COMMENT_FAIL,
     });
-    toastError(error);
+    toastError(error.message);
   }
 }
 
@@ -96,7 +96,7 @@ function* getCommentSaga(action) {
       },
     });
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
