@@ -153,6 +153,9 @@ function* deleteCommentSaga(action) {
   const { id } = action.payload;
   try {
     const response = yield axiosClient.delete(`/admin/review/${id}`);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
 
     yield put({
@@ -162,6 +165,7 @@ function* deleteCommentSaga(action) {
   } catch (error) {
     yield put({
       type: DELETE_COMMENT_FAIL,
+      payload: error,
     });
   }
 }

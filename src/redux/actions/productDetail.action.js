@@ -39,3 +39,10 @@ export function getCommentAdmin(params) {
     payload: params,
   };
 }
+
+export function deleteComment(params) {
+  return {
+    type: DELETE_COMMENT,
+    payload: params,
+  };
+}

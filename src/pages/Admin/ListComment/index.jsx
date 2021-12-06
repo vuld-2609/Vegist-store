@@ -90,61 +90,63 @@ function ListComment({
   };
 
   return (
-    <section className="comment">
-      <div className="comment__search">
-        <Search
-          placeholder="Search product or a user"
-          value={search}
-          onChange={handleChange}
-          enterButton
-        />
-      </div>
-      <div className="admin__listUser--tableNormal">
-        <table className="table">
-          <thead>
-            <tr>
-              {title.map((item) => (
-                <td key={item.id}>{item.title}</td>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {reviews?.length ? (
-              reviews?.map((item, index) => (
-                <tr className="table__row">
-                  <td>{index + 1}</td>
-                  <td>1</td>
-                  <td>{item.userId.fullName}</td>
-                  <td>{item.title}</td>
-                  <td>{item.description}</td>
-                  <td>{item.rate}</td>
-                  <td>{moment(item.dateCreate).format('L')}</td>
-                  <td>
-                    <>
-                      <BsReplyAllFill className="commment__icon commment__icon--reply" />
-                      <RiDeleteBin5Fill
-                        className="commment__icon commment__icon--delete"
-                        onClick={() => handleClickDelete(item.id, item.title)}
-                      />
-                    </>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <Empty />
-            )}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination">
-        {total ? (
-          <Pagination
-            current={current}
-            onChange={(page) => setCurrent(page)}
-            total={total}
-            defaultPageSize={10}
+    <section className="admin__listUser admin__products fadeIn">
+      <div className="container">
+        <div className="comment__search">
+          <Search
+            placeholder="Search product or a user"
+            value={search}
+            onChange={handleChange}
+            enterButton
           />
-        ) : null}
+        </div>
+        <div className="admin__listUser--tableNormal">
+          <table className="table">
+            <thead>
+              <tr>
+                {title.map((item) => (
+                  <td key={item.id}>{item.title}</td>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {reviews?.length ? (
+                reviews?.map((item, index) => (
+                  <tr className="table__row">
+                    <td>{index + 1}</td>
+                    <td>{renderNameProduct(item.productId)}</td>
+                    <td>{item.userId.fullName}</td>
+                    <td>{item.title}</td>
+                    <td>{item.description}</td>
+                    <td>{item.rate}</td>
+                    <td>{moment(item.dateCreate).format('L')}</td>
+                    <td>
+                      <>
+                        <BsReplyAllFill className="commment__icon commment__icon--reply" />
+                        <RiDeleteBin5Fill
+                          className="commment__icon commment__icon--delete"
+                          onClick={() => handleClickDelete(item.id, item.title)}
+                        />
+                      </>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <Empty />
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="pagination">
+          {total ? (
+            <Pagination
+              current={current}
+              onChange={(page) => setCurrent(page)}
+              total={total}
+              defaultPageSize={10}
+            />
+          ) : null}
+        </div>
       </div>
     </section>
   );
