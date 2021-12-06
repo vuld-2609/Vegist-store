@@ -114,7 +114,7 @@ function ListComment({
                 reviews?.map((item, index) => (
                   <tr className="table__row">
                     <td>{index + 1}</td>
-                    <td>{renderNameProduct(item.productId)}</td>
+                    <td>{renderNameProduct(item.productId._id)}</td>
                     <td>{item.userId.fullName}</td>
                     <td>{item.title}</td>
                     <td>{item.description}</td>
