@@ -1,7 +1,7 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
-import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';
+import { all } from 'redux-saga/effects';
 import { toastSuccess, toastError } from '../../until/toast';
 
 import {
@@ -14,14 +14,11 @@ import {
   CREATE_COMMENT,
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT_SUCCESS,
-  GET_COUNT_COMMENT_FAIL,
-  GET_COUNT_COMMENT_SUCCESS,
 } from '../constants';
-
-const apiURL = process.env.REACT_APP_API_URL;
 
 function* getProductDetailSaga(action) {
   const productId = action.payload;
+
   try {
     const [response, responseNew] = yield all([
       axiosClient({
@@ -44,9 +41,12 @@ function* getProductDetailSaga(action) {
       product: response.data.product,
       relatedProduct: responseNew.data.products,
     };
+
     yield put({
       type: GET_PRODUCT_DETAIL_SUCCESS,
-      payload: data,
+      payload: {
+        data:data
+      },
     });
   } catch (error) {
     yield put({
@@ -56,51 +56,62 @@ function* getProductDetailSaga(action) {
     toastError(error);
   }
 }
+
 function* createCommentSaga(action) {
   try {
-    const response = yield axios.post(`${apiURL}/listComment`, action.payload);
+    const {productId} = action.payload
+    const response = yield axiosClient.post(`user/review/${productId}`, action.payload);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
+
     yield put({
       type: CREATE_COMMENT_SUCCESS,
-      payload: data,
+      payload: {
+        data: data
+      },
     });
+
+    toastSuccess(data.message);
+
   } catch (error) {
     yield put({
       type: CREATE_COMMENT_FAIL,
     });
+    toastError(error);
   }
 }
+
 function* getCommentSaga(action) {
-  const { id, page, limit } = action.payload;
+  const { productId, page, limit } = action.payload;
+
   try {
-    const response = yield axios({
+    const response = yield axiosClient({
       method: 'GET',
-      url: `${apiURL}/listComment`,
+      url: `user/review/${productId}`,
       params: {
         ...(page && { _page: page }),
         ...(limit && { _limit: limit }),
-        ...(id && { idProduct: id }),
-        ...{ _sort: 'id', _order: 'desc' },
       },
     });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
-    const responseData = yield axios.get(`${apiURL}/listComment?idProduct=${id}`);
-    const dataRes = responseData.data.length;
+
     yield put({
       type: GET_COMMENT_SUCCESS,
-      payload: data,
-    });
-    yield put({
-      type: GET_COUNT_COMMENT_SUCCESS,
-      payload: dataRes,
+      payload: {
+        data:data.reviews,
+        total:data.total
+      },
     });
   } catch (error) {
     yield put({
       type: GET_COMMENT_FAIL,
     });
-    yield put({
-      type: GET_COUNT_COMMENT_FAIL,
-    });
+    toastError(error.message);
   }
 }
 

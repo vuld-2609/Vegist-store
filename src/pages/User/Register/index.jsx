@@ -15,7 +15,6 @@ const Register = (prop) => {
   const handleSubmitForm = (values) => {
     createAccount({
       ...values,
-      name: values.first + ' ' + values.last,
     });
   };
   return (

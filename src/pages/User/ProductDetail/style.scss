@@ -83,10 +83,6 @@
           color: $dark-gray;
         }
       }
-      span:first-child {
-        padding: 0 0.4rem;
-        color: $yellow;
-      }
     }
 
     Form {
@@ -158,14 +154,11 @@
   }
   &__description {
     padding: 3rem 0;
-    &--tabs {
-      .description__content {
-        p {
-          font-weight: 600;
-          padding: 1rem 0;
-        }
-      }
+    
       .review__content {
+        min-height: 760px;
+        margin-bottom: 2rem;
+
         p {
           font-weight: 600;
         }
@@ -204,7 +197,6 @@
           color: $white;
         }
       }
-    }
   }
   &__related {
     p {
@@ -213,4 +205,10 @@
       text-align: center;
     }
   }
+}
+.loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }

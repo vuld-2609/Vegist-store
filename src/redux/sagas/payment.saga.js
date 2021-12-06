@@ -85,23 +85,23 @@ function* updateBillSaga(action) {
     });
   }
 }
-function* getBillSaga(action) {
+function* getBillUserSaga(action) {
   try {
-    const { user, isPayment, id } = action.payload;
+    const { billId } = action.payload;
 
-    const response = yield axios({
+    const response = yield axiosClient({
       method: 'GET',
-      url: `${apiURL}/payments`,
-      params: {
-        ...(user && { user }),
-        ...(id && { id }),
-        ...(!isNaN(isPayment) && { isPayment }),
-      },
+      url: `user/bill/${billId}`,
     });
-    const data = response.data;
+
+    const {data,total} = response.data;
+
     yield put({
       type: GET_BILL_SUCCESS,
-      payload: data[0],
+      payload: {
+        data:data,
+        total:total
+      },
     });
   } catch (error) {
     yield put({
@@ -226,7 +226,7 @@ function* getOrderDetail(action) {
 export default function* paymentSaga() {
   yield takeEvery(CREATE_BILL, createBill);
   yield takeEvery(UPDATE_BILL, updateBillSaga);
-  yield takeEvery(GET_BILL, getBillSaga);
+  yield takeEvery(GET_BILL, getBillUserSaga);
   yield takeEvery(GET_PAYMENTS, getPayments);
   yield takeEvery(DELETE_PAYMENTS, deletePayments);
   yield takeEvery(UPDATE_PAYMENTS, updatePayments);
