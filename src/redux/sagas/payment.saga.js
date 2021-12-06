@@ -114,32 +114,6 @@ function* getBillUserSaga(action) {
 function* getPayments(action) {
   try {
     const { page, limit, search, status } = action.payload;
-    // const [responseData, responseTotal] = yield all([
-    //   axios({
-    //     method: 'GET',
-    //     url: `${apiURL}/payments`,
-    //     params: {
-    //       ...(page && { _page: page }),
-    //       ...(limit && { _limit: limit }),
-    //       ...(search && { q: search }),
-    //       // ...(status && { status: status }),
-    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
-    //     },
-    //   }),
-    //   axios({
-    //     method: 'GET',
-    //     url: `${apiURL}/payments`,
-    //     params: {
-    //       ...(search && { q: search }),
-    //       // ...(status && { status: status }),
-    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
-    //     },
-    //   }),
-    // ]);
-    // const data = {
-    //   payments: responseData.data,
-    //   total: responseTotal.data.length,
-    // };
 
     const response = yield axiosClient({
       method: 'GET',
@@ -151,6 +125,8 @@ function* getPayments(action) {
         ...(status && status !== 'Tất cả' ? { status: status } : { status: null }),
       },
     });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 
@@ -170,6 +146,9 @@ function* deletePayments(action) {
   try {
     const { id } = action.payload;
     const response = yield axiosClient.delete(`/admin/bill/${id}`);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
 
     yield put({
@@ -190,6 +169,9 @@ function* updatePayments(action) {
     const response = yield axiosClient.patch(`/admin/bill/updateStatus/${id}`, {
       status,
     });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
 
     yield put({
@@ -208,6 +190,8 @@ function* getOrderDetail(action) {
   try {
     const { id } = action.payload;
     const response = yield axiosClient.get(`/admin/bill/${id}`);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 

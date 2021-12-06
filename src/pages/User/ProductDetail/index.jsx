@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, createComment, getComment , addCart, } from '../../../redux/actions';
+import { getProductDetail, createComment, getComment, addCart } from '../../../redux/actions';
 import { AiFillHeart } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import { toastError } from '../../../until/toast';
@@ -37,10 +37,11 @@ const ProductDetail = ({
   comments,
   addCart,
   getComment,
-  listComment
+  listComment,
 }) => {
   const product = productDetail.data?.product;
-  const sales = product?.sales > 0 && Math.ceil(product?.price - product?.price * ( product?.sales / 100));
+  const sales =
+    product?.sales > 0 && Math.ceil(product?.price - product?.price * (product?.sales / 100));
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
   const [valueQuantity, setValueQuantity] = useState(1);
@@ -102,19 +103,18 @@ const ProductDetail = ({
 
   const handleSubmitForm = (value) => {};
 
- 
   const handleSubmitFormComment = async (value) => {
-    if(window.localStorage.getItem('token')){
+    if (window.localStorage.getItem('token')) {
       await createComment({
-         ...value,
-         productId,
-         rate: rateValue,
-         dateCreate:moment()
-       });
-       // getComment({productId,limit:5,page:1})
-       setIsShowFormComment(false);
-    }else{
-      toastError('Bạn chưa đăng nhập')
+        ...value,
+        productId,
+        rate: rateValue,
+        dateCreate: moment(),
+      });
+      // getComment({productId,limit:5,page:1})
+      setIsShowFormComment(false);
+    } else {
+      toastError('Bạn chưa đăng nhập');
       setIsShowFormComment(false);
     }
   };
@@ -321,7 +321,11 @@ const ProductDetail = ({
                   <div className="review__content--form">
                     <Form onFinish={handleSubmitFormComment}>
                       <p>{t('productDetail.Review__rating')}</p>
-                      <Rate defaultValue={5}  allowClear={false} onChange={(value) => handleChangRate(value)} />
+                      <Rate
+                        defaultValue={5}
+                        allowClear={false}
+                        onChange={(value) => handleChangRate(value)}
+                      />
                       <p>{t('productDetail.Review__title')}</p>
                       <Form.Item
                         name="title"
@@ -355,56 +359,54 @@ const ProductDetail = ({
                   </div>
                 </Panel>
               </Collapse>
-                <List
-                  className="comment-list"
-                  header={`${comments.total || 0} replies`}
-                  itemLayout="horizontal"
-                  dataSource={comments?.data}
-                  renderItem={(item) => (
-                    <li>
-                      <Comment
-                        author={item.userId?.fullName}
-                        avatar={
-                          'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                        }
-                        content={
-                          <>
-                            <div>
-                              <Rate disabled value={item.rate} />
-                            </div>
-                            <div>
-                              <p>{item.title}</p>
-                              <span>{item.description}</span>
-                            </div>
-                          </>
-                        }
-                        datetime={
-                          <Tooltip title={moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}>
-                            <span>{moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}</span>
-                          </Tooltip>
-                        }
-                        rate={item.rate}
-                      />
-                    </li>
-                  )}
-                />
+              <List
+                className="comment-list"
+                header={`${comments.total || 0} replies`}
+                itemLayout="horizontal"
+                dataSource={comments?.data}
+                renderItem={(item) => (
+                  <li>
+                    <Comment
+                      author={item.userId?.fullName}
+                      avatar={'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'}
+                      content={
+                        <>
+                          <div>
+                            <Rate disabled value={item.rate} />
+                          </div>
+                          <div>
+                            <p>{item.title}</p>
+                            <span>{item.description}</span>
+                          </div>
+                        </>
+                      }
+                      datetime={
+                        <Tooltip title={moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}>
+                          <span>{moment(item.dateCreate).format('DD-MM-YYYY, h:mm')}</span>
+                        </Tooltip>
+                      }
+                      rate={item.rate}
+                    />
+                  </li>
+                )}
+              />
             </div>
-              {comments.data?.length > 0 && (
-                <Pagination
-                  total={comments.total}
-                  defaultCurrent={1}
-                  current={current}
-                  defaultPageSize={5}
-                  onChange={(page) => {
-                    setCurrent(page);
-                    window.scrollTo({
-                      top: 0,
-                      left: 0,
-                      behavior: 'smooth',
-                    });
-                  }}
-                />
-              )}
+            {comments.data?.length > 0 && (
+              <Pagination
+                total={comments.total}
+                defaultCurrent={1}
+                current={current}
+                defaultPageSize={5}
+                onChange={(page) => {
+                  setCurrent(page);
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth',
+                  });
+                }}
+              />
+            )}
           </div>
         </div>
         <div className="productDetail__related">
@@ -429,10 +431,11 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state) => {
-  const { productDetail, comments,listComment } = state.productDetailReducer;
+  const { productDetail, comments, listComment } = state.productDetailReducer;
   return {
     productDetail,
-    comments,listComment
+    comments,
+    listComment,
   };
 };
 const mapDispatchToProps = (dispatch) => {
