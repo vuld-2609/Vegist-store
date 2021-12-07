@@ -4,28 +4,33 @@ import { getBill } from '../../../redux/actions';
 import { useTranslation } from 'react-i18next';
 import { FiCheckSquare } from 'react-icons/fi';
 import './styles.scss';
-import { Col, Row } from 'antd';
+import { Col, Row ,Spin} from 'antd';
 import history from '../../../until/history';
 
 const Success = ({ match, getBill, billData }) => {
   const billId = match.params.id;
   const { t } = useTranslation();
 
+  const  bill = billData?.data?.bill
+  const  billDetails = billData?.data?.billDetails
+
+
   useEffect(() => {
     document.title = 'Vegist | Trang Success';
-    const user = JSON.parse(localStorage.getItem('profile'));
-    getBill({ id: billId, user: user.email, isPayment: true });
+    getBill({ billId});
+
   }, []);
 
-  const handleCalculateToTal = () => {
-    let total = 0;
-    billData?.cartData?.forEach(element => {
-      total = total + parseInt(element.price * element.amount);
-    });
+  
 
-    return total;
-  };
   return (
+    <>
+    {billData.load ? (
+      <div className="loading">
+      <Spin />
+    </div>
+    )
+    :
     <section className="success fadeIn">
       <div className="container">
         <Row justify="center">
@@ -39,7 +44,7 @@ const Success = ({ match, getBill, billData }) => {
               </p>
               <div className="success__management">
                 <h3>
-                  {t('success.Order')} #{billData.paymentCode}
+                  {/* {t('success.Order')} #{billData.paymentCode} */}
                 </h3>
                 <button className="button">{t('success.Order Management')}</button>
               </div>
@@ -47,12 +52,12 @@ const Success = ({ match, getBill, billData }) => {
                 <div className="success__info--item">
                   <h4>{t('success.Receiver')}: </h4>
                   <p>
-                    {billData.name}, {billData.phone}
+                    {bill?.name}, {bill?.phoneNumber}
                   </p>
                 </div>
                 <div className="success__info--item">
                   <h4>{t('success.Delivery address')}: </h4>
-                  <p>{billData.address}</p>
+                  <p>{bill?.address}</p>
                   <span>({t('success.Staff will call to confirm before delivery')})</span>
                 </div>
                 <div className="success__info--item">
@@ -61,12 +66,12 @@ const Success = ({ match, getBill, billData }) => {
                 </div>
                 <div className="success__info--item">
                   <h4>{t('success.Total amount')}: </h4>
-                  <p className="text-danger"> {handleCalculateToTal().toLocaleString()} VND</p>
+                  <p className="text-danger"> {bill?.total.toLocaleString()} VND</p>
                 </div>
               </div>
               <div className="success__payment">
                 <h4>{t('success.Payment type')}:</h4>
-                <p>{billData.payment}</p>
+                <p>{bill?.payment}</p>
               </div>
               <div className="success__cancel">
                 <button className="button button-round--lg button-transparent">
@@ -83,24 +88,24 @@ const Success = ({ match, getBill, billData }) => {
                   <h3>{t('success.Products purchased')}:</h3>
                 </div>
                 <table className="success__cart--content">
-                  {billData?.cartData?.map(item => (
+                  {billDetails?.map(item => (
                     <tr
                       className="success__cart--item"
                       onClick={() => history.push(`/product/${item.id}`)}
                       key={item.id}
                     >
                       <td className="success__cart--img">
-                        <img src={item.img[0]} alt="cart img"></img>
+                        <img src={item.productId.imgs[0]} alt="cart img"></img>
                       </td>
                       <td className="success__cart--name">
-                        <h4>{item.name}</h4>
+                        <h4>{item.productId.name}</h4>
                         <p>
                           <span>{t('success.amount')}: </span>
-                          <span>{item.amount} </span>
+                          <span>{item.quantity} </span>
                         </p>
                       </td>
                       <td className="success__cart--price text-danger">
-                        {(item.price * item.amount).toLocaleString()} VND
+                        {(item.productId.price * item.quantity).toLocaleString()} VND
                       </td>
                     </tr>
                   ))}
@@ -116,6 +121,8 @@ const Success = ({ match, getBill, billData }) => {
         </Row>
       </div>
     </section>
+    }
+    </>
   );
 };
 

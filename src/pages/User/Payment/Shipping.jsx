@@ -3,26 +3,14 @@ import PaymentBreadcrumb from './component/PaymentBreadcrumb';
 import { Radio } from 'antd';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { getBill, updateBill } from '../../../redux/actions';
+import { getBill } from '../../../redux/actions';
 import './styles.scss';
 import history from '../../../until/history';
-const Shipping = ({ getBill, billData, updateBill }) => {
+const Shipping = ({ getBill, billData}) => {
+  document.title = 'Vegist | Trang ship';
   const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  useEffect(() => {
-    document.title = 'Vegist | Trang ship';
-    getBill({ user: user.email, isPayment: false });
-  }, []);
-
-  const handelUpdateBill = () => {
-    updateBill({
-      id: billData.id,
-      method: 'Standard',
-      shippingCost: 20000,
-    });
-    history.push('/payment');
-  };
+  const [infoPayment, setUser] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
   return (
     <div className="payment-page fadeIn">
@@ -35,7 +23,7 @@ const Shipping = ({ getBill, billData, updateBill }) => {
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Contact')}</h4>
-                  <p>{billData.email}</p>
+                  <p>{infoPayment.email}</p>
                 </div>
                 <button className="button" onClick={() => history.push('/infoPayment')}>
                   {t('payments.shipping.Change')}
@@ -44,7 +32,7 @@ const Shipping = ({ getBill, billData, updateBill }) => {
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Ship to')}</h4>
-                  <p>{billData.address}</p>
+                  <p>{infoPayment.address}</p>
                 </div>
                 <button className="button" onClick={() => history.push('/infoPayment')}>
                   {t('payments.shipping.Change')}
@@ -64,7 +52,7 @@ const Shipping = ({ getBill, billData, updateBill }) => {
             <div className="shipping__btn">
               <button
                 className="button  button-animation--1 button-round--lg "
-                onClick={() => handelUpdateBill()}
+                onClick={() => history.push('/payment')}
               >
                 <span> {t('payments.shipping.Continue to payment')}</span>
               </button>
@@ -91,7 +79,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBill: (params) => dispatch(getBill(params)),
-    updateBill: (params) => dispatch(updateBill(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Shipping);

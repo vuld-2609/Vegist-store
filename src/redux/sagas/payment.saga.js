@@ -26,35 +26,32 @@ import {
   UPDATE_PAYMENTS_SUCCESS,
 } from '../constants';
 import axiosClient from './../config/axiosClient';
+import { toastSuccess, toastError } from '../../until/toast';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
 function* createBill(action) {
   try {
-    const { user, ...other } = action.payload;
-    let response;
-    const responseCheckUser = yield axios.get(`${apiURL}/payments?user=${user}&isPayment=false`);
-    if (responseCheckUser.data.length) {
-      response = yield axios.patch(`${apiURL}/payments/${responseCheckUser.data[0].id}`, {
-        ...other,
-      });
-    } else {
-      response = yield axios.post(`${apiURL}/payments`, {
-        ...action.payload,
-        isPayment: false,
-      });
-    }
+    const response = yield axiosClient.post('/user/bill',action.payload)
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+    
     const data = response.data;
+
     yield put({
       type: CREATE_BILL_SUCCESS,
       payload: data,
     });
-    history.push('/shipping');
+
+    history.push(`/success/${data.bill.id}`);
+    toastSuccess('Đặt hàng thành công')
   } catch (error) {
     yield put({
       type: CREATE_BILL_FAIL,
       payload: error,
     });
+    
+    toastError(error.message)
   }
 }
 
@@ -85,6 +82,7 @@ function* updateBillSaga(action) {
     });
   }
 }
+
 function* getBillUserSaga(action) {
   try {
     const { billId } = action.payload;
@@ -94,13 +92,13 @@ function* getBillUserSaga(action) {
       url: `user/bill/${billId}`,
     });
 
-    const {data,total} = response.data;
+    const data = response.data;
 
     yield put({
       type: GET_BILL_SUCCESS,
       payload: {
         data:data,
-        total:total
+        total:response.data.total
       },
     });
   } catch (error) {

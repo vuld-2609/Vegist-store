@@ -1,45 +1,35 @@
 import { Checkbox, Col, Row, Select } from 'antd';
 import { Field, Form, Formik } from 'formik';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import English from '../../../assets/images/english.svg';
 import VietNam from '../../../assets/images/vietnam.svg';
-import { createBill, getInfo } from '../../../redux/actions';
 import CustomField from './component/CustomField';
 import PaymentBreadcrumb from './component/PaymentBreadcrumb';
+import history from '../../../until/history'
 import './styles.scss';
 
 const Information = ({ getInfo, infoUser, cartData, createBill }) => {
-  console.log('Log :  infoUser', infoUser);
+  document.title = 'Vegist | Thông tin';
   const { Option } = Select;
   const { t } = useTranslation();
   const [valueSelect, setValueSelect] = useState('vi');
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  useEffect(() => {
-    document.title = 'Vegist | Thông tin';
-    getInfo({ email: user.email });
-  }, []);
+  const [infoPayment, setInfoPayment] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
   const handleSubmitForm = (values) => {
-    const { firstName, lastName, ...other } = values;
-    const paymentCode = `ARYA${infoUser.id}${Math.floor(
-      Math.random() * values.zipCode + infoUser.id
-    )}`;
+    const {firstName,lastName} = values;
+    const fullName = `${firstName} ${lastName}`
+
     const dataForm = {
-      user: user.email,
-      name: `${firstName} ${lastName}`,
+      ...values,
       country: valueSelect,
-      cartData: [...cartData.cartData],
-      cartId: cartData.id,
-      datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
-      status: 'approval',
-      paymentCode,
-      ...other,
+      name:fullName
     };
-    createBill({ ...dataForm });
+    
+    localStorage.setItem('infoPayment',JSON.stringify(dataForm));
+    history.push('/shipping');
   };
 
   return (
@@ -50,12 +40,12 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
           <PaymentBreadcrumb />
           <Formik
             initialValues={{
-              email: infoUser?.email,
-              firstName: infoUser?.first,
-              lastName: infoUser?.last,
-              address: infoUser?.address || '',
-              zipCode: infoUser?.zipCode || '',
-              phone: infoUser?.phone || '',
+              email: (infoPayment || user).email,
+              firstName: (infoPayment || user).firstName,
+              lastName: (infoPayment || user).lastName,
+              address: (infoPayment || user).address || '',
+              zipCode: (infoPayment || user).zipCode || '',
+              phone: (infoPayment || user).phone || '',
               check: true,
             }}
             validationSchema={Yup.object({
@@ -172,17 +162,4 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { infoUser } = state.accountReducer;
-  const { cartData } = state.cartReducer;
-  const { billData } = state.paymentReducer;
-  return { infoUser, cartData, billData };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getInfo: (params) => dispatch(getInfo(params)),
-    createBill: (params) => dispatch(createBill(params)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Information);
+export default Information;

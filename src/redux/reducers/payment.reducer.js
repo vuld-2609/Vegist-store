@@ -13,12 +13,17 @@ import {
   UPDATE_PAYMENTS_FAIL,
   GET_ORDER_DETAIL_SUCCESS,
   GET_ORDER_DETAIL_FAIL,
+  GET_BILL
 } from '../constants';
 
 const initialState = {
   billInitData: {},
   billUpdateData: {},
-  billData: {},
+  billData: {
+    data:[],
+    total:'',
+    load:false,
+  },
   paymentsData: {},
   deleteData: {},
   updateData: {},
@@ -43,13 +48,36 @@ export default function paymentReducer(state = initialState, action) {
     case UPDATE_BILL_FAIL: {
       return state;
     }
-    case GET_BILL_SUCCESS:
+
+    case GET_BILL:{
+      return{
+          ...state,
+          billData:{
+            load:true
+          }
+      }
+    }
+    
+    case GET_BILL_SUCCESS:{ 
+      const {data} = action.payload;
       return {
         ...state,
-        billData: { ...action.payload },
+        billData: {
+          ...state.billData,
+          data,
+          load: false
+        },
       };
+    }
+
     case GET_BILL_FAIL: {
-      return state;
+      return{
+        ...state,
+        billData:{
+          ...state.billData,
+          load:false
+        }
+    }
     }
     case GET_PAYMENTS_SUCCESS:
       return {

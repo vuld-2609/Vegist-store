@@ -32,13 +32,13 @@ function* addCartSaga(action) {
       type: ADD_CART_SUCCESS,
       payload: data.cartDetails,
     });
-    toastSuccess(data.message);
+    toastSuccess('Thêm vào giỏ hàng thành công');
   } catch (error) {
     yield put({
       type: ADD_CART_FAIL,
       payload: error,
     });
-    toastError(error);
+    toastError(error.message);
   }
 }
 
@@ -63,7 +63,7 @@ function* updateCartSaga(action) {
       type: UPDATE_CART_FAIL,
       payload: error,
     });
-    toastError(error);
+    toastError(error.message);
   }
 }
 
