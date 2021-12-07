@@ -60,22 +60,40 @@ const AddProductAdmin = ({
             <h1 className="addProductAdmin__title">{t('admin.products.More new products')}</h1>
             <Formik
               initialValues={{
-                name: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.name : '',
+                name:
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.name
+                    : '',
                 categoryId:
                   location.pathname.indexOf(`edit`) !== -1
-                    ? productDetail?.product?.categoryId.id
+                    ? productDetail?.data?.product?.categoryId.id
                     : '',
                 origin:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.origin : '',
-                des: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.des : '',
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.origin
+                    : '',
+                des:
+                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.data?.product?.des : '',
                 shortDes:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.shortDes : '',
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.shortDes
+                    : '',
                 tagId:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.tagId.id : '',
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.tagId.id
+                    : '',
                 price:
-                  location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.price : '',
-                sale: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.sale : '',
-                unit: location.pathname.indexOf(`edit`) !== -1 ? productDetail?.product?.unit : '',
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.price
+                    : '',
+                sale:
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.sale
+                    : '',
+                unit:
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.unit
+                    : '',
                 // image: [],
               }}
               validationSchema={Yup.object({
@@ -315,7 +333,7 @@ const AddProductAdmin = ({
                             {location.pathname.indexOf(`edit`) !== -1 && (
                               <div>
                                 <Row gutter={[16, 24]}>
-                                  {productDetail?.product?.imgs?.map((item, index) => (
+                                  {productDetail?.data?.product?.imgs?.map((item, index) => (
                                     <Col md={3} xs={5}>
                                       <img key={index} src={item} alt="anh product"></img>
                                     </Col>
