@@ -25,7 +25,6 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
 
     localStorage.removeItem('infoPayment')
     getCartData();
-    // history.push(`/success/${billData.id}`);
   };
 
   return (
@@ -37,7 +36,7 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
           <div className="shipping__info shipping__content">
             <div className=" shipping__content--item   ">
               <div className="shipping__info--inner">
-                <h4>{t('payments.shipping.Contact')}</h4>
+                <h4>{t('Email')}</h4>
                 <p>{infoPayment.email}</p>
               </div>
               <button className="button" onClick={() => history.push('/infoPayment')}>
@@ -55,11 +54,14 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
             </div>
             <div className=" shipping__content--item">
               <div className="shipping__info--inner">
-                <h4>{t('payments.payment.Method')}</h4>
+                <h4>{t('Name')}</h4>
                 <p>
-                  {infoPayment.method}
+                  {infoPayment.name}
                 </p>
               </div>
+              <button className="button" onClick={() => history.push('/infoPayment')}>
+                {t('payments.shipping.Change')}
+              </button>
             </div>
           </div>
           <div className="shipping__title">
@@ -129,9 +131,9 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { billData } = state.paymentReducer;
+  const { billData,billInitData } = state.paymentReducer;
 
-  return { billData };
+  return { billData,billInitData };
 };
 
 const mapDispatchToProps = (dispatch) => {

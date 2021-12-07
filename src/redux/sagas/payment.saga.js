@@ -32,7 +32,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 function* createBill(action) {
   try {
-    const response = axiosClient.post('/user/bill',action.payload)
+    const response = yield axiosClient.post('/user/bill',action.payload)
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
     
@@ -43,7 +43,8 @@ function* createBill(action) {
       payload: data,
     });
 
-    toastError(data.message)
+    history.push(`/success/${data.bill.id}`);
+    toastSuccess('Đặt hàng thành công')
   } catch (error) {
     yield put({
       type: CREATE_BILL_FAIL,
@@ -81,6 +82,7 @@ function* updateBillSaga(action) {
     });
   }
 }
+
 function* getBillUserSaga(action) {
   try {
     const { billId } = action.payload;
@@ -90,13 +92,13 @@ function* getBillUserSaga(action) {
       url: `user/bill/${billId}`,
     });
 
-    const {data,total} = response.data;
+    const data = response.data;
 
     yield put({
       type: GET_BILL_SUCCESS,
       payload: {
         data:data,
-        total:total
+        total:response.data.total
       },
     });
   } catch (error) {

@@ -203,17 +203,10 @@ const ProductDetail = ({
                     {product?.sales && `${product?.sales} %`}
                   </span>
                 </p>
-                <p className="gray-color">{t('productDetail.Hurry')}</p>
-                <p className="gray-color">{t('productDetail.description')}</p>
+                <p className="gray-color">{t('Category')}: {product?.categoryId.name}</p>
+                <p className="gray-color">{product?.shortDes}</p>
               </div>
               <Form name="validate_other" onFinish={handleSubmitForm}>
-                <Form.Item name="radio" label={<p>{t('productDetail.Material')}</p>}>
-                  <Radio.Group defaultValue={'a'}>
-                    <Radio.Button value="a">CANADA</Radio.Button>
-                    <Radio.Button value="b">INDIA</Radio.Button>
-                    <Radio.Button value="c">GERMANY</Radio.Button>
-                  </Radio.Group>
-                </Form.Item>
                 <Form.Item label={<p>{t('productDetail.Quantity')}</p>}>
                   <input
                     type="number"
