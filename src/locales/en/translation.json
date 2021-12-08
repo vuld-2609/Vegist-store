@@ -366,6 +366,12 @@
     "listProduct": {
       "title": "LIST PRODUCT"
     },
+    "listOrder": {
+      "title": "LIST ORDER"
+    },
+    "listComment": {
+      "title": "LIST COMMENT"
+    },
     "table": {
       "name": "NAME",
       "address": "ADDRESS",

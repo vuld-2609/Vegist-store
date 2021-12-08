@@ -14,35 +14,39 @@ const InfoCart = ({ getCartData, cartData }) => {
   }, []);
 
   const renderCartData = (cartData) => {
-    return cartData?.cartDetail?.map((item, index) => (
-      <tr className="infoCart__cart--item" key={index}>
-        <td className="infoCart__cart--img">
-          <img src={item.img[0]} alt="anh"></img>
-          <span className="infoCart__cart--amount">{item.quantity}</span>
-        </td>
-        <td className="infoCart__cart--name">
-          <h5>{item.name}</h5>
-          {item.size && <p>{item.size}</p>}
-        </td>
-        <td className="infoCart__cart--price">
-          ${(item.quantity * item.price).toLocaleString()} VND
-        </td>
-      </tr>
-    ));
+    return cartData?.cartDetails?.map((item, index) => {
+      const { productId } = item;
+      return (
+        <tr className="infoCart__cart--item" key={index}>
+          <td className="infoCart__cart--img">
+            <img src={productId.imgs[0]} alt="anh"></img>
+            <span className="infoCart__cart--amount">{item.quantity}</span>
+          </td>
+          <td className="infoCart__cart--name">
+            <h5>{productId.name}</h5>
+            {productId.unit && <p>{productId.unit}</p>}
+          </td>
+          <td className="infoCart__cart--price">
+            ${(item.quantity * productId.price).toLocaleString()} VND
+          </td>
+        </tr>
+      );
+    });
   };
 
-  const handleCalculateToTal = (cartData) => {
+  const handleCalculateToTal = () => {
     let total = 0;
-    cartData?.forEach((element) => {
-      total = total + parseInt(element.price * element.quantity);
+    cartData?.cartDetails?.forEach((element) => {
+      total += parseInt(element.productId.price * element.quantity);
     });
-
+    total += total * 0.1;
     return total;
   };
+
   return (
     <section className="infoCart">
       <div className=" infoCart__container">
-        <table className="infoCart__cart">{renderCartData(cartData?.cartData)}</table>
+        <table className="infoCart__cart">{renderCartData(cartData)}</table>
         <div className="infoCart__discount">
           <form>
             <Input className="input" type="text" placeholder={t('infoCart.Discount code')}></Input>
@@ -54,7 +58,7 @@ const InfoCart = ({ getCartData, cartData }) => {
         <div className="infoCart__price">
           <div className="infoCart__price--item">
             <h4>{t('infoCart.Subtotal')}</h4>
-            <p>{handleCalculateToTal(cartData?.cartData).toLocaleString()}</p>
+            <p>{handleCalculateToTal().toLocaleString()}</p>
           </div>
           <div className="infoCart__price--item">
             <h4>{t('infoCart.Shipping cost')}</h4>

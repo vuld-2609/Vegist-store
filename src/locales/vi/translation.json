@@ -362,21 +362,26 @@
     "listProduct": {
       "title": "DANH SÁCH SẢN PHẨM"
     },
+    "listOrder": {
+      "title": "DANH SÁCH ĐƠN ĐẶT HÀNG"
+    },
+    "listComment": {
+      "title": "DANH SÁCH BÌNH LUẬN"
+    },
     "products": {
       "More new products": "Thêm mới sản phẩm",
       "Enter product name": "Nhập tên sản phẩm",
       "Product's name": "Tên sản phẩm",
       "Product Line": "Dòng sản phẩm",
       "Select product line": "Chọn dòng sản phẩm",
-      "Enter sale": "Nhập khuyến mãi...",
-      "Price": "Đơn giá",
-      "Enter price": "Nhập đơn giá...",
+      "Unit price": "Đơn giá",
+      "Enter unit price": "Nhập đơn giá...",
+      "New price": "Đơn giá mới",
+      "Enter new price": "Nhập đơn giá mới",
+      "Size": "Size",
       "Select...": "Chọn...",
-      "Unit": "Đơn vị tính",
-      "Select unit": "Chọn đơn vị tính...",
       "Origin": "Xuất sứ",
       "Tag": "Thẻ",
-      "Sale": "Khuyến mãi",
       "Select tag": "Chọn thẻ",
       "Image": "Ảnh",
       "Short description": "Mô tả ngắn",

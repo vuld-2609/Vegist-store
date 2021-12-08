@@ -2,37 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Radio } from 'antd';
 import PaymentBreadcrumb from './component/PaymentBreadcrumb';
 import { useTranslation } from 'react-i18next';
-import { getBill, getCartData, updateBill } from '../../../redux/actions';
+import { getBill, getCartData, createBill } from '../../../redux/actions';
 import { connect } from 'react-redux';
 import history from '../../../until/history';
 import { TiWarningOutline } from 'react-icons/ti';
 import { MdPayment } from 'react-icons/md';
-import moment from 'moment';
 import 'moment/locale/vi';
 import './styles.scss';
 
-const Payment = ({ getBill, billData, updateBill, getCartData }) => {
+const Payment = ({ getBill, billData, createBill, getCartData }) => {
   const { t } = useTranslation();
   const [billingAddress, setBillingAddress] = useState(1);
-  useEffect(() => {
-    document.title = 'Vegist | Trang thanh toán';
-    const user = JSON.parse(localStorage.getItem('profile'));
+  const [infoPayment, setInfoPayment] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
-    getBill({ user: user.email, isPayment: false });
-  }, []);
-  const handelUpdateBill = () => {
-    const date = moment().format('LLLL');
-    updateBill({
-      id: billData.id,
-      payment: 'Cash on Delivery (COD)',
-      billingAddress: billingAddress,
-      date,
-      isPayment: true,
-      type: 'success',
-      cartId: billData.cartId,
+  const handelCreateBill = async() => {
+    await createBill({
+        payment:'Trực tiếp',
+        name:infoPayment.name,
+        address: infoPayment.address,
+        phoneNumber: infoPayment.phone,
     });
+
+    localStorage.removeItem('infoPayment')
     getCartData();
-    history.push(`/success/${billData.id}`);
   };
 
   return (
@@ -44,8 +36,8 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
           <div className="shipping__info shipping__content">
             <div className=" shipping__content--item   ">
               <div className="shipping__info--inner">
-                <h4>{t('payments.shipping.Contact')}</h4>
-                <p>{billData.email}</p>
+                <h4>{t('Email')}</h4>
+                <p>{infoPayment.email}</p>
               </div>
               <button className="button" onClick={() => history.push('/infoPayment')}>
                 {t('payments.shipping.Change')}
@@ -54,7 +46,7 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
             <div className=" shipping__content--item">
               <div className="shipping__info--inner">
                 <h4>{t('payments.shipping.Ship to')}</h4>
-                <p>{billData.address}</p>
+                <p>{infoPayment.address}</p>
               </div>
               <button className="button" onClick={() => history.push('/infoPayment')}>
                 {t('payments.shipping.Change')}
@@ -62,11 +54,14 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
             </div>
             <div className=" shipping__content--item">
               <div className="shipping__info--inner">
-                <h4>{t('payments.payment.Method')}</h4>
+                <h4>{t('Name')}</h4>
                 <p>
-                  {billData.method} &#8226; {billData.shippingCost}
+                  {infoPayment.name}
                 </p>
               </div>
+              <button className="button" onClick={() => history.push('/infoPayment')}>
+                {t('payments.shipping.Change')}
+              </button>
             </div>
           </div>
           <div className="shipping__title">
@@ -118,7 +113,7 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
           <div className="shipping__btn">
             <button
               className="button  button-animation--1 button-round--lg "
-              onClick={() => handelUpdateBill()}
+              onClick={() => handelCreateBill()}
             >
               <span> {t('payments.payment.Complete order')}</span>
             </button>
@@ -136,15 +131,15 @@ const Payment = ({ getBill, billData, updateBill, getCartData }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { billData } = state.paymentReducer;
+  const { billData,billInitData } = state.paymentReducer;
 
-  return { billData };
+  return { billData,billInitData };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getBill: (params) => dispatch(getBill(params)),
-    updateBill: (params) => dispatch(updateBill(params)),
+    createBill: (params) => dispatch(createBill(params)),
     getCartData: (params) => dispatch(getCartData(params)),
   };
 };

@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import { ContainerOutlined, DesktopOutlined, PieChartOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import {
-  AppstoreOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import history from '../../until/history';
-
 import './style.scss';
+
 const Admin = () => {
   const { SubMenu } = Menu;
   const { t } = useTranslation();
@@ -53,9 +46,16 @@ const Admin = () => {
             icon={<ContainerOutlined />}
             onClick={() => history.push('/admin/listOrder')}
           >
-            LIST ORDER
+            {t('admin.listOrder.title')}
           </Menu.Item>
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
+          <Menu.Item
+            key="5"
+            icon={<ContainerOutlined />}
+            onClick={() => history.push('/admin/listComment')}
+          >
+            {t('admin.listComment.title')}
+          </Menu.Item>
+          {/* <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
             <Menu.Item key="5">Option 5</Menu.Item>
             <Menu.Item key="6">Option 6</Menu.Item>
             <Menu.Item key="7">Option 7</Menu.Item>
@@ -68,7 +68,7 @@ const Admin = () => {
               <Menu.Item key="11">Option 11</Menu.Item>
               <Menu.Item key="12">Option 12</Menu.Item>
             </SubMenu>
-          </SubMenu>
+          </SubMenu> */}
         </Menu>
       </div>
     </>

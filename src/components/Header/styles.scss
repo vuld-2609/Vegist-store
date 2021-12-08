@@ -161,7 +161,19 @@
     &--account {
       @include flex-align-center;
       &-content {
+        @include flex;
         padding-left: 1rem;
+        flex-direction: column;
+        cursor: pointer;
+
+        .user-avatar{
+          width:40px;
+          height:40px;
+
+          img{
+            border-radius: 50%;
+          }
+        }
       }
       &-title {
         color: $primary-color;

@@ -98,70 +98,72 @@ function ListOrder({
   };
 
   return (
-    <section className="order">
-      <div className="order__filter">
-        <div className="order__sort">
-          <h3 className="order__sort--title">By Sort</h3>
-          <Select
-            showSearch
-            style={{ width: 160 }}
-            optionFilterProp="children"
-            placeholder="Select a status"
-            onChange={handleChangeSort}
-          >
-            {arrStatus.map((item, index) => (
-              <Option value={item.value} key={`option-${index}`}>
-                {item.value}
-              </Option>
-            ))}
-          </Select>
-        </div>
-        <div className="order__search">
-          <Search
-            placeholder="Search payment code or a user"
-            value={search}
-            onChange={handleChange}
-            enterButton
-          />
-        </div>
-      </div>
-      <div className="admin__listUser--tableNormal">
-        <table className="table">
-          <thead>
-            <tr>
-              {title.map((item) => (
-                <td key={item.id}>{item.title}</td>
+    <section className="admin__listUser admin__products fadeIn">
+      <div className="container">
+        <div className="order__filter">
+          <div className="order__sort">
+            <h3 className="order__sort--title">By Sort</h3>
+            <Select
+              showSearch
+              style={{ width: 160 }}
+              optionFilterProp="children"
+              placeholder="Select a status"
+              onChange={handleChangeSort}
+            >
+              {arrStatus.map((item, index) => (
+                <Option value={item.value} key={`option-${index}`}>
+                  {item.value}
+                </Option>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {bills?.length ? (
-              bills?.map((item, index) => (
-                <Row
-                  item={item}
-                  index={index}
-                  arrStatus={arrStatus}
-                  handleChangeStatus={handleChangeStatus}
-                  handleClickDelete={handleClickDelete}
-                />
-              ))
-            ) : (
+            </Select>
+          </div>
+          <div className="order__search">
+            <Search
+              placeholder="Search payment code or a user"
+              value={search}
+              onChange={handleChange}
+              enterButton
+            />
+          </div>
+        </div>
+        <div className="admin__listUser--tableNormal">
+          <table className="table">
+            <thead>
               <tr>
-                <Empty />
+                {title.map((item) => (
+                  <td key={item.id}>{item.title}</td>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination">
-        {bills?.length ? (
-          <Pagination
-            current={current}
-            onChange={(page) => setCurrent(page)}
-            total={total}
-            defaultPageSize={10}
-          />
-        ) : null}
+            </thead>
+            <tbody>
+              {bills?.length ? (
+                bills?.map((item, index) => (
+                  <Row
+                    item={item}
+                    index={index}
+                    arrStatus={arrStatus}
+                    handleChangeStatus={handleChangeStatus}
+                    handleClickDelete={handleClickDelete}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <Empty />
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="pagination">
+          {bills?.length ? (
+            <Pagination
+              current={current}
+              onChange={(page) => setCurrent(page)}
+              total={total}
+              defaultPageSize={10}
+            />
+          ) : null}
+        </div>
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import history from '../../until/history';
-import { toastError } from '../../until/toast';
+import { toastError,toastSuccess } from '../../until/toast';
 import axiosClient from '../config/axiosClient';
 
 import {
@@ -42,30 +42,26 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 function* createBill(action) {
   try {
-    const { user, ...other } = action.payload;
-    let response;
-    const responseCheckUser = yield axios.get(`${apiURL}/payments?user=${user}&isPayment=false`);
-    if (responseCheckUser.data.length) {
-      response = yield axios.patch(`${apiURL}/payments/${responseCheckUser.data[0].id}`, {
-        ...other,
-      });
-    } else {
-      response = yield axios.post(`${apiURL}/payments`, {
-        ...action.payload,
-        isPayment: false,
-      });
-    }
+    const response = yield axiosClient.post('/user/bill',action.payload)
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+    
     const data = response.data;
+
     yield put({
       type: CREATE_BILL_SUCCESS,
       payload: data,
     });
-    history.push('/shipping');
+
+    history.push(`/success/${data.bill.id}`);
+    toastSuccess('Đặt hàng thành công')
   } catch (error) {
     yield put({
       type: CREATE_BILL_FAIL,
       payload: error,
     });
+    
+    toastError(error.message)
   }
 }
 
@@ -96,26 +92,24 @@ function* updateBillSaga(action) {
     });
   }
 }
-function* getBillSaga(action) {
-  try {
-    const { user, isPayment, id,page,search,status } = action.payload;
 
-    const response = yield axios({
+function* getBillUserSaga(action) {
+  try {
+    const { billId } = action.payload;
+
+    const response = yield axiosClient({
       method: 'GET',
-      url: `${apiURL}/payments`,
-      params: {
-        ...(user && { user }),
-          ...(search && { q: search }),
-          ...(page && { _page: page }),
-        ...(id && { id }),
-        ...(status && status !== 'all' && { status }),
-        ...(!isNaN(isPayment) && { isPayment }),
-      },
+      url: `user/bill/${billId}`,
     });
+
     const data = response.data;
+
     yield put({
       type: GET_BILL_SUCCESS,
-      payload: data,
+      payload: {
+        data:data,
+        total:response.data.total
+      },
     });
   } catch (error) {
     yield put({
@@ -128,32 +122,6 @@ function* getBillSaga(action) {
 function* getPayments(action) {
   try {
     const { page, limit, search, status } = action.payload;
-    // const [responseData, responseTotal] = yield all([
-    //   axios({
-    //     method: 'GET',
-    //     url: `${apiURL}/payments`,
-    //     params: {
-    //       ...(page && { _page: page }),
-    //       ...(limit && { _limit: limit }),
-    //       ...(search && { q: search }),
-    //       // ...(status && { status: status }),
-    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
-    //     },
-    //   }),
-    //   axios({
-    //     method: 'GET',
-    //     url: `${apiURL}/payments`,
-    //     params: {
-    //       ...(search && { q: search }),
-    //       // ...(status && { status: status }),
-    //       ...(status && status !== 'all' ? { status: status } : { status: null }),
-    //     },
-    //   }),
-    // ]);
-    // const data = {
-    //   payments: responseData.data,
-    //   total: responseTotal.data.length,
-    // };
 
     const response = yield axiosClient({
       method: 'GET',
@@ -165,6 +133,8 @@ function* getPayments(action) {
         ...(status && status !== 'Tất cả' ? { status: status } : { status: null }),
       },
     });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 
@@ -184,6 +154,9 @@ function* deletePayments(action) {
   try {
     const { id } = action.payload;
     const response = yield axiosClient.delete(`/admin/bill/${id}`);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
 
     yield put({
@@ -204,6 +177,9 @@ function* updatePayments(action) {
     const response = yield axiosClient.patch(`/admin/bill/updateStatus/${id}`, {
       status,
     });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
+
     const data = response.data;
 
     yield put({
@@ -222,6 +198,8 @@ function* getOrderDetail(action) {
   try {
     const { id } = action.payload;
     const response = yield axiosClient.get(`/admin/bill/${id}`);
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error);
 
     const data = response.data;
 
@@ -317,7 +295,7 @@ function* getBillDetailUserSaga(action) {
 export default function* paymentSaga() {
   yield takeEvery(CREATE_BILL, createBill);
   yield takeEvery(UPDATE_BILL, updateBillSaga);
-  yield takeEvery(GET_BILL, getBillSaga);
+  yield takeEvery(GET_BILL, getBillUserSaga);
   yield takeEvery(GET_PAYMENTS, getPayments);
   yield takeEvery(DELETE_PAYMENTS, deletePayments);
   yield takeEvery(UPDATE_PAYMENTS, updatePayments);
