@@ -368,12 +368,20 @@
     "listComment": {
       "title": "DANH SÁCH BÌNH LUẬN"
     },
+    "table": {
+      "name": "Họ tên",
+      "address": "Địa chỉ",
+      "phone": "Số điện thoại",
+      "action": "Hành động",
+      "role": "Tên quyền",
+      "status": "Trạng thái"
+    },
     "products": {
       "More new products": "Thêm mới sản phẩm",
       "Enter product name": "Nhập tên sản phẩm",
       "Product's name": "Tên sản phẩm",
-      "Product Line": "Dòng sản phẩm",
-      "Select product line": "Chọn dòng sản phẩm",
+      "category": "Dòng sản phẩm",
+      "Select category": "Chọn dòng sản phẩm",
       "Unit price": "Đơn giá",
       "Enter unit price": "Nhập đơn giá...",
       "New price": "Đơn giá mới",

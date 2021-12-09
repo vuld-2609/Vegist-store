@@ -9,12 +9,10 @@ import {
   GET_INFO_SUCCESS,
   GET_LIST_USER_FAIL,
   GET_LIST_USER_SUCCESS,
-  CREATE_USER_BY_ADMIN_FAIL,
-  CREATE_USER_BY_ADMIN_SUCCESS,
   DELETE_USER_FAIL,
   DELETE_USER_SUCCESS,
-  EDIT_USER_FAIL,
-  EDIT_USER_SUCCESS
+  EDIT_USER_BY_ADMIN_FAIL,
+  EDIT_USER_BY_ADMIN_SUCCESS,
 } from '../constants';
 
 const initialStore = {
@@ -22,10 +20,8 @@ const initialStore = {
   user: {},
   userDataEdited: {},
   infoUser: {},
-  listUser: [],
-  adminCreate: {},
-  deleteUser: [],
-  userEdit: {}
+  listUser: {},
+  userEdit: {},
 };
 
 export default function accountReducer(state = initialStore, action) {
@@ -33,7 +29,7 @@ export default function accountReducer(state = initialStore, action) {
     case CREATE_ACCOUNT_SUCCESS:
       return {
         ...state,
-        userList: [action.payload]
+        userList: [action.payload],
       };
     case CREATE_ACCOUNT_FAIL: {
       return state;
@@ -42,8 +38,8 @@ export default function accountReducer(state = initialStore, action) {
       return {
         ...state,
         user: {
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
     case GET_USER_ACCOUNT_FAIL: {
@@ -53,8 +49,8 @@ export default function accountReducer(state = initialStore, action) {
       return {
         ...state,
         infoUser: {
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
     case GET_INFO_FAIL: {
@@ -64,8 +60,8 @@ export default function accountReducer(state = initialStore, action) {
       return {
         ...state,
         userDataEdited: {
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
 
@@ -75,41 +71,29 @@ export default function accountReducer(state = initialStore, action) {
     case GET_LIST_USER_SUCCESS: {
       return {
         ...state,
-        listUser: [...action.payload]
+        listUser: { ...action.payload },
       };
     }
     case GET_LIST_USER_FAIL: {
       return state;
     }
-    case CREATE_USER_BY_ADMIN_SUCCESS: {
-      return {
-        ...state,
-        adminCreate: {
-          ...action.payload
-        }
-      };
-    }
-    case CREATE_USER_BY_ADMIN_FAIL: {
-      return state;
-    }
     case DELETE_USER_SUCCESS: {
-      return {
-        ...state,
-        adminCreate: [...action.payload]
-      };
+      const data = state.listUser.users.filter((item) => item.id !== action.payload);
+      return { ...state, listUser: { users: data, total: state.listUser.total - 1 } };
     }
     case DELETE_USER_FAIL: {
       return state;
     }
-    case EDIT_USER_SUCCESS: {
+    case EDIT_USER_BY_ADMIN_SUCCESS: {
+      const listUser = JSON.parse(JSON.stringify(state.listUser));
+      const index = state.listUser.users.findIndex((item) => item.id === action.payload.id);
+      listUser.users[index] = action.payload;
       return {
         ...state,
-        userEdit: {
-          ...action.payload
-        }
+        listUser,
       };
     }
-    case EDIT_USER_FAIL: {
+    case EDIT_USER_BY_ADMIN_FAIL: {
       return state;
     }
     default: {

@@ -376,15 +376,17 @@
       "name": "NAME",
       "address": "ADDRESS",
       "phone": "PHONE",
-      "action": "ACTION"
+      "action": "ACTION",
+      "role": "ROLE",
+      "status": "STATUS"
     },
 
     "products": {
       "More new products": "More new products",
       "Enter product name": "Enter product name...",
       "Product's name": "Product's name",
-      "Product Line": "Product line",
-      "Select product line": "Select product line...",
+      "Category": "Category",
+      "Select category": "Select category...",
       "Enter price": "Enter price...",
       "Price": "Price",
       "Enter sale": "Enter sale",

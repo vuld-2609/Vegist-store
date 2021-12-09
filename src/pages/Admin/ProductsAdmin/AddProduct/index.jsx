@@ -7,6 +7,7 @@ import CustomField from '../../../../components/Admin/CustomField/index';
 import VietNam from '../../../../assets/images/vietnam.svg';
 import English from '../../../../assets/images/english.svg';
 import { FaStarOfLife } from 'react-icons/fa';
+import { AiOutlineRollback } from 'react-icons/ai';
 import { connect } from 'react-redux';
 import {
   createProduct,
@@ -16,6 +17,7 @@ import {
 } from '../../../../redux/actions';
 import { useLocation } from 'react-router-dom';
 import './styles.scss';
+import history from '../../../../until/history';
 
 const AddProductAdmin = ({
   match,
@@ -54,6 +56,14 @@ const AddProductAdmin = ({
   };
   return (
     <section className="addProductAdmin">
+      <Row>
+        <Col offset={2}>
+          <AiOutlineRollback
+            className="icon-back"
+            onClick={() => history.push('/admin/products')}
+          />
+        </Col>
+      </Row>
       <Row justify="center">
         <Col xs={18}>
           <div className="addProductAdmin__container container">
@@ -157,7 +167,7 @@ const AddProductAdmin = ({
                     <Row align="middle">
                       <Col md={6}>
                         <label className htmlFor="categoryId">
-                          {t('admin.products.Product Line')}
+                          {t('admin.products.Category')}
                           <FaStarOfLife />
                         </label>
                       </Col>
@@ -170,7 +180,7 @@ const AddProductAdmin = ({
                               {...FieldProps.field}
                               style={{ width: '100%' }}
                               className="form__control--select"
-                              placeholder={t('admin.products.Select product line')}
+                              placeholder={t('admin.products.Select category')}
                               onChange={(value) =>
                                 FieldProps.form.setFieldValue(FieldProps.field.name, value)
                               }

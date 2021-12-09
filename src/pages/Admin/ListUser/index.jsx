@@ -1,18 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Pagination, Input, Button, Modal, Empty } from 'antd';
-
-import { getListUser, deleteUser } from '../../../redux/actions';
+import { Pagination, Input, Modal, Empty, Switch } from 'antd';
+import { getListUser, deleteUser, editUserByAdmin } from '../../../redux/actions';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-
+import { titleCase } from '../../../until/string';
 import ModalCreate from './ModalCreate';
 import ModalModify from './ModalModify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 
-const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) => {
-  console.log('Log :  listUser', listUser);
-  const [current, setCurrent] = useState(1);
+const ListUser = ({
+  deleteUser,
+  getListUser,
+  listUser,
+  totalUsers,
+  adminCreate,
+  userEdit,
+  editUserByAdmin,
+}) => {
+  const [page, setPage] = useState(1);
   const [isDeleted, setIsDeleted] = useState(false);
   const [search, setSearch] = useState('');
   const [searchKey, setSearchKey] = useState();
@@ -22,11 +30,11 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
   useEffect(() => {
     document.title = 'Vegist | Trang Quản lý người dùng';
     getListUser({
-      page: current,
+      page,
       limit: 10,
       search: searchKey,
     });
-  }, [current, adminCreate, isDeleted, userEdit, searchKey]);
+  }, [page, adminCreate, isDeleted, userEdit, searchKey]);
 
   const { Search } = Input;
 
@@ -42,14 +50,18 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
         search: value,
       };
       setSearchKey(formValue.search);
-      setCurrent(1);
+      setPage(1);
     }, 1000);
   };
 
   function confirm(data) {
     Modal.confirm({
       title: 'Confirm',
-      content: `Do you want to delete this user ${data.email} ?`,
+      content: (
+        <span>
+          Do you want to delete this user <b> {titleCase(data.fullName)}</b> ?
+        </span>
+      ),
       cancelText: 'CANCEL',
       okText: 'OK',
       onOk() {
@@ -59,12 +71,18 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
       onCancel() {},
     });
   }
+
+  const onChangeStatus = (e, id) => {
+    const status = e ? 'activated' : 'blocked';
+    editUserByAdmin({ id, status });
+  };
+
   const renderLocationProduct = () => {
-    const start = (current - 1) * 12 + 1;
+    const start = (page - 1) * 12 + 1;
     let end;
-    if (listUser[0].length >= 12) {
-      end = (current - 1) * 12 + 12;
-    } else end = start + listUser[0].length - 1;
+    if (listUser.length >= 12) {
+      end = (page - 1) * 12 + 12;
+    } else end = start + listUser.length - 1;
     return `${start} - ${end}`;
   };
 
@@ -81,9 +99,9 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
                 enterButton
               />
             </div>
-            <div className="admin__listUser--btn-create">
+            {/* <div className="admin__listUser--btn-create">
               <ModalCreate setIsDeleted={setIsDeleted} />
-            </div>
+            </div> */}
           </div>
           <div className="admin__listUser--tableNormal">
             <table>
@@ -91,28 +109,37 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
                 <tr>
                   <td>STT</td>
                   <td>{t('admin.table.name')}</td>
-                  <td>EMAIL</td>
-                  <td>{t('admin.table.address')}</td>
                   <td>{t('admin.table.phone')}</td>
+                  <td>EMAIL</td>
+                  <td>{t('admin.table.role')}</td>
                   <td>{t('admin.table.action')}</td>
+                  <td>{t('admin.table.status')}</td>
                 </tr>
               </thead>
               <tbody>
-                {listUser[0]?.length > 0 ? (
-                  listUser[0]?.map((item, index) => (
+                {listUser?.length > 0 ? (
+                  listUser?.map((item, index) => (
                     <tr>
                       <td>{index + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.email}</td>
-                      <td>{item.address}</td>
+                      <td>{titleCase(item.fullName)}</td>
                       <td>{item.phone}</td>
+                      <td>{item.email}</td>
+                      <td>{titleCase(item.role)}</td>
                       <td>
                         <div>
                           <ModalModify item={item} />
-                          <Button type="primary" onClick={() => confirm(item)}>
+                          <button className="button" onClick={() => confirm(item)}>
                             <FaTrashAlt />
-                          </Button>
+                          </button>
                         </div>
+                      </td>
+                      <td>
+                        <Switch
+                          checkedChildren="activated"
+                          unCheckedChildren="blocked"
+                          defaultChecked={item.status === 'activated' ? true : false}
+                          onChange={(e) => onChangeStatus(e, item.id)}
+                        />
                       </td>
                     </tr>
                   ))
@@ -125,22 +152,23 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
             </table>
           </div>
           <div className="admin__listUser--pagination">
-            {listUser[1] > 10 && (
+            {totalUsers > 10 && (
               <section className="pagination">
                 <div className="pagination__result">
-                  {t('products.Showing')} {renderLocationProduct()} {t('products.of')} {listUser[1]}{' '}
+                  {t('products.Showing')} {renderLocationProduct()} {t('products.of')} {totalUsers}{' '}
                   {t('products.result')}
                 </div>
                 <Pagination
-                  current={current}
-                  onChange={(page) => setCurrent(page)}
-                  total={listUser[1]}
+                  current={page}
+                  onChange={(page) => setPage(page)}
+                  total={totalUsers}
                   defaultPageSize={10}
                 />
               </section>
             )}
           </div>
         </div>
+        <ToastContainer />
       </section>
     </>
   );
@@ -148,8 +176,10 @@ const ListUser = ({ deleteUser, getListUser, listUser, adminCreate, userEdit }) 
 
 const mapStateToProps = (state) => {
   const { listUser, deleteUser, adminCreate, userEdit, isLoading } = state.accountReducer;
+
   return {
-    listUser,
+    listUser: listUser.users,
+    totalUsers: listUser.total,
     deleteUser,
     adminCreate,
     userEdit,
@@ -160,6 +190,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getListUser: (params) => dispatch(getListUser(params)),
     deleteUser: (params) => dispatch(deleteUser(params)),
+    editUserByAdmin: (params) => dispatch(editUserByAdmin(params)),
   };
 };
 
