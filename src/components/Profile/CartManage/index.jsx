@@ -10,11 +10,11 @@ import moment from 'moment';
 const { Option } = Select;
 const { Search } = Input;
 function CartManage(prop) {
-  const { getOrderUser, orderUser, cancelOrderUser, billDetailUser, getBillDetailUser } = prop;
+  const { getOrderUser, orderUser, cancelOrderUser, billDetailUser, getBillDetailUser,tabValue } = prop;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [current, setCurrent] = useState(1);
   const [searchKey, setSearchKey] = useState('');
-  const [filterSelect, setFilterSelect] = useState('');
+  const [filterSelect, setFilterSelect] = useState('all');
   const [openDetail, isOpenDetail] = useState(false);
 
   const { t } = useTranslation();
@@ -25,20 +25,33 @@ function CartManage(prop) {
       search: searchKey,
       page: current,
       status: filterSelect,
+      limit:5
     });
   }, [current, searchKey, filterSelect]);
 
+  useEffect(() => {
+   tabValue==='1' && getOrderUser({
+      page: current,
+      limit:5
+    });
+
+  }, [tabValue]);
+
   function handleChange(value) {
     setFilterSelect(value);
+    setCurrent(1)
   }
 
   const handleSearchOrder = (key) => {
     setSearchKey(key);
+    setCurrent(1)
   };
 
-  const handleOk = (id) => {
+  const handleCancelBill = async(id) => {
+    await cancelOrderUser({ billId: id ,status:'Đã hủy'});
+
+    setCurrent(1)
     setIsModalVisible(false);
-    cancelOrderUser({ billId: id });
   };
 
   const handleCancel = () => {
@@ -49,7 +62,7 @@ function CartManage(prop) {
     isOpenDetail(false);
   };
 
-  const handleCancelBill = () => {
+  const handleOpenModalCancelBill = () => {
     isOpenDetail(false);
   };
 
@@ -64,18 +77,29 @@ function CartManage(prop) {
 
   return (
     <>
+      {orderUser.load ? (
+        <div className="loading">
+          <Spin />
+        </div>
+      ):
       <section className="profile fadeIn">
         <div className="container">
           <div className="profile__order">
             <p className="profile__order--title">{t('orderHistory.title')}</p>
             <div className="profile__order-content">
               <div className="profile__order-content-action">
-                <div className="action-select">
-                  <Select defaultValue="all" onChange={handleChange}>
-                    <Option value="all">Tất cả</Option>
-                    <Option value="Chưa thanh toán">Chưa thanh toán</Option>
-                    <Option value="Đã thanh toán">Đã thanh toán</Option>
-                  </Select>
+                <div>
+                  Sort by: 
+                </div>
+                  <div className="action-select">
+                    <Select  value={filterSelect} onChange={handleChange}>
+                      <Option value="all">Tất cả</Option>
+                      <Option value="Đợi xác nhận">Đợi xác nhận</Option>
+                      <Option value="Đã xác nhận">Đã xác nhận</Option>
+                      <Option value="Đang vận chuyển">Đang vận chuyển</Option>
+                      <Option value="Đã giao hàng">Đã giao hàng</Option>
+                      <Option value="Đã hủy">Đã hủy</Option>
+                    </Select>
                 </div>
                 <div>
                   <Search
@@ -103,6 +127,7 @@ function CartManage(prop) {
                         <tr>
                           <td>{index + 1}</td>
                           <td id="order-detail-products">
+                            <div>
                             {item.billDetails.map((item, index) => (
                                <div>
                                  <div>
@@ -113,13 +138,14 @@ function CartManage(prop) {
                                 </div>
                                </div>
                             ))}
+                            </div>
                           </td>
                           <td>{moment(item.dateCreate).format('LL')}</td>
                           <td>{`${item.total.toLocaleString()} VND`}</td>
                           <td>{item.status}</td>
                           <td className="action-cart-manage">
                             <Button
-                              disabled={item.status !== 'Chưa thanh toán'}
+                              disabled={item.status !== 'Đợi xác nhận'}
                               onClick={handleCancelPayment}
                             >
                               Huỷ
@@ -129,7 +155,8 @@ function CartManage(prop) {
                               title="Product Detail"
                               visible={openDetail}
                               onOk={handleOkBill}
-                              onCancel={handleCancelBill}
+                              onCancel={handleOpenModalCancelBill}
+                              bodyStyle={{minHeight:'70vh',overflowY:'auto'}}
                               width={1000}
                             >
                               {billDetailUser.load ? (
@@ -158,9 +185,9 @@ function CartManage(prop) {
                               )}
                             </Modal>
                             <Modal
-                              title="Basic Modal"
+                              title="Cancel Bill"
                               visible={isModalVisible}
-                              onOk={() => handleOk(item.id)}
+                              onOk={() => handleCancelBill(item.id)}
                               onCancel={handleCancel}
                             >
                               <p>Bạn có chắc muốn huỷ đơn đặt hàng này không ?</p>
@@ -193,9 +220,16 @@ function CartManage(prop) {
                 <div className="admin__listUser--pagination">
                   <Pagination
                     current={current}
-                    onChange={(page) => setCurrent(page)}
+                    onChange={(page) => {
+                      window.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'smooth',
+                      });
+                      setCurrent(page)
+                    }}
                     total={orderUser.total}
-                    defaultPageSize={10}
+                    defaultPageSize={5}
                   />
                 </div>
               )}
@@ -203,6 +237,7 @@ function CartManage(prop) {
           </div>
         </div>
       </section>
+      }
     </>
   );
 }

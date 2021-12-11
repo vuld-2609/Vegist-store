@@ -34,6 +34,9 @@ import {
   EDIT_USER,
   EDIT_USER_FAIL,
   EDIT_USER_SUCCESS,
+  EDIT_USER_PASSWORD,
+  EDIT_USER_PASSWORD_FAIL,
+  EDIT_USER_PASSWORD_SUCCESS,
 } from '../constants';
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -167,18 +170,23 @@ function* createAccountSaga(action) {
 
 function* getInfoSaga(action) {
   try {
-    const { email } = action.payload;
-    const response = yield axios.get(`${apiURL}/userList?email=${email}`);
-    const data = response.data[0];
+    const response = yield axiosClient.get('user/auth');
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
     yield put({
       type: GET_INFO_SUCCESS,
-      payload: data,
+      payload: {
+        data:response.data
+      },
     });
   } catch (error) {
     yield put({
       type: GET_INFO_FAIL,
       payload: error,
     });
+    
+    toastError(error.message);
   }
 }
 
@@ -186,53 +194,73 @@ function* loginSaga(action) {
   try {
     const { email, password } = action.payload;
     const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { email, password });
+
     if (status === 'failed' && error.message) {
       throw new Error(error.message);
     }
+
     if (data.token && status === 'success') {
       localStorage.setItem('token', data.token);
       localStorage.setItem('profile', JSON.stringify(data.user));
       toastSuccess('Đăng Nhập Thành Công');
       data.user.role === 'admin' ? history.push('/admin') : history.push('/');
     }
+
     yield put({
       type: GET_USER_ACCOUNT_SUCCESS,
     });
   } catch (error) {
-    toastError(error.message);
     yield put({
       type: GET_USER_ACCOUNT_FAIL,
       payload: error,
     });
+    toastError(error.message)
   }
 }
 function* editProfileSaga(action) {
   try {
-    const { id, first, last, password, phone, address, token } = action.payload;
-    const { status, error, data } = yield axios.patch(`${apiURL}/userList/${id}`, {
-      last,
-      first,
-      phone,
-      address,
-      password,
-    });
+    const { status, error, data } = yield axiosClient.patch(`user/auth`, action.payload);
 
-    // if (status === 'failed' && error.message) {
-    //   throw new Error(error.message);
-    // }
+    if (status === 'failed' && error.message) {
+      throw new Error(error.message);
+    }
 
-    localStorage.setItem('profile', JSON.stringify({ ...data, password: '', token: token }));
     yield put({
       type: EDIT_PROFILE_SUCCESS,
       payload: data,
     });
-    toastSuccess(status)
+    localStorage.setItem('profile', JSON.stringify(data.user))
+
+    toastSuccess('Đổi thông tin thành công')
   } catch (error) {
     yield put({
       type: EDIT_PROFILE_FAIL,
       payload: error,
     });
-    toastError(error);
+    toastError(error.message);
+  }
+}
+
+function* editPasswordUser(action) {
+  try {
+    const { status, error, data } = yield axiosClient.patch('user/auth/updatePassword', action.payload);
+
+    if (status === 'failed' && error.message) {
+      throw new Error(error.message);
+    }
+
+    yield put({
+      type: EDIT_USER_PASSWORD_SUCCESS,
+      payload: data,
+    });
+
+    toastSuccess('Đổi mật khẩu thành công')
+  } catch (error) {
+    yield put({
+      type: EDIT_USER_PASSWORD_FAIL,
+      payload: error,
+    });
+    toastError(error.message);
   }
 }
 
@@ -245,4 +273,5 @@ export default function* accountSaga() {
   yield takeEvery(CREATE_USER_BY_ADMIN, createUserByAdminSaga);
   yield takeEvery(DELETE_USER, deleteUserSaga);
   yield takeEvery(EDIT_USER, editUserSaga);
+  yield takeEvery(EDIT_USER_PASSWORD, editPasswordUser);
 }

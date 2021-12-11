@@ -23,7 +23,7 @@ import Search from '../Search';
 
 const { Option } = Select;
 
-const Header = ({ getCartData, cartData, userDataEdited }) => {
+const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [totalItemInCart, setTotalItemInCart] = useState(0);
@@ -180,10 +180,11 @@ const Header = ({ getCartData, cartData, userDataEdited }) => {
 
 const mapStateToProps = (state) => {
   const { cartData } = state.cartReducer;
-  const { userDataEdited } = state.accountReducer;
+  const { userDataEdited,infoUser } = state.accountReducer;
   return {
     userDataEdited,
     cartData,
+    infoUser
   };
 };
 const mapDispatchToProps = (dispatch) => {

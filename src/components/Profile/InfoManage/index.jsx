@@ -1,49 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Collapse, Row, Button, Input, Form as FormAnt } from 'antd';
+import { Col, Collapse, Row, Button, Input, Form as FormAnt,Spin } from 'antd';
 import { BsPencilSquare } from 'react-icons/bs';
-import bcrypt from 'bcryptjs';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
-import { editProfile, getInfo, getBill } from '../../../redux/actions';
+import { editProfile, getInfo,editUserPassword } from '../../../redux/actions';
 import * as Yup from 'yup';
-
-import history from '../../../until/history';
+import { toastSuccess,toastComingSoon } from '../../../until/toast';
 import './style.scss';
-import { toastError, toastSuccess } from '../../../until/toast';
+import history from '../../../until/history';
 const { Panel } = Collapse;
 
 function InfoManage(prop) {
-  const { editProfile, infoUser, getInfo, userDataEdited } = prop;
+  const { editProfile, infoUser, getInfo,editUserPassword } = prop;
   const { t } = useTranslation();
 
-  const [userEdited, setUserEdited] = useState({});
   const [editable, setEditable] = useState(false);
   const [isShowChangePw, setIsShowChangePw] = useState(false);
   document.title = 'Vegist | Trang Thông tin cá nhân';
-  const user = JSON.parse(localStorage.getItem('profile'));
   
   useEffect(() => {
-    getInfo({ email: user.email });
-  }, [userDataEdited]);
+    getInfo();
+  }, []);
 
-  useEffect(() => {
-    setUserEdited(infoUser);
-  }, [infoUser, userDataEdited]);
-
-  const handleSubmitInfo = (value) => {
-    editProfile({
+  const handleSubmitInfo = async(value) => {
+  delete value.phoneNumber
+   await editProfile({
       ...value,
-      id: infoUser.id,
     });
-    setUserEdited(value);
+
+    getInfo();
     setEditable(!editable);
   };
 
-  const handleSubmitPassword = (values) => {
-      editProfile({
-        password: values.password,
-      });
+  const handleSubmitPassword = async(values) => {
+   infoUser?.data?.email ? await editUserPassword({
+          password: values.passwordInner,
+          newPassword: values.passwordNew,
+      })
+      : toastSuccess('Bạn chưa có email !')
+      
+      getInfo();
       setIsShowChangePw(false);
   };
 
@@ -55,38 +52,43 @@ function InfoManage(prop) {
     {
       id: 1,
       title: 'Full Name',
-      content: user?.fullName,
+      content: infoUser?.data?.fullName,
       type: 'name',
       last: 'last',
     },
     {
       id: 2,
       title: 'Email',
-      content: user.email,
+      content: infoUser?.data?.email,
       type: 'email',
     },
     {
       id: 3,
       title: t('Profile.account.address'),
-      content: `${user.address ?? ''} `,
+      content: `${infoUser?.data?.address ?? ''} `,
       type: 'address',
     },
     {
       id: 4,
       title: t('Profile.account.phone'),
-      content: `${user.phone ?? ''}`,
-      type: 'phone',
+      content: `${infoUser?.data?.phoneNumber ?? ''}`,
+      type: 'phoneNumber',
     },
   ];
 
   return (
     <>
-      <div className="profile__modal"></div>
-
+      {/* <div className="profile__modal"></div> */}
+      {
+        infoUser.load ? (
+          <div className="loading">
+              <Spin />
+          </div>
+        ):
       <section className="profile fadeIn">
         <div className="container">
           <h2>
-            {t('Profile.welcome')} {user.fullName}
+            {t('Profile.welcome')} { infoUser?.data?.fullName}
           </h2>
           <div className="profile__content">
             <Row>
@@ -95,10 +97,12 @@ function InfoManage(prop) {
                   <p>{t('Categories.My_Account.name')}</p>
                   <ul>
                     <li>
-                      <span>{t('Categories.My_Account.My Wishlist')} (0)</span>
+                      <span onClick={()=>{
+                        toastComingSoon()
+                      }}>{t('Categories.My_Account.My Wishlist')} (0)</span>
                     </li>
                     <li>
-                      <span>{t('Categories.My_Account.My Cart')} (0)</span>
+                      <span onClick={()=>history.push('/cart')}>{t('Categories.My_Account.My Cart')} (0)</span>
                     </li>
                     <li>
                       <Collapse
@@ -215,14 +219,14 @@ function InfoManage(prop) {
                 <div className="profile__content--info">
                   <p>{t('Profile.account.title')}</p>
                   <div className="profile__content--info-detail">
-                    {user && (
+                     
                       <Formik
                         initialValues={{
-                          firstName: user?.firstName,
-                          lastName: user?.lastName,
-                          email: user?.email,
-                          address: user?.address,
-                          phone: user?.phone,
+                          firstName: infoUser?.data?.firstName,
+                          lastName: infoUser?.data?.lastName,
+                          email: infoUser?.data?.email,
+                          address: infoUser?.data?.address,
+                          phoneNumber: infoUser?.data?.phoneNumber,
                         }}
                         enableReinitialize
                         validationSchema={Yup.object({
@@ -230,9 +234,11 @@ function InfoManage(prop) {
                             .required(t('validate.first'))
                             .max(20, t('Profile.max')),
                             lastName: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
-                          phone: Yup.string().matches(
-                            /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
-                            'Invalid phone number !'
+                            email: Yup.string()
+                            .required(t("Email can't be blank !"))
+                            .matches(
+                              /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                            'Invalid mail !'
                           ),
                         })}
                         onSubmit={(value) => handleSubmitInfo(value)}
@@ -248,7 +254,7 @@ function InfoManage(prop) {
                                   <p>{item.title}:</p>
                                   <div>
                                     {editable === false ? (
-                                      <p>{item.content}</p>
+                                      <p className="fullName">{item.content}</p>
                                     ) : item.type === 'name' ? (
                                       <>
                                         <Collapse
@@ -283,13 +289,13 @@ function InfoManage(prop) {
                                           </Panel>
                                         </Collapse>
                                       </>
-                                    ) : item.type === 'email' ? (
+                                    ) : item.type === 'phoneNumber' ? (
                                       <p>{item.content}</p>
-                                    ) : item.type === 'phone' ? (
+                                    ) : item.type === 'email' ? (
                                       <>
                                         <Field type="text" name={item.type} />
                                         <span className="error-message">
-                                          <ErrorMessage name="phone" />
+                                          <ErrorMessage name="email" />
                                         </span>
                                       </>
                                     ) : (
@@ -320,7 +326,6 @@ function InfoManage(prop) {
                           </div>
                         </Form>
                       </Formik>
-                    )}
                   </div>
                 </div>
               </Col>
@@ -328,24 +333,23 @@ function InfoManage(prop) {
           </div>
         </div>
       </section>
+      }
     </>
   );
 }
 const mapStateToProps = (state) => {
-  const { editProfile, infoUser, userList, userDataEdited } = state.accountReducer;
+  const { editProfile, infoUser } = state.accountReducer;
 
   return {
     editProfile,
     infoUser,
-    userDataEdited,
-    userList,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     editProfile: (params) => dispatch(editProfile(params)),
     getInfo: (params) => dispatch(getInfo(params)),
-    getBill: (params) => dispatch(getBill(params)),
+    editUserPassword: (params) => dispatch(editUserPassword(params)),
   };
 };
 

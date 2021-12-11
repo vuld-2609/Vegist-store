@@ -79,7 +79,7 @@ function* createCommentSaga(action) {
       },
     });
 
-    toastSuccess(data.message);
+    toastSuccess('Đánh giá thành công');
   } catch (error) {
     yield put({
       type: CREATE_COMMENT_FAIL,

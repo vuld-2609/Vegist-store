@@ -34,7 +34,7 @@ const Login = ({ getUser }) => {
                   <h2>{t('login.create')}</h2>
                   <p>{t('login.text')}</p>
                 </div>
-                <div className="login__label">Email</div>
+                <div className="login__label">Email Or Phone Number <span className="required">*</span></div>
                 <Form.Item
                   name="email"
                   rules={[
@@ -50,7 +50,7 @@ const Login = ({ getUser }) => {
                 >
                   <Input placeholder="Email" />
                 </Form.Item>
-                <div className="login__label">{t('password.password')}</div>
+                <div className="login__label">{t('Password')} <span className="required">*</span></div>
                 <Form.Item
                   name="password"
                   rules={[

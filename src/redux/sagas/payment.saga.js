@@ -102,6 +102,9 @@ function* getBillUserSaga(action) {
       url: `user/bill/${billId}`,
     });
 
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
+
     const data = response.data;
 
     yield put({
@@ -116,6 +119,8 @@ function* getBillUserSaga(action) {
       type: GET_BILL_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
@@ -134,7 +139,7 @@ function* getPayments(action) {
       },
     });
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -147,6 +152,8 @@ function* getPayments(action) {
       type: GET_PAYMENTS_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
@@ -155,7 +162,7 @@ function* deletePayments(action) {
     const { id } = action.payload;
     const response = yield axiosClient.delete(`/admin/bill/${id}`);
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -168,6 +175,8 @@ function* deletePayments(action) {
       type: DELETE_PAYMENTS_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
@@ -178,7 +187,7 @@ function* updatePayments(action) {
       status,
     });
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -191,6 +200,8 @@ function* updatePayments(action) {
       type: UPDATE_PAYMENTS_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
@@ -199,7 +210,7 @@ function* getOrderDetail(action) {
     const { id } = action.payload;
     const response = yield axiosClient.get(`/admin/bill/${id}`);
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -212,13 +223,17 @@ function* getOrderDetail(action) {
       type: GET_ORDER_DETAIL_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
 function* cancelOrderUserSaga(action) {
   try {
-    const { billId } = action.payload;
-    const response = yield axiosClient.patch(`user/bill/${billId}`)
+    const { billId,status } = action.payload;
+    const response = yield axiosClient.patch(`user/bill/${billId}`,{status})
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -233,7 +248,8 @@ function* cancelOrderUserSaga(action) {
       type: CANCEL_ORDER_FAIL,
       payload: error,
     });
-    toastError(error)
+
+    toastError(error.message)
   }
 }
 
@@ -252,6 +268,9 @@ function* getOrderUserSaga(action) {
       },
     });
 
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
+
     const data = response.data;
 
     yield put({
@@ -265,7 +284,7 @@ function* getOrderUserSaga(action) {
       type: GET_ORDER_USER_FAIL,
       payload: error,
     });
-    toastError(error)
+    toastError(error.message)
   }
 }
 
@@ -274,6 +293,8 @@ function* getBillDetailUserSaga(action) {
     const billId = action.payload;
 
     const response = yield axiosClient.get(`/user/bill/${billId}`)
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
    
     const data = response.data;
 
@@ -288,7 +309,7 @@ function* getBillDetailUserSaga(action) {
       type: GET_BILL_DETAIL_USER_FAIL,
       payload: error,
     });
-    toastError(error)
+    toastError(error.message)
   }
 }
 

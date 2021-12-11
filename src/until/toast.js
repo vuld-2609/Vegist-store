@@ -22,3 +22,14 @@ export const toastError = (value, position = 'top-right', time = 3000) =>
     draggable: true,
     progress: undefined,
   });
+
+  export const toastComingSoon = (value, position = 'top-right', time = 3000) =>
+  toast.success(`Coming Soon !`, {
+    position,
+    autoClose: time,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });

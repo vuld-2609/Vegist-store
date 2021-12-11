@@ -6,7 +6,8 @@ import {
   GET_LIST_USER,
   CREATE_USER_BY_ADMIN,
   DELETE_USER,
-  EDIT_USER
+  EDIT_USER,
+  EDIT_USER_PASSWORD
 } from '../constants';
 
 export function createAccount(params) {
@@ -54,6 +55,13 @@ export function deleteUser(params) {
 export function editUser(params) {
   return {
     type: EDIT_USER,
+    payload: params
+  };
+}
+
+export function editUserPassword(params) {
+  return {
+    type: EDIT_USER_PASSWORD,
     payload: params
   };
 }

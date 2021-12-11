@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { Tabs } from 'antd';
 
 import InfoManage from '../../../components/Profile/InfoManage/index'
@@ -9,15 +9,19 @@ import './style.scss';
 const { TabPane } = Tabs;
 
 function Profile() {
+  const [tabValue,setTabValue] = useState('1')
+  const handleChange = (value) => {
+    setTabValue(value)
+  }
 
   return (
     <>
-      <Tabs tabPosition='left'>
+      <Tabs onChange={handleChange} tabPosition='left'>
         <TabPane tab="Info Manage" key="1">
-          <InfoManage/>
+          <InfoManage tabValue={tabValue}/>
         </TabPane>
         <TabPane tab="Order Manage" key="2">
-          <CartManage/>
+          <CartManage tabValue={tabValue}/>
         </TabPane>
     </Tabs>
     </>

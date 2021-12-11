@@ -14,14 +14,21 @@ import {
   DELETE_USER_FAIL,
   DELETE_USER_SUCCESS,
   EDIT_USER_FAIL,
-  EDIT_USER_SUCCESS
+  EDIT_USER_SUCCESS,
+  GET_INFO,
+  EDIT_USER_PASSWORD,
+  EDIT_USER_PASSWORD_SUCCESS,
+  EDIT_USER_PASSWORD_FAIL
 } from '../constants';
 
 const initialStore = {
   userList: [],
   user: {},
   userDataEdited: {},
-  infoUser: {},
+  infoUser: {
+    data:[],
+    load:false,
+  },
   listUser: [],
   adminCreate: {},
   deleteUser: [],
@@ -49,16 +56,34 @@ export default function accountReducer(state = initialStore, action) {
     case GET_USER_ACCOUNT_FAIL: {
       return state;
     }
+
+    case GET_INFO:{
+      return {
+        ...state,
+        infoUser:{
+          load:true
+        }
+      }
+    }
+
     case GET_INFO_SUCCESS: {
+      const {user} = action.payload.data;
       return {
         ...state,
         infoUser: {
-          ...action.payload
+          ...state.infoUser,
+          data:user,
+          load:false
         }
       };
     }
     case GET_INFO_FAIL: {
-      return state;
+      return {
+        ...state,
+        infoUser:{
+          load:false
+        }
+      }
     }
     case EDIT_PROFILE_SUCCESS: {
       return {
@@ -110,6 +135,17 @@ export default function accountReducer(state = initialStore, action) {
       };
     }
     case EDIT_USER_FAIL: {
+      return state;
+    }
+    case EDIT_USER_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        userEdit: {
+          ...action.payload
+        }
+      };
+    }
+    case EDIT_USER_PASSWORD_FAIL: {
       return state;
     }
     default: {
