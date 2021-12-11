@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { editUser } from '../../../../redux/actions';
+import { editUserByAdmin } from '../../../../redux/actions';
 import { FaEdit } from 'react-icons/fa';
-import { regexPhone } from '../../../../Constant';
 import { Modal, Button, Select } from 'antd';
 import './style.scss';
 
-const ModalModify = ({ editUser, item }) => {
+const ModalModify = ({ editUserByAdmin, item }) => {
   const { t } = useTranslation();
   const { Option } = Select;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectRole, setSelectRole] = useState(item.role);
-  const [isLoading, setIsLoading] = useState(false);
 
   function handleChange(value) {
     setSelectRole(value);
@@ -29,11 +26,9 @@ const ModalModify = ({ editUser, item }) => {
     setIsModalVisible(false);
   };
 
-  const handleSubmitAdd = (value) => {
-    editUser({
-      ...value,
+  const handleSubmitAdd = () => {
+    editUserByAdmin({
       id: item.id,
-      name: value.first + ' ' + value.last,
       role: selectRole,
     });
     setIsModalVisible(false);
@@ -41,9 +36,9 @@ const ModalModify = ({ editUser, item }) => {
   return (
     <>
       <div className="admin__listUser--modal">
-        <Button type="primary" onClick={showModal}>
+        <button className="button" onClick={showModal}>
           <FaEdit />
-        </Button>
+        </button>
         <Modal
           title="MODIFY USER"
           visible={isModalVisible}
@@ -52,18 +47,13 @@ const ModalModify = ({ editUser, item }) => {
         >
           <Formik
             initialValues={{
-              first: item.first,
-              last: item.last,
+              firstName: item.firstName,
+              lastName: item.lastName,
               address: item.address,
-              phone: item.phone,
+              phone: item.phone || 'bổ sung data sau',
+              email: item.email,
             }}
             enableReinitialize
-            validationSchema={Yup.object({
-              first: Yup.string().required(t('validate.first')).max(20, t('Profile.max')),
-              last: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
-              phone: Yup.string().matches(regexPhone, 'Invalid phone number !'),
-              address: Yup.string().max(50, t('userList.validate.address')),
-            })}
             onSubmit={(value, { resetForm }) => {
               handleSubmitAdd(value);
               resetForm();
@@ -71,51 +61,49 @@ const ModalModify = ({ editUser, item }) => {
           >
             <Form className="admin__listUser--modal-form">
               <div className="modal__create-input">
-                <label htmlFor="first">
-                  {t('Profile.account.first')} <span>*</span>
-                </label>
+                <label htmlFor="phone">{t('Profile.account.phone')}</label>
                 <div>
-                  <Field id="first" type="text" name="first" />
-                  <p className="error-message">
-                    <ErrorMessage name="first" />
-                  </p>
+                  <Field id="phone" type="text" name="phone" disabled />
                 </div>
               </div>
               <div className="modal__create-input">
-                <label htmlFor="last">
+                <label htmlFor="firstName">
+                  {t('Profile.account.first')} <span>*</span>
+                </label>
+                <div>
+                  <Field id="firstName" type="text" name="firstName" disabled />
+                </div>
+              </div>
+              <div className="modal__create-input">
+                <label htmlFor="lastName">
                   {t('Profile.account.last')} <span>*</span>
                 </label>
                 <div>
-                  <Field id="last" type="text" name="last" />
-                  <p className="error-message">
-                    <ErrorMessage name="last" />
-                  </p>
+                  <Field id="lastName" type="text" name="lastName" disabled />
                 </div>
               </div>
 
               <div className="modal__create-input">
-                <label htmlFor="phone">{t('Profile.account.phone')}</label>
+                <label htmlFor="email">Email</label>
                 <div>
-                  <Field id="phone" type="text" name="phone" />
-                  <p className="error-message">
-                    <ErrorMessage name="phone" />
-                  </p>
+                  <Field id="email" type="text" name="email" disabled />
                 </div>
               </div>
               <div className="modal__create-input">
                 <label htmlFor="address">{t('Profile.account.address')}</label>
                 <div>
-                  <Field id="address" type="text" name="address" />
-                  <p className="error-message">
-                    <ErrorMessage name="address" />
-                  </p>
+                  <Field id="address" type="text" name="address" disabled />
                 </div>
               </div>
 
               <div className="modal__create-input modal__create-input-modify">
                 <label htmlFor="password">{t('Profile.account.role')}</label>
                 <div>
-                  <Select defaultValue={item.role} style={{ width: 120 }} onChange={handleChange}>
+                  <Select
+                    defaultValue={item.role || 'user'}
+                    style={{ width: 120 }}
+                    onChange={handleChange}
+                  >
                     <Option value="user">{t('Profile.account.user')}</Option>
                     <Option value="admin">{t('Profile.account.admin')}</Option>
                   </Select>
@@ -146,7 +134,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    editUser: (params) => dispatch(editUser(params)),
+    editUserByAdmin: (params) => dispatch(editUserByAdmin(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalModify);
