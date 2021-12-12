@@ -4,3 +4,4 @@ export * from './account.constant';
 export * from './productDetail.constant';
 export * from './cart.constant';
 export * from './payment.constant';
+export * from './discount.constant';
