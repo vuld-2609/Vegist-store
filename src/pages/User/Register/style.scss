@@ -37,6 +37,14 @@
     .ant-form-item-control-input-content {
       padding: 0.8rem 0;
     }
+
+    .ant-form-item{
+      margin-bottom: 1rem;
+    }
+
+    .required{
+      color:red
+    }
   }
 
   &__right {

@@ -2,6 +2,17 @@
 @import '../../../scss/utilities/mixin';
 $border-input: #1890ff33;
 .profile {
+  min-height: 50vh;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background-color: #eee;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: gray;
+  }
+
   h6 {
     color: $white;
   }
@@ -16,6 +27,8 @@ $border-input: #1890ff33;
   line-height: 2;
 
   &__content {
+    min-height: 500px;
+
     &--cart {
       p {
         font-size: 2rem;
@@ -54,9 +67,11 @@ $border-input: #1890ff33;
 
       &-detail {
         .info__detail-inner {
+        
           input {
             width: 100%;
             border: 0.5px solid $gray;
+            padding: .2rem 1rem;
             &:focus {
               border-color: $blue;
               border-right-width: 1px !important;
@@ -88,6 +103,10 @@ $border-input: #1890ff33;
           display: flex;
           gap: 2rem;
         }
+
+        .fullName{
+          width: 100% !important;
+        }
       }
     }
   }
@@ -115,6 +134,8 @@ $border-input: #1890ff33;
     }
     .name-order {
       text-align: center;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
     table {
@@ -148,6 +169,19 @@ $border-input: #1890ff33;
           }
         }
       }
+    }
+
+    &-content-action{
+      display: flex;
+      justify-content: flex-end;
+      gap: 2rem;
+      padding: 10px 0;
+
+        .action-select{
+          .ant-select{
+            min-width:120px;
+          }
+        }
     }
   }
 }

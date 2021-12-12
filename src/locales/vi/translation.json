@@ -219,11 +219,11 @@
     "Review__customer": "Đánh giá của khách hàng",
     "Review__rating": "Đánh giá",
     "Review__title": "Tiêu đề",
-    "Review__body": "Nội dung đánh giá không quá 1000 kí tự",
+    "Review__body": "Nội dung đánh giá không quá 255 kí tự",
     "Review__submit": "Xác nhận",
     "Review__validate": {
       "title": "Vui lòng nhập tiêu đề !",
-      "content": "Nội dung không được quá 1000 kí tự"
+      "content": "Nội dung không được quá 255 kí tự"
     },
     "Availability": "Trạng thái",
     "Availability__stock": "Còn hàng",

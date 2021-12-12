@@ -14,6 +14,7 @@ import { AiOutlineUserAdd, AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
+import {toastComingSoon} from '../../until/toast'
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
@@ -23,7 +24,7 @@ import Search from '../Search';
 
 const { Option } = Select;
 
-const Header = ({ getCartData, cartData, userDataEdited }) => {
+const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [totalItemInCart, setTotalItemInCart] = useState(0);
@@ -153,7 +154,7 @@ const Header = ({ getCartData, cartData, userDataEdited }) => {
                 </>
               )}
             </div>
-            <div className="header__widget--item">
+            <div onClick={toastComingSoon} className="header__widget--item">
               <AiOutlineHeart />
               <span className="header__widget--item-count">0</span>
             </div>
@@ -180,10 +181,11 @@ const Header = ({ getCartData, cartData, userDataEdited }) => {
 
 const mapStateToProps = (state) => {
   const { cartData } = state.cartReducer;
-  const { userDataEdited } = state.accountReducer;
+  const { userDataEdited,infoUser } = state.accountReducer;
   return {
     userDataEdited,
     cartData,
+    infoUser
   };
 };
 const mapDispatchToProps = (dispatch) => {

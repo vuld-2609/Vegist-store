@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { addCart, getCartData } from '../../redux/actions';
 import Star from '../Star';
 import './styles.scss';
-import { toastSuccess } from '../../until/toast';
+import { toastComingSoon } from '../../until/toast';
 
 const ProductItem = ({ data, addCart, getCartData }) => {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const ProductItem = ({ data, addCart, getCartData }) => {
         </a>
         <div className="product-item__widget">
           <span className="icon icon-round product-item__widget-icon">
-            <Tooltip placement="top" title="WISHLIST">
+            <Tooltip onClick={toastComingSoon} placement="top" title="WISHLIST">
               <HiHeart />
             </Tooltip>
           </span>

@@ -2,6 +2,16 @@
 @import '../../../scss/utilities/mixin';
 
 .productDetail {
+  &__review{
+    min-height: 500px;
+
+    .ant-tabs-nav-wrap{
+    display: flex;
+    justify-content: center;
+    }
+  }
+
+
   #pointer-mini {
     display: inline-block;
     font-size: 20pt; //Width of pointer
@@ -73,6 +83,7 @@
 
     &--info {
       padding-top: 1rem;
+      min-height: 240px;
       p {
         font-weight: 600;
         line-height: 2;
@@ -109,19 +120,23 @@
         }
       }
 
-      .productDetail__social {
-        padding: 1rem 0;
-        @include flex-align-center();
+    }
+    .productDetail__social {
+      padding: 1rem 0;
+      @include flex-align-center();
 
-        div {
-          padding-left: 1rem;
-          @include flex('', center, row, 0.4rem);
-          img {
-            width: 6%;
-          }
+      div {
+        padding-left: 1rem;
+        @include flex('', center, row, 0.4rem);
+        img {
+          width: 6%;
         }
       }
     }
+  }
+
+  &__quantity {
+    width: 40%;
   }
 
   .productDetail__service {
@@ -154,7 +169,7 @@
   }
   &__description {
     padding: 3rem 0;
-    
+
       .review__content {
         min-height: 760px;
         margin-bottom: 2rem;
@@ -205,10 +220,4 @@
       text-align: center;
     }
   }
-}
-.loading{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
 }

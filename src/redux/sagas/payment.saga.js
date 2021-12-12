@@ -2,6 +2,9 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import history from '../../until/history';
+import { toastError,toastSuccess } from '../../until/toast';
+import axiosClient from '../config/axiosClient';
+
 import {
   CREATE_BILL,
   CREATE_BILL_FAIL,
@@ -23,10 +26,17 @@ import {
   UPDATE_BILL_SUCCESS,
   UPDATE_PAYMENTS,
   UPDATE_PAYMENTS_FAIL,
-  UPDATE_PAYMENTS_SUCCESS,
+  GET_ORDER_USER,
+  GET_ORDER_USER_SUCCESS,
+  GET_ORDER_USER_FAIL,
+  CANCEL_ORDER,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
+  GET_BILL_DETAIL_USER,
+  GET_BILL_DETAIL_USER_SUCCESS,
+  GET_BILL_DETAIL_USER_FAIL,
+  UPDATE_PAYMENTS_SUCCESS
 } from '../constants';
-import axiosClient from './../config/axiosClient';
-import { toastSuccess, toastError } from '../../until/toast';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -92,6 +102,9 @@ function* getBillUserSaga(action) {
       url: `user/bill/${billId}`,
     });
 
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
+
     const data = response.data;
 
     yield put({
@@ -106,6 +119,8 @@ function* getBillUserSaga(action) {
       type: GET_BILL_FAIL,
       payload: error,
     });
+
+    toastError(error.message)
   }
 }
 
@@ -207,7 +222,94 @@ function* getOrderDetail(action) {
       type: GET_ORDER_DETAIL_FAIL,
       payload: error,
     });
-    toastError(error.message);
+
+    toastError(error.message)
+  }
+}
+
+function* cancelOrderUserSaga(action) {
+  try {
+    const { billId,status } = action.payload;
+    const response = yield axiosClient.patch(`user/bill/${billId}`,{status})
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
+    const data = response.data;
+
+    yield put({
+      type: CANCEL_ORDER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+    toastSuccess('Huỷ đơn hàng thành công !')
+  } catch (error) {
+    yield put({
+      type: CANCEL_ORDER_FAIL,
+      payload: error,
+    });
+
+    toastError(error.message)
+  }
+}
+
+function* getOrderUserSaga(action) {
+  try {
+    const { page,search,status,limit } = action.payload;
+
+    const response = yield axiosClient({
+      method: 'GET',
+      url: `user/bill`,
+      params: {
+          ...(search && { q: search }),
+          ...(limit && { _limit: limit }),
+          ...(page && { _page: page }),
+        ...(status && status !== 'all' && { status }),
+      },
+    });
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+
+
+    const data = response.data;
+
+    yield put({
+      type: GET_ORDER_USER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: GET_ORDER_USER_FAIL,
+      payload: error,
+    });
+    toastError(error.message)
+  }
+}
+
+function* getBillDetailUserSaga(action) {
+  try {
+    const billId = action.payload;
+
+    const response = yield axiosClient.get(`/user/bill/${billId}`)
+
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
+   
+    const data = response.data;
+
+    yield put({
+      type: GET_BILL_DETAIL_USER_SUCCESS,
+      payload: {
+        data:data
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: GET_BILL_DETAIL_USER_FAIL,
+      payload: error,
+    });
+    toastError(error.message)
   }
 }
 
@@ -219,4 +321,7 @@ export default function* paymentSaga() {
   yield takeEvery(DELETE_PAYMENTS, deletePayments);
   yield takeEvery(UPDATE_PAYMENTS, updatePayments);
   yield takeEvery(GET_ORDER_DETAIL, getOrderDetail);
+  yield takeEvery(GET_ORDER_USER, getOrderUserSaga);
+  yield takeEvery(CANCEL_ORDER, cancelOrderUserSaga);
+  yield takeEvery(GET_BILL_DETAIL_USER, getBillDetailUserSaga);
 }

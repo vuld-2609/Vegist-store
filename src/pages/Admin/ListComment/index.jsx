@@ -118,7 +118,7 @@ function ListComment({
                     <td>{renderNameProduct(item.productId._id)}</td>
                     <td>{item.userId.fullName}</td>
                     <td>{item.title}</td>
-                    <td>{item.description}</td>
+                    <td className="text-clamp text-clamp--2">{item.description}</td>
                     <td>{item.rate}</td>
                     <td>{moment(item.dateCreate).format('L')}</td>
                     <td className="comment__button">
