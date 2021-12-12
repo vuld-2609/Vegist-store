@@ -31,6 +31,8 @@ import OrderDetail from './pages/Admin/ListOrder/OrderDetail/OrderDetail';
 import NotFound from './components/NotFound/NotFound';
 import About from './pages/User/About/index';
 import ListComment from './pages/Admin/ListComment';
+import DiscountManagement from './pages/Admin/DiscountManagement';
+import CreateDiscount from './pages/Admin/DiscountManagement/CreateDiscount';
 
 function App() {
   return (
@@ -70,6 +72,18 @@ function App() {
             path="/admin/products/edit/:id"
             component={AddProductAdmin}
           ></PrivateLayout>
+          <PrivateLayout
+            exact
+            path="/admin/discount"
+            component={DiscountManagement}
+          ></PrivateLayout>
+          <PrivateLayout exact path="/admin/discount" component={CreateDiscount}></PrivateLayout>
+          <PrivateLayout
+            exact
+            path="/admin/discount/add"
+            component={CreateDiscount}
+          ></PrivateLayout>
+          <PrivateLayout exact path="*" component={Home}></PrivateLayout>
         </Switch>
       </Router>
     </div>

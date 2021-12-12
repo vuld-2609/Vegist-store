@@ -133,9 +133,16 @@
     },
     "search": {
       "required": "You have not entered a keyword !"
+    },
+    "discount": {
+      "max": "Discount name cannot be longer than 50 characters !",
+      "required": "Discount name can't be blank !",
+      "percent": "Discount percentage must be a positive integer between 0 and 100"
+    },
+    "discount name": {
+      "required": "Discount code can't be blank !"
     }
   },
-
   "home": {
     "banner": {
       "shop now": "shop now",
@@ -144,7 +151,6 @@
       "Vegetable Eggplant": "Vegetable Eggplant ",
       "100% Fresh food": "100% Fresh food"
     },
-
     "countdown": {
       "title": "Deal Of The Day!",
       "thumbnail": "We offer a hot deal offer every festival",
@@ -184,7 +190,6 @@
     "Organic Juice": "Organic Juice ",
     "Organic Dryfruit": "Organic Dryfruit"
   },
-
   "tags": {
     "Almond": "Almond",
     "banana": "banana",
@@ -216,7 +221,6 @@
     "Organic Juice ": "Organic Juice ",
     "Organic Dryfruit": "Organic Dryfruit"
   },
-
   "productDetail": {
     "Review": "Write a review",
     "Review__customer": "Customer Review",
@@ -258,7 +262,6 @@
     "Do you want to delete all products": "Do you want to delete all products?",
     "Checkout": "Checkout"
   },
-
   "Profile": {
     "welcome": "Welcome",
     "edit": "Edit password",
@@ -361,16 +364,31 @@
   },
   "admin": {
     "listUser": {
-      "title": "LIST USER"
+      "title": "User management"
     },
     "listProduct": {
-      "title": "LIST PRODUCT"
+      "title": "Product management "
     },
     "listOrder": {
-      "title": "LIST ORDER"
+      "title": "Order management "
     },
     "listComment": {
-      "title": "LIST COMMENT"
+      "title": "Comment management "
+    },
+    "discount": {
+      "title": "Discount management",
+      " Discount name": "Discount name ",
+      "StartDate": "Start date",
+      "EndDate": "End date",
+      "Add new": "Add new",
+      "key": "Key",
+      "Discount name": "Discount name",
+      "Discount code": "Discount code",
+      "Percent": "Percent",
+      "Start date": "Start date",
+      "End date": "End date",
+      "Quantity": "Quantity",
+      "Action": "Action"
     },
     "table": {
       "name": "NAME",
@@ -380,7 +398,6 @@
       "role": "ROLE",
       "status": "STATUS"
     },
-
     "products": {
       "More new products": "More new products",
       "Enter product name": "Enter product name...",
@@ -402,7 +419,19 @@
       "Enter short description": "Enter Short description...",
       "Describe": "Describe",
       "Enter describe": "Enter describe...",
-      "Add new": "Add new"
-    }
+      "Add new": "Add new",
+      "Create discount": "Create dicount code",
+      "Enter discount name": "Enter discount name",
+      "Discount code": "Discount code",
+      "Enter discount code": "Enter discount code",
+      "Percent": "Percent",
+      "Enter percent": "Enter percent",
+      "Quantity": "Quantity",
+      "Enter quantity": "Enter quantity"
+    },
+    "sales": {
+      "title": "Discount Management"
+    },
+    "home": "Home"
   }
 }

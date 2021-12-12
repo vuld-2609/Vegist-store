@@ -134,9 +134,16 @@
     },
     "search": {
       "required": "Bạn chưa nhập từ khóa !"
+    },
+    "discount": {
+      "max": "Tên mã khuyến mãi không được dài hơn 50 ký tự",
+      "required": "Tên mã giảm giá không được để trống !",
+      "percent": "Phần trăm giảm giá phải là số nguyên dương từ 0 đến 100"
+    },
+    "discount name": {
+      "required": "Mã khuyến mãi không được để trống !"
     }
   },
-
   "home": {
     "banner": {
       "shop now": "mua sắm ngay",
@@ -145,7 +152,6 @@
       "Vegetable Eggplant": "Rau cà tím ",
       "100% Fresh food": "100% thực phẩm tươi"
     },
-
     "countdown": {
       "title": "Ưu đãi trong ngày!",
       "thumbnail": "Chúng tôi cung cấp một ưu đãi hấp dẫn mỗi dịp lễ hội",
@@ -357,16 +363,31 @@
   },
   "admin": {
     "listUser": {
-      "title": "DANH SÁCH NGƯỜI DÙNG"
+      "title": "Quản lý User"
     },
     "listProduct": {
-      "title": "DANH SÁCH SẢN PHẨM"
+      "title": "Quản lý sản phẩm"
     },
     "listOrder": {
-      "title": "DANH SÁCH ĐƠN ĐẶT HÀNG"
+      "title": "Quản lý đơn đặt hàng"
     },
     "listComment": {
-      "title": "DANH SÁCH BÌNH LUẬN"
+      "title": "Quản lý bình luận"
+    },
+    "discount": {
+      "title": "Quản lý khuyến mãi",
+      " Discount name": "Tên mã giảm giá",
+      "StartDate": "Ngày bắt đầu",
+      "EndDate": "Ngày kết thúc",
+      "Add new": "Thêm mới",
+      "key": "STT",
+      "Discount name": "Tên mã giảm giá",
+      "Discount code": "Mã giảm giá",
+      "Percent": "Phần trăm giảm giá",
+      "Start date": "Ngày bắt đầu",
+      "End date": "Ngày kết thúc",
+      "Quantity": "Số lượng",
+      "Action": "Hành động"
     },
     "table": {
       "name": "Họ tên",
@@ -396,7 +417,19 @@
       "Enter short description": "Nhập mô tả ngắn...",
       "Describe": "Mô tả",
       "Enter describe": "Nhập mô tả...",
-      "Add new": "Thêm mới"
-    }
+      "Add new": "Thêm mới",
+      "Create discount": "Tạo mã khuyến mãi",
+      "Enter discount name": "Nhập tên mã giảm giá",
+      "Discount code": "Mã giảm giá",
+      "Enter discount code": "Nhập mã giảm giá",
+      "Percent": "Phần trăm giảm giá",
+      "Enter percent": "Nhập phần trăm giảm giá",
+      "Quantity": "Số lượng",
+      "Enter quantity": "Nhập số lượng mã giảm giá"
+    },
+    "sales": {
+      "title": "Quản lý khuyến mãi"
+    },
+    "home": "Trang chủ"
   }
 }
