@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { deletePayments, getPayments, updatePayments } from '../../../redux/actions';
 import Row from './components/Row/index';
 import './styles.scss';
+import { ToastContainer } from 'react-toastify';
 
 const arrStatus = [
   { id: 1, value: 'Đợi xác nhận' },
   { id: 2, value: 'Đã xác nhận' },
   { id: 3, value: 'Đang vận chuyển' },
   { id: 4, value: 'Đã giao hàng' },
-  { id: 5, value: 'Tất cả' },
+  { id: 5, value: 'Đã hủy' },
+  { id: 6, value: 'Tất cả' },
 ];
 
 const title = [
@@ -40,7 +42,6 @@ function ListOrder({
   const [search, setSearch] = useState('');
   const [searchKey, setSearchKey] = useState();
   const [sort, setSort] = useState('');
-
   const typingTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -73,6 +74,27 @@ function ListOrder({
       cancelText: 'CANCEL',
       onOk() {
         deletePayments({ id });
+      },
+      onCancel() {},
+    });
+  };
+
+  const handleClickCancel = (paymentCode, id) => {
+    Modal.confirm({
+      title: 'Confirm',
+      content: (
+        <p>
+          Do you want to cancel this payment{' '}
+          <span style={{ fontWeight: 600 }}>{`#${paymentCode}`}</span> ?
+        </p>
+      ),
+      okText: 'OK',
+      cancelText: 'CANCEL',
+      onOk() {
+        updatePayments({
+          id,
+          status: 'Đã hủy',
+        });
       },
       onCancel() {},
     });
@@ -144,6 +166,7 @@ function ListOrder({
                     arrStatus={arrStatus}
                     handleChangeStatus={handleChangeStatus}
                     handleClickDelete={handleClickDelete}
+                    handleClickCancel={handleClickCancel}
                   />
                 ))
               ) : (
@@ -165,6 +188,7 @@ function ListOrder({
           ) : null}
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }

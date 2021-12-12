@@ -1,3 +1,5 @@
+@import '../../scss/styles.scss';
+
 .admin-navbar {
   > button {
     // display: none !important;
@@ -5,5 +7,28 @@
   height: 100vh;
   ul {
     height: 100%;
+  }
+}
+
+.admin__account {
+  @include flex('', center, '', '', '');
+  &--avt {
+    margin-right: 8px;
+    width: 40px;
+    height: 40px;
+
+    & > img {
+      border-radius: 50%;
+    }
+  }
+
+  &--name {
+    color: $gray;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:hover {
+      color: $white;
+    }
   }
 }

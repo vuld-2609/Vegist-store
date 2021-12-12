@@ -1,25 +1,23 @@
 import { put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
-import axiosClient from '../config/axiosClient';
 import { all } from 'redux-saga/effects';
-import { toastSuccess, toastError } from '../../until/toast';
-
+import { toastError, toastSuccess } from '../../until/toast';
+import axiosClient from '../config/axiosClient';
 import {
-  GET_PRODUCT_DETAIL,
-  GET_PRODUCT_DETAIL_FAIL,
-  GET_PRODUCT_DETAIL_SUCCESS,
-  GET_COMMENT,
-  GET_COMMENT_SUCCESS,
-  GET_COMMENT_FAIL,
   CREATE_COMMENT,
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT_SUCCESS,
   DELETE_COMMENT,
-  DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAIL,
+  DELETE_COMMENT_SUCCESS,
+  GET_COMMENT,
   GET_COMMENT_ADMIN,
-  GET_COMMENT_ADMIN_SUCCESS,
   GET_COMMENT_ADMIN_FAIL,
+  GET_COMMENT_ADMIN_SUCCESS,
+  GET_COMMENT_FAIL,
+  GET_COMMENT_SUCCESS,
+  GET_PRODUCT_DETAIL,
+  GET_PRODUCT_DETAIL_FAIL,
+  GET_PRODUCT_DETAIL_SUCCESS,
 } from '../constants';
 
 function* getProductDetailSaga(action) {
@@ -78,8 +76,7 @@ function* createCommentSaga(action) {
         data: data,
       },
     });
-
-    toastSuccess(data.message);
+    toastSuccess('Đánh giá sản phẩm thành công!');
   } catch (error) {
     yield put({
       type: CREATE_COMMENT_FAIL,
@@ -134,7 +131,7 @@ function* getCommentAdminSaga(action) {
       },
     });
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -146,6 +143,7 @@ function* getCommentAdminSaga(action) {
     yield put({
       type: GET_COMMENT_ADMIN_FAIL,
     });
+    toastError(error.message);
   }
 }
 
@@ -154,7 +152,7 @@ function* deleteCommentSaga(action) {
   try {
     const response = yield axiosClient.delete(`/admin/review/${id}`);
 
-    if (response.status === 'failed' && response.error) throw new Error(response.error);
+    if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
     const data = response.data;
 
@@ -162,11 +160,13 @@ function* deleteCommentSaga(action) {
       type: DELETE_COMMENT_SUCCESS,
       payload: data,
     });
+    toastSuccess('Xóa đánh giá thành công!');
   } catch (error) {
     yield put({
       type: DELETE_COMMENT_FAIL,
       payload: error,
     });
+    toastError(error.message);
   }
 }
 
