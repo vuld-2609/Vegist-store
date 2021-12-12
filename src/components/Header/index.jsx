@@ -14,6 +14,7 @@ import { AiOutlineUserAdd, AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
+import {toastComingSoon} from '../../until/toast'
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
@@ -153,7 +154,7 @@ const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
                 </>
               )}
             </div>
-            <div className="header__widget--item">
+            <div onClick={toastComingSoon} className="header__widget--item">
               <AiOutlineHeart />
               <span className="header__widget--item-count">0</span>
             </div>

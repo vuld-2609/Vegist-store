@@ -1,11 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import history from '../../until/history';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { all } from 'redux-saga/effects';
 import axiosClient from '../config/axiosClient';
 import { toastSuccess, toastError } from '../../until/toast';
 
@@ -25,78 +20,85 @@ import {
   GET_LIST_USER,
   GET_LIST_USER_FAIL,
   GET_LIST_USER_SUCCESS,
-  CREATE_USER_BY_ADMIN,
-  CREATE_USER_BY_ADMIN_FAIL,
-  CREATE_USER_BY_ADMIN_SUCCESS,
+  EDIT_USER_BY_ADMIN,
+  EDIT_USER_BY_ADMIN_FAIL,
+  EDIT_USER_BY_ADMIN_SUCCESS,
   DELETE_USER,
   DELETE_USER_FAIL,
   DELETE_USER_SUCCESS,
-  EDIT_USER,
-  EDIT_USER_FAIL,
-  EDIT_USER_SUCCESS,
   EDIT_USER_PASSWORD,
   EDIT_USER_PASSWORD_FAIL,
   EDIT_USER_PASSWORD_SUCCESS,
 } from '../constants';
-const apiURL = process.env.REACT_APP_API_URL;
 
-function* editUserSaga(action) {
+function* editUserByAdminSaga(action) {
   try {
-    const { id, first, last, name, phone, address } = action.payload;
-    const response = yield axios.patch(`${apiURL}/userList/${id}`, {
-      last,
-      first,
-      phone,
-      address,
-      name,
+    const { id, role, status } = action.payload;
+    const {
+      status: s,
+      error,
+      data,
+    } = yield axiosClient.patch(`admin/user/${id}`, {
+      role,
+      status,
     });
-    const data = response.data;
-    toastSuccess('Modify user success !');
+
+    if (s === 'failed' && error) {
+      throw new Error(error.message);
+    }
     yield put({
-      type: EDIT_USER_SUCCESS,
-      payload: data,
+      type: EDIT_USER_BY_ADMIN_SUCCESS,
+      payload: data.user,
     });
+    toastSuccess(data.message);
   } catch (error) {
+    toastError(error.message);
     yield put({
-      type: EDIT_USER_FAIL,
+      type: EDIT_USER_BY_ADMIN_FAIL,
       payload: error,
     });
   }
 }
+
 function* deleteUserSaga(action) {
   try {
     const { id } = action.payload;
-    yield axios.delete(`${apiURL}/userList/${id}`);
-    toastSuccess('Delete user success !');
+    const { status, error, data } = yield axiosClient.delete(`admin/user/${id}`);
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
     yield put({
       type: DELETE_USER_SUCCESS,
-      payload: [],
+      payload: id,
     });
+    toastSuccess(data.message);
   } catch (error) {
+    toastError(error);
     yield put({
       type: DELETE_USER_FAIL,
       payload: error,
     });
   }
 }
+
 function* getListUserSaga(action) {
   try {
     const { page, limit, search } = action.payload;
-    const [response, resCheck] = yield all([
-      axios({
-        url: `${apiURL}/userList`,
-        method: 'get',
-        params: {
-          ...{ role: 'user' },
-          ...(page && { _page: page }),
-          ...(limit && { _limit: limit }),
-          ...{ _sort: 'id', _order: 'desc' },
-          ...(search && { q: search }),
-        },
-      }),
-      axios.get(`${apiURL}/userList?role=user`),
-    ]);
-    const data = [response.data, resCheck.data.length];
+    const { status, error, data } = yield axiosClient({
+      url: `admin/user`,
+      method: 'GET',
+      params: {
+        ...(page && { _page: page }),
+        ...(limit && { _limit: limit }),
+        ...(search && { q: search }),
+      },
+    });
+
+    if (status === 'failed' && error) {
+      throw new Error(error.message);
+    }
+
     yield put({
       type: GET_LIST_USER_SUCCESS,
       payload: data,
@@ -106,38 +108,7 @@ function* getListUserSaga(action) {
       type: GET_LIST_USER_FAIL,
       payload: error,
     });
-  }
-}
-function* createUserByAdminSaga(action) {
-  try {
-    const { email, password } = action.payload;
-    const responseCheck = yield axios.get(`${apiURL}/userList?email=${email}`);
-    const dataCheck = responseCheck.data;
-    if (dataCheck.length === 0) {
-      const hashedPassword = yield bcrypt.hash(password, 12);
-      const response = yield axios.post(`${apiURL}/userList`, {
-        ...action.payload,
-        password: hashedPassword,
-      });
-      const data = response.data;
-      toastSuccess('Create user success !');
-      yield put({
-        type: CREATE_USER_BY_ADMIN_SUCCESS,
-        payload: data,
-      });
-    } else {
-      toastSuccess('An error has occurred !');
-      yield put({
-        type: CREATE_USER_BY_ADMIN_FAIL,
-      });
-    }
-  } catch (error) {
-    toastError('An error has occurred !');
-
-    yield put({
-      type: CREATE_USER_BY_ADMIN_FAIL,
-      payload: error,
-    });
+    toastError(error);
   }
 }
 
@@ -181,6 +152,7 @@ function* getInfoSaga(action) {
       },
     });
   } catch (error) {
+    toastError(error.message);
     yield put({
       type: GET_INFO_FAIL,
       payload: error,
@@ -217,6 +189,7 @@ function* loginSaga(action) {
     toastError(error.message)
   }
 }
+
 function* editProfileSaga(action) {
   try {
     const { status, error, data } = yield axiosClient.patch(`user/auth`, action.payload);
@@ -254,7 +227,7 @@ function* editPasswordUser(action) {
       payload: data,
     });
 
-    toastSuccess('Đổi mật khẩu thành công')
+    toastSuccess(data.message)
   } catch (error) {
     yield put({
       type: EDIT_USER_PASSWORD_FAIL,
@@ -270,8 +243,7 @@ export default function* accountSaga() {
   yield takeEvery(EDIT_PROFILE, editProfileSaga);
   yield takeEvery(GET_INFO, getInfoSaga);
   yield takeEvery(GET_LIST_USER, getListUserSaga);
-  yield takeEvery(CREATE_USER_BY_ADMIN, createUserByAdminSaga);
+  yield takeEvery(EDIT_USER_BY_ADMIN, editUserByAdminSaga);
   yield takeEvery(DELETE_USER, deleteUserSaga);
-  yield takeEvery(EDIT_USER, editUserSaga);
   yield takeEvery(EDIT_USER_PASSWORD, editPasswordUser);
 }

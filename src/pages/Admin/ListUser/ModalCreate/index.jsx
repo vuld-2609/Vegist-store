@@ -3,22 +3,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { createUserByAdmin } from '../../../../redux/actions';
+import { createAccount } from '../../../../redux/actions';
 import { regexPhone } from '../../../../Constant';
 
 import { Modal, Button, Select } from 'antd';
 import './style.scss';
 
-const ModalCreate = ({ createUserByAdmin }) => {
+const ModalCreate = ({ createAccount }) => {
   const { t } = useTranslation();
   const { Option } = Select;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectRole, setSelectRole] = useState('user');
-
-  function handleChange(value) {
-    setSelectRole(value);
-  }
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -29,10 +24,9 @@ const ModalCreate = ({ createUserByAdmin }) => {
   };
 
   const handleSubmitAdd = (value) => {
-    createUserByAdmin({
+    createAccount({
       ...value,
-      name: value.first + ' ' + value.last,
-      role: selectRole,
+      fullName: value.first + ' ' + value.last,
     });
     setIsModalVisible(false);
   };
@@ -50,8 +44,8 @@ const ModalCreate = ({ createUserByAdmin }) => {
         >
           <Formik
             initialValues={{
-              first: '',
-              last: '',
+              firstName: '',
+              lastName: '',
               email: '',
               address: '',
               phone: '',
@@ -59,8 +53,8 @@ const ModalCreate = ({ createUserByAdmin }) => {
             }}
             enableReinitialize
             validationSchema={Yup.object({
-              first: Yup.string().required(t('validate.first')).max(20, t('Profile.max')),
-              last: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
+              firstName: Yup.string().required(t('validate.first')).max(20, t('Profile.max')),
+              lastName: Yup.string().required(t('validate.last')).max(20, t('Profile.max')),
               phone: Yup.string().matches(regexPhone, 'Invalid phone number !'),
               email: Yup.string().required(t('validate.email.required')),
               address: Yup.string().max(50, t('userList.validate.address')),
@@ -75,24 +69,33 @@ const ModalCreate = ({ createUserByAdmin }) => {
           >
             <Form className="admin__listUser--modal-form">
               <div className="modal__create-input">
-                <label htmlFor="first">
+                <label htmlFor="firstName">
                   {t('Profile.account.first')} <span>*</span>
                 </label>
                 <div>
-                  <Field id="first" type="text" name="first" />
+                  <Field id="firstName" type="text" name="firstName" />
                   <p className="error-message">
-                    <ErrorMessage name="first" />
+                    <ErrorMessage name="firstName" />
                   </p>
                 </div>
               </div>
               <div className="modal__create-input">
-                <label htmlFor="last">
+                <label htmlFor="lastName">
                   {t('Profile.account.last')} <span>*</span>
                 </label>
                 <div>
-                  <Field id="last" type="text" name="last" />
+                  <Field id="lastName" type="text" name="lastName" />
                   <p className="error-message">
-                    <ErrorMessage name="last" />
+                    <ErrorMessage name="lastName" />
+                  </p>
+                </div>
+              </div>
+              <div className="modal__create-input">
+                <label htmlFor="phone">{t('Profile.account.phone')}</label>
+                <div>
+                  <Field id="phone" type="text" name="phone" />
+                  <p className="error-message">
+                    <ErrorMessage name="phone" />
                   </p>
                 </div>
               </div>
@@ -104,15 +107,6 @@ const ModalCreate = ({ createUserByAdmin }) => {
                   <Field id="email" type="text" name="email" />
                   <p className="error-message">
                     <ErrorMessage name="email" />
-                  </p>
-                </div>
-              </div>
-              <div className="modal__create-input">
-                <label htmlFor="phone">{t('Profile.account.phone')}</label>
-                <div>
-                  <Field id="phone" type="text" name="phone" />
-                  <p className="error-message">
-                    <ErrorMessage name="phone" />
                   </p>
                 </div>
               </div>
@@ -134,15 +128,6 @@ const ModalCreate = ({ createUserByAdmin }) => {
                   <p className="error-message">
                     <ErrorMessage name="password" />
                   </p>
-                </div>
-              </div>
-              <div className="modal__create-input modal__create-input-modify">
-                <label htmlFor="password">{t('Profile.account.role')}</label>
-                <div>
-                  <Select defaultValue="user" style={{ width: 120 }} onChange={handleChange}>
-                    <Option value="user">{t('Profile.account.user')}</Option>
-                    <Option value="admin">{t('Profile.account.admin')}</Option>
-                  </Select>
                 </div>
               </div>
               <div className="modal__form-btn">
@@ -169,7 +154,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createUserByAdmin: (params) => dispatch(createUserByAdmin(params)),
+    createAccount: (params) => dispatch(createAccount(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCreate);

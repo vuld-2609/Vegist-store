@@ -243,6 +243,7 @@ function* cancelOrderUserSaga(action) {
         data:data
       },
     });
+    toastSuccess('Huỷ đơn hàng thành công !')
   } catch (error) {
     yield put({
       type: CANCEL_ORDER_FAIL,

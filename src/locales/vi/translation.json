@@ -219,11 +219,11 @@
     "Review__customer": "Đánh giá của khách hàng",
     "Review__rating": "Đánh giá",
     "Review__title": "Tiêu đề",
-    "Review__body": "Nội dung đánh giá không quá 1000 kí tự",
+    "Review__body": "Nội dung đánh giá không quá 255 kí tự",
     "Review__submit": "Xác nhận",
     "Review__validate": {
       "title": "Vui lòng nhập tiêu đề !",
-      "content": "Nội dung không được quá 1000 kí tự"
+      "content": "Nội dung không được quá 255 kí tự"
     },
     "Availability": "Trạng thái",
     "Availability__stock": "Còn hàng",
@@ -368,12 +368,20 @@
     "listComment": {
       "title": "DANH SÁCH BÌNH LUẬN"
     },
+    "table": {
+      "name": "Họ tên",
+      "address": "Địa chỉ",
+      "phone": "Số điện thoại",
+      "action": "Hành động",
+      "role": "Tên quyền",
+      "status": "Trạng thái"
+    },
     "products": {
       "More new products": "Thêm mới sản phẩm",
       "Enter product name": "Nhập tên sản phẩm",
       "Product's name": "Tên sản phẩm",
-      "Product Line": "Dòng sản phẩm",
-      "Select product line": "Chọn dòng sản phẩm",
+      "category": "Dòng sản phẩm",
+      "Select category": "Chọn dòng sản phẩm",
       "Unit price": "Đơn giá",
       "Enter unit price": "Nhập đơn giá...",
       "New price": "Đơn giá mới",

@@ -346,7 +346,7 @@ const ProductDetail = ({
                             name="description"
                             rules={[
                               {
-                                max: 1000,
+                                max: 255,
                                 message: t('productDetail.Review__validate.content'),
                               },
                             ]}

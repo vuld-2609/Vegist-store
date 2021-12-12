@@ -88,7 +88,7 @@ const Register = (prop) => {
                 >
                   <Input placeholder="Phone Number" />
                 </Form.Item>
-                <div className="login__label">Email</div>
+                {/* <div className="login__label">Email</div>
                 <Form.Item
                   name="email"
                   rules={[
@@ -99,7 +99,7 @@ const Register = (prop) => {
                   ]}
                 >
                   <Input placeholder="Email" />
-                </Form.Item>
+                </Form.Item> */}
                 <div className="login__label">Password <span className="required">*</span></div>
               
                 <Form.Item

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const toastSuccess = (value, position = 'top-right', time = 3000) =>
+export const toastSuccess = (value, position = 'top-right', time = 2000) =>
   toast.success(`🦄 ${value}`, {
     position,
     autoClose: time,
@@ -12,7 +12,7 @@ export const toastSuccess = (value, position = 'top-right', time = 3000) =>
     progress: undefined,
   });
 
-export const toastError = (value, position = 'top-right', time = 3000) =>
+export const toastError = (value, position = 'top-right', time = 2000) =>
   toast.error(`🦄 ${value}`, {
     position,
     autoClose: time,
@@ -23,7 +23,7 @@ export const toastError = (value, position = 'top-right', time = 3000) =>
     progress: undefined,
   });
 
-  export const toastComingSoon = (value, position = 'top-right', time = 3000) =>
+  export const toastComingSoon = (value, position = 'top-right', time = 1500) =>
   toast.success(`Coming Soon !`, {
     position,
     autoClose: time,

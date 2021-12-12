@@ -12,7 +12,7 @@ import history from '../../../until/history';
 const { Panel } = Collapse;
 
 function InfoManage(prop) {
-  const { editProfile, infoUser, getInfo,editUserPassword } = prop;
+  const { editProfile, infoUser, getInfo,editUserPassword, tabValue } = prop;
   const { t } = useTranslation();
 
   const [editable, setEditable] = useState(false);
@@ -22,6 +22,11 @@ function InfoManage(prop) {
   useEffect(() => {
     getInfo();
   }, []);
+
+  useEffect(() => {
+    tabValue==='2' && getInfo();
+  }, [tabValue]);
+
 
   const handleSubmitInfo = async(value) => {
   delete value.phoneNumber
@@ -99,10 +104,10 @@ function InfoManage(prop) {
                     <li>
                       <span onClick={()=>{
                         toastComingSoon()
-                      }}>{t('Categories.My_Account.My Wishlist')} (0)</span>
+                      }}>{t('Categories.My_Account.My Wishlist')}</span>
                     </li>
                     <li>
-                      <span onClick={()=>history.push('/cart')}>{t('Categories.My_Account.My Cart')} (0)</span>
+                      <span onClick={()=>history.push('/cart')}>{t('Categories.My_Account.My Cart')}</span>
                     </li>
                     <li>
                       <Collapse

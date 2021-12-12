@@ -222,11 +222,11 @@
     "Review__customer": "Customer Review",
     "Review__rating": "Rating",
     "Review__title": "Review Title",
-    "Review__body": "Body of Review (1000)characters remaining",
+    "Review__body": "Body of Review (255)characters remaining",
     "Review__submit": "Review submit",
     "Review__validate": {
       "title": "Please input your title !",
-      "content": "Content must be less than 1000 characters"
+      "content": "Content must be less than 255 characters"
     },
     "Availability": "Availability",
     "Availability__stock": "In stock",
@@ -376,15 +376,17 @@
       "name": "NAME",
       "address": "ADDRESS",
       "phone": "PHONE",
-      "action": "ACTION"
+      "action": "ACTION",
+      "role": "ROLE",
+      "status": "STATUS"
     },
 
     "products": {
       "More new products": "More new products",
       "Enter product name": "Enter product name...",
       "Product's name": "Product's name",
-      "Product Line": "Product line",
-      "Select product line": "Select product line...",
+      "Category": "Category",
+      "Select category": "Select category...",
       "Enter price": "Enter price...",
       "Price": "Price",
       "Enter sale": "Enter sale",
