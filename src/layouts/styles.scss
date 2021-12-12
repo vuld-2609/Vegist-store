@@ -45,8 +45,13 @@
     padding-left: 256px;
     width: calc(100% -256px);
   }
+
+  &__language {
+    @include flex(flex-end, center, '', '', '');
+    padding: 12px 12px 0 0;
+  }
 }
 
-.main{
+.main {
   min-height: 70vh;
 }
