@@ -32,7 +32,7 @@ function* addCartSaga(action) {
       type: ADD_CART_SUCCESS,
       payload: data.cartDetails,
     });
-    toastSuccess('Thêm vào giỏ hàng thành công');
+    toastSuccess('Thêm vào giỏ hàng thành công!');
   } catch (error) {
     yield put({
       type: ADD_CART_FAIL,

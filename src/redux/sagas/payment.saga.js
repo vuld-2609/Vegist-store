@@ -42,10 +42,10 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 function* createBill(action) {
   try {
-    const response = yield axiosClient.post('/user/bill',action.payload)
+    const response = yield axiosClient.post('/user/bill', action.payload);
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
-    
+
     const data = response.data;
 
     yield put({
@@ -54,14 +54,14 @@ function* createBill(action) {
     });
 
     history.push(`/success/${data.bill.id}`);
-    toastSuccess('Đặt hàng thành công')
+    toastSuccess('Đặt hàng thành công!');
   } catch (error) {
     yield put({
       type: CREATE_BILL_FAIL,
       payload: error,
     });
-    
-    toastError(error.message)
+
+    toastError(error.message);
   }
 }
 
@@ -110,8 +110,8 @@ function* getBillUserSaga(action) {
     yield put({
       type: GET_BILL_SUCCESS,
       payload: {
-        data:data,
-        total:response.data.total
+        data: data,
+        total: response.data.total,
       },
     });
   } catch (error) {
@@ -152,8 +152,7 @@ function* getPayments(action) {
       type: GET_PAYMENTS_FAIL,
       payload: error,
     });
-
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
@@ -170,13 +169,13 @@ function* deletePayments(action) {
       type: DELETE_PAYMENTS_SUCCESS,
       payload: data,
     });
+    toastSuccess('Xóa đơn đặt hàng thành công!');
   } catch (error) {
     yield put({
       type: DELETE_PAYMENTS_FAIL,
       payload: error,
     });
-
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
@@ -195,13 +194,13 @@ function* updatePayments(action) {
       type: UPDATE_PAYMENTS_SUCCESS,
       payload: data,
     });
+    toastSuccess('Cập nhật trạng thái đơn đặt hàng thành công!');
   } catch (error) {
     yield put({
       type: UPDATE_PAYMENTS_FAIL,
       payload: error,
     });
-
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 

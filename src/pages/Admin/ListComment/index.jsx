@@ -7,6 +7,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
 import './styles.scss';
+import { ToastContainer } from 'react-toastify';
 
 const title = [
   { id: 1, title: 'STT' },
@@ -120,14 +121,12 @@ function ListComment({
                     <td className="text-clamp text-clamp--2">{item.description}</td>
                     <td>{item.rate}</td>
                     <td>{moment(item.dateCreate).format('L')}</td>
-                    <td>
-                      <>
-                        <BsReplyAllFill className="commment__icon commment__icon--reply" />
-                        <RiDeleteBin5Fill
-                          className="commment__icon commment__icon--delete"
-                          onClick={() => handleClickDelete(item.id, item.title)}
-                        />
-                      </>
+                    <td className="comment__button">
+                      <BsReplyAllFill className="comment__icon comment__icon--reply" />
+                      <RiDeleteBin5Fill
+                        className="comment__icon comment__icon--delete"
+                        onClick={() => handleClickDelete(item.id, item.title)}
+                      />
                     </td>
                   </tr>
                 ))
@@ -148,6 +147,7 @@ function ListComment({
           ) : null}
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }
