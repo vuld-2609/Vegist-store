@@ -30,3 +30,11 @@
     cursor: pointer;
   }
 }
+
+.admin__wrapper--button {
+  @include flex(flex-end, center, '', '', '');
+}
+
+.button-back {
+  margin-right: 12px;
+}

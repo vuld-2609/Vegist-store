@@ -1,10 +1,11 @@
 import { Empty, Input, Modal, Pagination, Select } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { deletePayments, getPayments, updatePayments } from '../../../redux/actions';
 import Row from './components/Row/index';
 import './styles.scss';
-import { ToastContainer } from 'react-toastify';
 
 const arrStatus = [
   { id: 1, value: 'Đợi xác nhận' },
@@ -13,16 +14,6 @@ const arrStatus = [
   { id: 4, value: 'Đã giao hàng' },
   { id: 5, value: 'Đã hủy' },
   { id: 6, value: 'Tất cả' },
-];
-
-const title = [
-  { id: 1, title: 'STT' },
-  { id: 2, title: 'Payment Code' },
-  { id: 3, title: 'User Name' },
-  { id: 4, title: 'Total Price' },
-  { id: 5, title: 'Date Time' },
-  { id: 6, title: 'Status' },
-  { id: 7, title: 'Action' },
 ];
 
 function ListOrder({
@@ -43,6 +34,17 @@ function ListOrder({
   const [searchKey, setSearchKey] = useState();
   const [sort, setSort] = useState('');
   const typingTimeoutRef = useRef(null);
+  const { t } = useTranslation();
+
+  const title = [
+    { id: 1, title: 'STT' },
+    { id: 2, title: t('admin.order.Payment Code') },
+    { id: 3, title: t('admin.order.User Name') },
+    { id: 4, title: t('admin.order.Total Price') },
+    { id: 5, title: t('admin.order.Date Time') },
+    { id: 6, title: t('admin.order.Status') },
+    { id: 7, title: t('admin.order.Action') },
+  ];
 
   useEffect(() => {
     document.title = 'Vegist | Trang Quản lý đơn đặt hàng';
@@ -129,7 +131,7 @@ function ListOrder({
               showSearch
               style={{ width: 160 }}
               optionFilterProp="children"
-              placeholder="Select a status"
+              placeholder={t('admin.order.Select a status')}
               onChange={handleChangeSort}
             >
               {arrStatus.map((item, index) => (
@@ -141,7 +143,7 @@ function ListOrder({
           </div>
           <div className="order__search">
             <Search
-              placeholder="Search payment code or a user"
+              placeholder={t('admin.order.Search')}
               value={search}
               onChange={handleChange}
               enterButton

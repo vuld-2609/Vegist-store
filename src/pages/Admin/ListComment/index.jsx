@@ -2,24 +2,14 @@ import { Empty, Input, Modal, Pagination } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsReplyAllFill, BsEyeFill } from 'react-icons/bs';
+import { useTranslation } from 'react-i18next';
+import { BsEyeFill, BsReplyAllFill } from 'react-icons/bs';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { connect } from 'react-redux';
-import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
-import './styles.scss';
 import { ToastContainer } from 'react-toastify';
+import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
 import history from '../../../until/history';
-
-const title = [
-  { id: 1, title: 'STT' },
-  { id: 2, title: 'Name Product' },
-  { id: 3, title: 'User Name' },
-  { id: 4, title: 'Title' },
-  { id: 5, title: 'Content' },
-  { id: 6, title: 'Rating' },
-  { id: 7, title: 'Datetime' },
-  { id: 8, title: 'Action' },
-];
+import './styles.scss';
 
 function ListComment({
   productsData,
@@ -33,10 +23,22 @@ function ListComment({
   const [search, setSearch] = useState('');
   const [searchKey, setSearchKey] = useState();
   const [current, setCurrent] = useState(1);
+  const { t } = useTranslation();
 
   const typingTimeoutRef = useRef(null);
 
   const { reviews, total } = listCommentAdmin;
+
+  const title = [
+    { id: 1, title: 'STT' },
+    { id: 2, title: t('admin.comment.Name Product') },
+    { id: 3, title: t('admin.comment.User Name') },
+    { id: 4, title: t('admin.comment.Title') },
+    { id: 5, title: t('admin.comment.Content') },
+    { id: 6, title: t('admin.comment.Rating') },
+    { id: 7, title: t('admin.comment.Date Time') },
+    { id: 8, title: t('admin.comment.Action') },
+  ];
 
   useEffect(() => {
     document.title = 'Vegist | Trang Quản lý đánh giá';
@@ -96,7 +98,7 @@ function ListComment({
       <div className="container">
         <div className="comment__search">
           <Search
-            placeholder="Search product or a user"
+            placeholder={t('admin.comment.Search')}
             value={search}
             onChange={handleChange}
             enterButton
