@@ -50,7 +50,7 @@ const ModalModify = ({ editUserByAdmin, item }) => {
               firstName: item.firstName,
               lastName: item.lastName,
               address: item.address,
-              phone: item.phone || 'bổ sung data sau',
+              phone: item.phone,
               email: item.email,
             }}
             enableReinitialize
