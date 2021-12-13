@@ -138,38 +138,7 @@ $border-input: #1890ff33;
       overflow-y: auto;
     }
 
-    table {
-      width: 100%;
-      thead {
-        background-color: $gray;
-      }
-      tr {
-        border-top: 1px solid $gray;
-        border-bottom: 1px solid $gray;
-        border-collapse: collapse;
-      }
-      td {
-        padding: 1rem;
-      }
-      tbody {
-        tr {
-          td:first-child {
-            padding-left: 1rem;
-          }
-          td {
-            &:nth-child(6) {
-              width: 20%;
-              div {
-                @include flex('', '', '', 3rem);
-              }
-            }
-            &:nth-child(2) {
-              width: 15%;
-            }
-          }
-        }
-      }
-    }
+
 
     &-content-action{
       display: flex;
@@ -184,4 +153,61 @@ $border-input: #1890ff33;
         }
     }
   }
+}
+
+.bill-table {
+  width: 100%;
+  thead {
+    background-color: $gray;
+  }
+  tr {
+    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray;
+    border-collapse: collapse;
+  }
+  td {
+    padding: 1rem;
+  }
+  tbody {
+    tr {
+      td:first-child {
+        padding-left: 1rem;
+      }
+      td {
+        &:nth-child(6) {
+          width: 20%;
+          div {
+            @include flex('', '', '', 3rem);
+          }
+        }
+        &:nth-child(2) {
+          width: 15%;
+        }
+      }
+    }
+  }
+
+  &.bill-table--detail{
+    min-height: 490px;
+    td{
+      vertical-align: middle;
+    }
+
+    tbody{
+      max-height: 50vh;
+      overflow-y: auto;
+      
+
+      td {
+        width: auto !important;
+      }
+    }
+    img{
+      width: 150px;
+    }
+  }
+}
+
+.bill-table__detail-total{
+  float: right;
 }

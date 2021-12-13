@@ -164,8 +164,8 @@ function* getInfoSaga(action) {
 
 function* loginSaga(action) {
   try {
-    const { email, password } = action.payload;
-    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { email, password });
+    const { phoneNumber, password } = action.payload;
+    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { phoneNumber, password });
 
     if (status === 'failed' && error.message) {
       throw new Error(error.message);

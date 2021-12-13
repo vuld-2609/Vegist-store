@@ -10,24 +10,7 @@
 .bill-detail-modal{
     max-height: 60vh;
 
-    &__title{
-        padding-bottom: 1rem;
-    }
-
-    >div,&__content{
-        padding: 1rem 0;
-        display:flex;
-        justify-content:space-around;
-        border-bottom: 1px solid #ebebeb;
-
-        li{
-            width:30%;
-
-            img{
-                max-width: 40%;
-            }
-        }
-    }
+   width:100%;
    
 }
 
