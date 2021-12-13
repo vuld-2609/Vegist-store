@@ -13,7 +13,6 @@ const { Text } = Typography;
 function CartManage(prop) {
   const { getOrderUser, orderUser, cancelOrderUser, billDetailUser, getBillDetailUser, tabValue } =
   prop;
-  console.log("🚀 ~ file: index.jsx ~ line 14 ~ CartManage ~ billDetailUser", billDetailUser)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [current, setCurrent] = useState(1);
   const [searchKey, setSearchKey] = useState('');

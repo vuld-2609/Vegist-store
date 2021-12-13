@@ -1,18 +1,11 @@
 import moment from 'moment';
 import 'moment/locale/vi';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getOrderDetail } from '../../../../redux/actions';
 import history from '../../../../until/history';
 import './styles.scss';
-
-const title = [
-  { id: 1, title: 'STT' },
-  { id: 2, title: 'Image' },
-  { id: 3, title: 'Name' },
-  { id: 4, title: 'Quantity' },
-  { id: 5, title: 'Price' },
-];
 
 function OrderDetail({ match, orderDetail, getOrderDetail }) {
   useEffect(() => {
@@ -21,6 +14,15 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
   }, []);
 
   const { bill, billDetails } = orderDetail;
+  const { t } = useTranslation();
+
+  const title = [
+    { id: 1, title: 'STT' },
+    { id: 2, title: t('admin.order.Image') },
+    { id: 3, title: t('admin.order.Name') },
+    { id: 4, title: t('admin.order.Quantity') },
+    { id: 5, title: t('admin.order.Price') },
+  ];
 
   const renderPaymentCode = (id) => {
     let str = id.slice(-8).toUpperCase();
@@ -30,15 +32,15 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
   return (
     <section className="detail">
       <div className="detail__container">
-        <h1 className="detail__title">ORDER DETAIL</h1>
+        <h1 className="detail__title">{t('admin.order.ORDER DETAIL')}</h1>
         {bill && (
           <>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Payment Code</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Payment Code')}</h3>
               <p>{`#${renderPaymentCode(bill.id)}`}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Orderer's name</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Order name')}</h3>
               <p>{bill.userId.fullName}</p>
             </div>
             {bill.userId.email && (
@@ -48,37 +50,37 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
               </div>
             )}
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Datetime</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Date Time')}</h3>
               <p>{moment(bill.dateCreate).format('L')}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Recipient's name</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Recipient name')}</h3>
               <p>{bill.name}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Phone Number</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Phone Number')}</h3>
               <p>{bill.phoneNumber}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Address</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Address')}</h3>
               <p>{bill.address}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Total Price</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Total Price')}</h3>
               <p>{`${bill.total.toLocaleString()} VND`}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Order Payment</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Payment Status')}</h3>
               <p>{bill.isCompleted === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
             </div>
             <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Order Status</h3>
+              <h3 className="detail__subtitle">{t('admin.order.Order Status')}</h3>
               <p>{bill.status}</p>
             </div>
           </>
         )}
         <div className="detail__wrapper">
-          <h3 className="detail__subtitle">Products</h3>
+          <h3 className="detail__subtitle">{t('admin.order.Products')}</h3>
           <div className="admin__listUser--tableNormal">
             <table className="detail__table">
               <thead>
@@ -111,7 +113,7 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
             className="button button-round--lg button-primary"
             onClick={() => history.push('/admin/listOrder')}
           >
-            Go to List Order
+            {t('admin.order.GO TO LIST ORDER')}
           </button>
         </div>
       </div>

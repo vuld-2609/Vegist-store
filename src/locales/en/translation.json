@@ -276,7 +276,7 @@
       "title": "Account Detail",
       "name": "Name",
       "address": "Address",
-      "phone": "Phone numbers",
+      "phone": "Phone number",
       "edit": "EDIT PROFILE",
       "first": "First Name",
       "last": "Last Name",
@@ -364,20 +364,19 @@
   },
   "admin": {
     "listUser": {
-      "title": "User management"
+      "title": "User Management"
     },
     "listProduct": {
-      "title": "Product management "
+      "title": "Product Management "
     },
     "listOrder": {
-      "title": "Order management "
+      "title": "Order Management "
     },
     "listComment": {
-      "title": "Comment management "
+      "title": "Comment Management "
     },
     "discount": {
-      "title": "Discount management",
-      " Discount name": "Discount name ",
+      "title": "Discount Management",
       "StartDate": "Start date",
       "EndDate": "End date",
       "Add new": "Add new",
@@ -388,7 +387,10 @@
       "Start date": "Start date",
       "End date": "End date",
       "Quantity": "Quantity",
-      "Action": "Action"
+      "Action": "Action",
+      "Search": "Search a discount...",
+      "Add": "ADD DISCOUNT CODE",
+      "CREATE DISCOUNT CODE": "CREATE DISCOUNT CODE"
     },
     "table": {
       "name": "NAME",
@@ -420,18 +422,65 @@
       "Describe": "Describe",
       "Enter describe": "Enter describe...",
       "Add new": "Add new",
-      "Create discount": "Create dicount code",
+      "Add product": "Add product",
+      "Search a product": "Search a product...",
+      "Edit": "Edit",
+      "Create discount": "Create discount code",
       "Enter discount name": "Enter discount name",
       "Discount code": "Discount code",
       "Enter discount code": "Enter discount code",
       "Percent": "Percent",
       "Enter percent": "Enter percent",
       "Quantity": "Quantity",
-      "Enter quantity": "Enter quantity"
+      "Enter quantity": "Enter quantity",
+      "Key": "Key",
+      "Name": "Name",
+      "Discount": "Name",
+      "Current price": "Current price",
+      "Action": "Current price"
     },
     "sales": {
       "title": "Discount Management"
     },
-    "home": "Home"
+    "home": "Home",
+    "Back": "BACK",
+    "user": {
+      "Search a user": "Search a user...",
+      "Email": "EMAIL"
+    },
+    "order": {
+      "Select a status": "Select a status",
+      "Search": "Search a payment code or a user...",
+      "Payment Code": "Payment Code",
+      "User Name": "User Name",
+      "Total Price": "Total Price",
+      "Date Time": "Date Time",
+      "Status": "Status",
+      "Action": "Action",
+      "Cancel": "Cancel",
+      "ORDER DETAIL": "ORDER DETAIL",
+      "Order name": "Orderer's name",
+      "Recipient name": "Recipient's name",
+      "Phone Number": "Phone Number",
+      "Address": "Address",
+      "Payment Status": "Payment Status",
+      "Order Status": "Order Status",
+      "Products": "Products",
+      "Image": "Image",
+      "Name": "Name",
+      "Quantity": "Quantity",
+      "Price": "Price",
+      "GO TO LIST ORDER": "GO TO LIST ORDER"
+    },
+    "comment": {
+      "Name Product": "Name Product",
+      "User Name": "User Name",
+      "Title": "Title",
+      "Content": "Content",
+      "Rating": "Rating",
+      "Date Time": "Date Time",
+      "Action": "Action",
+      "Search": "Search a product or a user..."
+    }
   }
 }

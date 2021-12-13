@@ -80,7 +80,7 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
           <div className="admin__listUser--btn">
             <div className="admin__listUser--btn-search">
               <Search
-                placeholder="search a product"
+                placeholder={t('admin.discount.Search')}
                 value={search}
                 onChange={handleChange}
                 enterButton
@@ -90,7 +90,7 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
               className="admin__listUser--btn-create"
               onClick={() => history.push('/admin/discount/add')}
             >
-              <Button type="primary">Add product</Button>
+              <Button type="primary">{t('admin.discount.Add')}</Button>
             </div>
           </div>
           <div className="admin__listUser--tableNormal">
@@ -98,13 +98,13 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
               <thead>
                 <tr>
                   <td>{t('admin.discount.key')}</td>
-                  <td>{t('admin.discount.Discount name')}Discount name</td>
-                  <td>{t('admin.discount.Discount code')}Discount code</td>
-                  <td>{t('admin.discount.Percent')}Percent</td>
-                  <td>{t('admin.discount.Start date')}Start date</td>
-                  <td>{t('admin.discount.End date')}End date</td>
-                  <td>{t('admin.discount.Quantity')}Quantity</td>
-                  <td>{t('admin.discount.Action')}Action</td>
+                  <td>{t('admin.discount.Discount name')}</td>
+                  <td>{t('admin.discount.Discount code')}</td>
+                  <td>{t('admin.discount.Percent')}</td>
+                  <td>{t('admin.discount.Start date')}</td>
+                  <td>{t('admin.discount.End date')}</td>
+                  <td>{t('admin.discount.Quantity')}</td>
+                  <td>{t('admin.discount.Action')}</td>
                 </tr>
               </thead>
               <tbody>

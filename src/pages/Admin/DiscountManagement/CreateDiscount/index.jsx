@@ -33,18 +33,18 @@ const CreateDiscount = ({ createDiscount }) => {
   };
   return (
     <section className="addProductAdmin">
-      <Row>
+      {/* <Row>
         <Col offset={2}>
           <AiOutlineRollback
             className="icon-back"
             onClick={() => history.push('/admin/discount')}
           />
         </Col>
-      </Row>
+      </Row> */}
       <Row justify="center">
         <Col xs={18}>
           <div className="addProductAdmin__container container">
-            <h1 className="addProductAdmin__title">{t('admin.products.Create discount')}</h1>
+            <h1 className="addProductAdmin__title">{t('admin.discount.CREATE DISCOUNT CODE')}</h1>
             <Formik
               initialValues={{
                 name: '',
@@ -77,7 +77,7 @@ const CreateDiscount = ({ createDiscount }) => {
                     <CustomField
                       name="name"
                       type="text"
-                      label={t('admin.discount. Discount name')}
+                      label={t('admin.discount.Discount name')}
                       placeholder={t('admin.products.Enter discount name')}
                       required
                     />
@@ -161,10 +161,19 @@ const CreateDiscount = ({ createDiscount }) => {
                       required
                     />
                   </Col>
-                  <Col xs={24}>
+                  <Col xs={24} className="admin__wrapper--button">
+                    <Row justify="end" align="middle">
+                      <button
+                        type="button"
+                        className="button button-round--lg button-primary button-back"
+                        onClick={() => history.push('/admin/discount')}
+                      >
+                        {t('admin.Back')}
+                      </button>
+                    </Row>
                     <Row justify="end" align="middle">
                       <button type="submit" className="button button-round--lg button-primary">
-                        t('admin.discount.Add new')
+                        {t('admin.discount.Add new')}
                       </button>
                     </Row>
                   </Col>

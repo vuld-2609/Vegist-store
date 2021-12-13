@@ -56,14 +56,14 @@ const AddProductAdmin = ({
   };
   return (
     <section className="addProductAdmin">
-      <Row>
+      {/* <Row>
         <Col offset={2}>
           <AiOutlineRollback
             className="icon-back"
             onClick={() => history.push('/admin/products')}
           />
         </Col>
-      </Row>
+      </Row> */}
       <Row justify="center">
         <Col xs={18}>
           <div className="addProductAdmin__container container">
@@ -377,12 +377,21 @@ const AddProductAdmin = ({
                       placeholder={t('admin.products.Enter describe')}
                     />
                   </Col>
-                  <Col xs={24}>
+                  <Col xs={24} className="admin__wrapper--button">
+                    <Row justify="end" align="middle">
+                      <button
+                        type="button"
+                        className="button button-round--lg button-primary button-back"
+                        onClick={() => history.push('/admin/products')}
+                      >
+                        {t('admin.Back')}
+                      </button>
+                    </Row>
                     <Row justify="end" align="middle">
                       <button type="submit" className="button button-round--lg button-primary">
                         {location.pathname.indexOf(`/admin/products/edit`) === -1
                           ? t('admin.products.Add new')
-                          : 'edit'}
+                          : t('admin.products.Edit')}
                       </button>
                     </Row>
                   </Col>

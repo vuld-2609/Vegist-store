@@ -81,7 +81,7 @@ const ListUser = ({ getProducts, deleteProduct, productsData, totalProduct }) =>
           <div className="admin__listUser--btn">
             <div className="admin__listUser--btn-search">
               <Search
-                placeholder="search a product"
+                placeholder={t('admin.products.Search a product')}
                 value={search}
                 onChange={handleChange}
                 enterButton
@@ -91,21 +91,21 @@ const ListUser = ({ getProducts, deleteProduct, productsData, totalProduct }) =>
               className="admin__listUser--btn-create"
               onClick={() => history.push('/admin/products/add')}
             >
-              <Button type="primary">Add product</Button>
+              <Button type="primary">{t('admin.products.Add product')}</Button>
             </div>
           </div>
           <div className="admin__listUser--tableNormal">
             <table>
               <thead>
                 <tr>
-                  <td>Key</td>
-                  <td>Name</td>
-                  <td>Price</td>
-                  <td>Discount</td>
-                  <td>Current price</td>
-                  <td>Category</td>
-                  <td>Tag</td>
-                  <td>Action</td>
+                  <td>{t('admin.products.Key')}</td>
+                  <td>{t('admin.products.Name')}</td>
+                  <td>{t('admin.products.Price')}</td>
+                  <td>{t('admin.products.Discount')}</td>
+                  <td>{t('admin.products.Current price')}</td>
+                  <td>{t('admin.products.Category')}</td>
+                  <td>{t('admin.products.Tag')}</td>
+                  <td>{t('admin.products.Action')}</td>
                 </tr>
               </thead>
               <tbody>

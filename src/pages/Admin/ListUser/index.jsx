@@ -93,7 +93,7 @@ const ListUser = ({
           <div className="admin__listUser--btn">
             <div className="admin__listUser--btn-search">
               <Search
-                placeholder="search a user"
+                placeholder={t('admin.user.Search a user')}
                 value={search}
                 onChange={handleChange}
                 enterButton
@@ -110,7 +110,7 @@ const ListUser = ({
                   <td>STT</td>
                   <td>{t('admin.table.name')}</td>
                   <td>{t('admin.table.phone')}</td>
-                  <td>EMAIL</td>
+                  <td>{t('admin.user.Email')}</td>
                   <td>{t('admin.table.role')}</td>
                   <td>{t('admin.table.action')}</td>
                   <td>{t('admin.table.status')}</td>
