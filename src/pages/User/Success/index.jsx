@@ -74,7 +74,7 @@ const Success = ({ match, getBill, billData }) => {
                 <p>{bill?.payment}</p>
               </div>
               <div className="success__cancel">
-                <button className="button button-round--lg button-transparent">
+                <button onClick={()=>history.push('/profile')} className="button button-round--lg button-transparent">
                   {t('success.Order Cancellation')}
                 </button>
               </div>

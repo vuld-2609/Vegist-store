@@ -52,7 +52,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
               email: Yup.string()
                 // .required(t('validate.email.required'))
                 .max(50, t('validate.email.max'))
-                .email('Email không hợp lệ'),
+                .email('validate.email.regex'),
               firstName: Yup.string()
                 .max(50, t('validate.firstName.max'))
                 .required(t('validate.firstName.required')),

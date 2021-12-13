@@ -31,6 +31,7 @@ const initialState = {
     data:[],
     total:'',
     load:false,
+    bill:{}
   },
   paymentsData: {},
   deleteData: {},
@@ -183,13 +184,14 @@ export default function paymentReducer(state = initialState, action) {
     }
 
     case GET_BILL_DETAIL_USER_SUCCESS :{
-      const {billDetails} = action.payload.data;
+      const {billDetails,bill} = action.payload.data;
       return {
         ...state,
         billDetailUser: {
           ...state.billDetailUser,
           data:billDetails,
-          load:false
+          load:false,
+          bill
         }
       }
     }
