@@ -2,12 +2,13 @@ import { Empty, Input, Modal, Pagination } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsReplyAllFill } from 'react-icons/bs';
+import { BsReplyAllFill, BsEyeFill } from 'react-icons/bs';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
 import './styles.scss';
 import { ToastContainer } from 'react-toastify';
+import history from '../../../until/history';
 
 const title = [
   { id: 1, title: 'STT' },
@@ -122,6 +123,10 @@ function ListComment({
                     <td>{item.rate}</td>
                     <td>{moment(item.dateCreate).format('L')}</td>
                     <td className="comment__button">
+                      <BsEyeFill
+                        className="comment__icon comment__icon--reply"
+                        onClick={() => history.push(`/product/${item.productId._id}`)}
+                      />
                       <BsReplyAllFill className="comment__icon comment__icon--reply" />
                       <RiDeleteBin5Fill
                         className="comment__icon comment__icon--delete"

@@ -84,7 +84,7 @@
       "max": "Email không được vượt quá 50 kí tự !"
     },
     "password": {
-      "password": "password",
+      "password": "Mật khẩu",
       "required": "Mật khẩu không được để trống !",
       "regex": "Mật khẩu không được nhỏ hơn 8 kí tự !"
     },

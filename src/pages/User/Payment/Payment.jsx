@@ -15,15 +15,15 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
   const [billingAddress, setBillingAddress] = useState(1);
   const [infoPayment, setInfoPayment] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
-  const handelCreateBill = async() => {
+  const handelCreateBill = async () => {
     await createBill({
-        payment:'Trực tiếp',
-        name:infoPayment.name,
-        address: infoPayment.address,
-        phoneNumber: infoPayment.phone,
+      payment: 'Trực tiếp',
+      name: infoPayment.name,
+      address: infoPayment.address,
+      phoneNumber: infoPayment.phone,
     });
 
-    localStorage.removeItem('infoPayment')
+    localStorage.removeItem('infoPayment');
     getCartData();
   };
 
@@ -36,13 +36,24 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
           <div className="shipping__info shipping__content">
             <div className=" shipping__content--item   ">
               <div className="shipping__info--inner">
-                <h4>{t('Email')}</h4>
-                <p>{infoPayment.email}</p>
+                <h4>{t('Phone')}</h4>
+                <p>{infoPayment.phone}</p>
               </div>
               <button className="button" onClick={() => history.push('/infoPayment')}>
                 {t('payments.shipping.Change')}
               </button>
             </div>
+            {infoPayment.email && (
+              <div className=" shipping__content--item   ">
+                <div className="shipping__info--inner">
+                  <h4>{t('Email')}</h4>
+                  <p>{infoPayment.email}</p>
+                </div>
+                <button className="button" onClick={() => history.push('/infoPayment')}>
+                  {t('payments.shipping.Change')}
+                </button>
+              </div>
+            )}
             <div className=" shipping__content--item">
               <div className="shipping__info--inner">
                 <h4>{t('payments.shipping.Ship to')}</h4>
@@ -55,9 +66,7 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
             <div className=" shipping__content--item">
               <div className="shipping__info--inner">
                 <h4>{t('Name')}</h4>
-                <p>
-                  {infoPayment.name}
-                </p>
+                <p>{infoPayment.name}</p>
               </div>
               <button className="button" onClick={() => history.push('/infoPayment')}>
                 {t('payments.shipping.Change')}
@@ -83,7 +92,7 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
               <Radio checked>{t('payments.payment.Cash on Delivery (COD)')}</Radio>
             </div>
           </div>
-          <div className="shipping__title">
+          {/* <div className="shipping__title">
             <h2>{t('payments.payment.Billing address')}</h2>
             <p>
               {t('payments.payment.Select the address that matches your card or payment method.')}
@@ -109,7 +118,7 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
                 </Radio>
               </div>
             </Radio.Group>
-          </div>
+          </div> */}
           <div className="shipping__btn">
             <button
               className="button  button-animation--1 button-round--lg "
@@ -131,9 +140,9 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { billData,billInitData } = state.paymentReducer;
+  const { billData, billInitData } = state.paymentReducer;
 
-  return { billData,billInitData };
+  return { billData, billInitData };
 };
 
 const mapDispatchToProps = (dispatch) => {

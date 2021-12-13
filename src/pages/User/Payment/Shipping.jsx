@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { getBill } from '../../../redux/actions';
 import './styles.scss';
 import history from '../../../until/history';
-const Shipping = ({ getBill, billData}) => {
+const Shipping = ({ getBill, billData }) => {
   document.title = 'Vegist | Trang ship';
   const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
@@ -23,12 +23,23 @@ const Shipping = ({ getBill, billData}) => {
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Contact')}</h4>
-                  <p>{infoPayment.email}</p>
+                  <p>{infoPayment.phone}</p>
                 </div>
                 <button className="button" onClick={() => history.push('/infoPayment')}>
                   {t('payments.shipping.Change')}
                 </button>
               </div>
+              {infoPayment.email && (
+                <div className=" shipping__content--item   ">
+                  <div className="shipping__info--inner">
+                    <h4>{t('Email')}</h4>
+                    <p>{infoPayment.email}</p>
+                  </div>
+                  <button className="button" onClick={() => history.push('/infoPayment')}>
+                    {t('payments.shipping.Change')}
+                  </button>
+                </div>
+              )}
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Ship to')}</h4>

@@ -48,6 +48,8 @@
     background-color: $light-gray;
     padding: 2rem;
     &--subtotal {
+      padding: 1rem 0;
+      border-bottom: 1px solid $border-light;
       &-item {
         @include flex;
         padding-bottom: 0.6rem;
@@ -74,7 +76,7 @@
     }
     &--total {
       @extend .cart__price--subtotal-item;
-      padding: 1rem;
+      padding: 1rem 0;
       border-bottom: 1px solid $border-light;
       h4 {
         font-weight: 500;
@@ -106,6 +108,10 @@
       color: $dark-gray;
       padding: 2rem 0;
     }
+  }
+
+  &__img {
+    padding: 1rem 0;
   }
 }
 .ant-modal-confirm-content {

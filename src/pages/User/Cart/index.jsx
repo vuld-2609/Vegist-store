@@ -79,6 +79,12 @@ const Cart = ({ cartData, clearCart, getCartData }) => {
             </Col>
             <Col xl={7} lg={8} md={12} sm={16} xs={24}>
               <section className="cart__price">
+                <div className="cart__img">
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0412/8151/9765/files/banner10-min.jpg?v=1593256899"
+                    alt="img"
+                  />
+                </div>
                 <div className="cart__price--subtotal">
                   <div className="cart__price--subtotal-item">
                     <h4>{t('cart.Subtotal')}</h4>
@@ -89,7 +95,7 @@ const Cart = ({ cartData, clearCart, getCartData }) => {
                     <p>${(handleCalculateToTal() * 0.1).toLocaleString()} VND</p>
                   </div>
                 </div>
-                <div className="cart__price--info">
+                {/* <div className="cart__price--info">
                   <h2 className="cart__price--title">{t('cart.Shipping Info')}</h2>
                   <div className="cart__price--info-item">
                     <p>{t('cart.Country')}</p>
@@ -108,7 +114,7 @@ const Cart = ({ cartData, clearCart, getCartData }) => {
                     <p>{t('cart.Zip/Postal code')}</p>
                     <Input placeholder="Zip/Postal code" />
                   </div>
-                </div>
+                </div> */}
                 <div className="cart__price--total">
                   <h4>{t('cart.Total')}</h4>
                   <p>${(handleCalculateToTal() * 1.1).toLocaleString()} VND</p>

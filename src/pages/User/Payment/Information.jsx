@@ -7,7 +7,7 @@ import English from '../../../assets/images/english.svg';
 import VietNam from '../../../assets/images/vietnam.svg';
 import CustomField from './component/CustomField';
 import PaymentBreadcrumb from './component/PaymentBreadcrumb';
-import history from '../../../until/history'
+import history from '../../../until/history';
 import './styles.scss';
 
 const Information = ({ getInfo, infoUser, cartData, createBill }) => {
@@ -19,16 +19,16 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
   const [infoPayment, setInfoPayment] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
   const handleSubmitForm = (values) => {
-    const {firstName,lastName} = values;
-    const fullName = `${firstName} ${lastName}`
+    const { firstName, lastName } = values;
+    const fullName = `${firstName} ${lastName}`;
 
     const dataForm = {
       ...values,
       country: valueSelect,
-      name:fullName
+      name: fullName,
     };
-    
-    localStorage.setItem('infoPayment',JSON.stringify(dataForm));
+
+    localStorage.setItem('infoPayment', JSON.stringify(dataForm));
     history.push('/shipping');
   };
 
@@ -50,7 +50,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
             }}
             validationSchema={Yup.object({
               email: Yup.string()
-                .required(t('validate.email.required'))
+                // .required(t('validate.email.required'))
                 .max(50, t('validate.email.max'))
                 .email('Email không hợp lệ'),
               firstName: Yup.string()
@@ -73,7 +73,8 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
             <Form>
               <Row gutter={[24, 16]}>
                 <Col xs={24}>
-                  <CustomField name="email" type="email" label="Email" />
+                  {/* <CustomField name="email" type="email" label="Email" /> */}
+                  <CustomField name="phone" type="text" label={t('payments.information.Phone')} />
                 </Col>
                 <Col xs={24}>
                   <div className="form__control">
@@ -110,9 +111,10 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
                   />
                 </Col>
                 <Col sm={9} xs={24}>
-                  <CustomField name="phone" type="text" label={t('payments.information.Phone')} />
+                  {/* <CustomField name="phone" type="text" label={t('payments.information.Phone')} /> */}
+                  <CustomField name="email" type="email" label="Email" />
                 </Col>
-                <Col sm={9} xs={24}>
+                {/* <Col sm={9} xs={24}>
                   <div className="form__control">
                     <label htmlFor="title">{t('payments.information.Country/region')}</label>
                     <Field
@@ -144,12 +146,16 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
                     type="text"
                     label={t('payments.information.ZIP code')}
                   />
-                </Col>
+                </Col> */}
                 <Col>
                   <button type="submit" className="button button-round--lg button-primary">
                     {t('payments.information.Continue to shipping')}
                   </button>
-                  <button type="button" className="button button-round--lg button-transparent">
+                  <button
+                    type="button"
+                    className="button button-round--lg button-transparent"
+                    onClick={() => history.push('/cart')}
+                  >
                     {t('payments.information.Return to cart')}
                   </button>
                 </Col>

@@ -34,7 +34,9 @@ const Register = (prop) => {
                   <h2>{t('register.create')}</h2>
                   <p>{t('register.text')}</p>
                 </div>
-                <div className="login__label">First Name <span className="required">*</span></div>
+                <div className="login__label">
+                  First Name <span className="required">*</span>
+                </div>
                 <Form.Item
                   name="firstName"
                   rules={[
@@ -44,16 +46,19 @@ const Register = (prop) => {
                       whitespace: true,
                     },
                     {
-                      max:8,
-                      min:2,
-                      message: t('the length of the First Name must be greater than 2 and less than 20'),
-                    }
+                      max: 8,
+                      min: 2,
+                      message: t(
+                        'the length of the First Name must be greater than 2 and less than 20'
+                      ),
+                    },
                   ]}
                 >
-            
                   <Input placeholder="First name" />
                 </Form.Item>
-                <div className="login__label">Last Name <span className="required">*</span></div>
+                <div className="login__label">
+                  Last Name <span className="required">*</span>
+                </div>
                 <Form.Item
                   name="lastName"
                   rules={[
@@ -63,16 +68,20 @@ const Register = (prop) => {
                       whitespace: true,
                     },
                     {
-                      max:8,
-                      min:2,
-                      message: t('the length of the Last Name must be greater than 2 and less than 20'),
-                    }
+                      max: 8,
+                      min: 2,
+                      message: t(
+                        'the length of the Last Name must be greater than 2 and less than 20'
+                      ),
+                    },
                   ]}
                 >
                   <Input placeholder="Last name" />
                 </Form.Item>
-                <div className="login__label">Phone Number <span className="required">*</span></div>
-                
+                <div className="login__label">
+                  Phone Number <span className="required">*</span>
+                </div>
+
                 <Form.Item
                   name="phoneNumber"
                   rules={[
@@ -82,26 +91,16 @@ const Register = (prop) => {
                     },
                     {
                       required: true,
-                      message: t('validate.phoneNumber.required'),
+                      message: t('validate.phone.required'),
                     },
                   ]}
                 >
                   <Input placeholder="Phone Number" />
                 </Form.Item>
-                {/* <div className="login__label">Email</div>
-                <Form.Item
-                  name="email"
-                  rules={[
-                    {
-                      pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                      message: t('validate.email.regex'),
-                    },
-                  ]}
-                >
-                  <Input placeholder="Email" />
-                </Form.Item> */}
-                <div className="login__label">Password <span className="required">*</span></div>
-              
+                <div className="login__label">
+                  Password <span className="required">*</span>
+                </div>
+
                 <Form.Item
                   name="password"
                   rules={[
@@ -116,7 +115,7 @@ const Register = (prop) => {
                   ]}
                   hasFeedback
                 >
-                  <Input.Password placeholder="Pass word" />
+                  <Input.Password placeholder="Password" />
                 </Form.Item>
                 <Form.Item>
                   <Button type="warning" htmlType="submit">
