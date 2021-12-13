@@ -34,23 +34,27 @@ const Login = ({ getUser }) => {
                   <h2>{t('login.create')}</h2>
                   <p>{t('login.text')}</p>
                 </div>
-                <div className="login__label">Email Or Phone Number <span className="required">*</span></div>
+                <div className="login__label">
+                  Phone Number <span className="required">*</span>
+                </div>
                 <Form.Item
                   name="email"
                   rules={[
-                    {
-                      type: 'email',
-                      message: t('validate.email.regex'),
-                    },
+                    // {
+                    //   pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+                    //   message: t('validate.phone.regex'),
+                    // },
                     {
                       required: true,
-                      message: t('validate.email.required'),
+                      message: t('validate.phone.required'),
                     },
                   ]}
                 >
-                  <Input placeholder="Email" />
+                  <Input placeholder="Phone Number" />
                 </Form.Item>
-                <div className="login__label">{t('Password')} <span className="required">*</span></div>
+                <div className="login__label">
+                  {t('Password')} <span className="required">*</span>
+                </div>
                 <Form.Item
                   name="password"
                   rules={[
@@ -65,7 +69,7 @@ const Login = ({ getUser }) => {
                   ]}
                   hasFeedback
                 >
-                  <Input.Password placeholder="Pass word" />
+                  <Input.Password placeholder="Password" />
                 </Form.Item>
                 <Form.Item>
                   <Button type="warning" htmlType="submit">

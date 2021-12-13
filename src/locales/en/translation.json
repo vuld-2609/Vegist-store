@@ -67,7 +67,7 @@
     "button register": "SIGN IN",
     "already": "Don't have account ?",
     "button login": "Create account",
-    "forgot": "Forgot your password"
+    "forgot": "Forgot your password ?"
   },
   "Terms & Conditions": {
     "title": "Terms & Conditions",
@@ -83,17 +83,17 @@
       "max": "Email cannot exceed 50 characters !"
     },
     "password": {
-      "password": "password",
+      "password": "Password",
       "required": "Password can't be blank !",
       "regex": "Password must not be less than 8 characters !"
     },
     "zipCode": "ZIP code must contain 6 digits !",
     "address": {
-      "required": "Password can't be blank !",
+      "required": "Address can't be blank !",
       "max": "The address cannot exceed 100 characters !"
     },
     "phone": {
-      "required": "Phone can't be blank !",
+      "required": "Phone number can't be blank !",
       "regex": "Invalid phone number !"
     },
     "firstName": {

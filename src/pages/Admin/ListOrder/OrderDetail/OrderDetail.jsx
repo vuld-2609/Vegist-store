@@ -41,10 +41,12 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
               <h3 className="detail__subtitle">Orderer's name</h3>
               <p>{bill.userId.fullName}</p>
             </div>
-            <div className="detail__wrapper">
-              <h3 className="detail__subtitle">Email</h3>
-              <p>{bill.userId.email}</p>
-            </div>
+            {bill.userId.email && (
+              <div className="detail__wrapper">
+                <h3 className="detail__subtitle">Email</h3>
+                <p>{bill.userId.email}</p>
+              </div>
+            )}
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">Datetime</h3>
               <p>{moment(bill.dateCreate).format('L')}</p>
