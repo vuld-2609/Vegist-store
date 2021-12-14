@@ -37,45 +37,45 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
           <>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Payment Code')}</h3>
-              <p>{`#${renderPaymentCode(bill.id)}`}</p>
+              <p>{`#${renderPaymentCode(bill?.id)}`}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Order name')}</h3>
-              <p>{bill.userId.fullName}</p>
+              <p>{bill?.userId?.fullName}</p>
             </div>
-            {bill.userId.email && (
+            {bill?.userId?.email && (
               <div className="detail__wrapper">
                 <h3 className="detail__subtitle">Email</h3>
-                <p>{bill.userId.email}</p>
+                <p>{bill?.userId?.email}</p>
               </div>
             )}
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Date Time')}</h3>
-              <p>{moment(bill.dateCreate).format('L')}</p>
+              <p>{moment(bill?.dateCreate).format('L')}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Recipient name')}</h3>
-              <p>{bill.name}</p>
+              <p>{bill?.name}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Phone Number')}</h3>
-              <p>{bill.phoneNumber}</p>
+              <p>{bill?.phoneNumber}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Address')}</h3>
-              <p>{bill.address}</p>
+              <p>{bill?.address}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Total Price')}</h3>
-              <p>{`${bill.total.toLocaleString()} VND`}</p>
+              <p>{`${bill?.total.toLocaleString()} VND`}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Payment Status')}</h3>
-              <p>{bill.isCompleted === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
+              <p>{bill?.isCompleted === true ? 'Đã thanh toán' : 'Chưa thanh toán (Ship COD)'}</p>
             </div>
             <div className="detail__wrapper">
               <h3 className="detail__subtitle">{t('admin.order.Order Status')}</h3>
-              <p>{bill.status}</p>
+              <p>{bill?.status}</p>
             </div>
           </>
         )}
@@ -98,9 +98,9 @@ function OrderDetail({ match, orderDetail, getOrderDetail }) {
                       <td>
                         <img src={item.productId?.imgs[0]} alt="img" className="detail__img" />
                       </td>
-                      <td>{item.productId?.name}</td>
-                      <td>{item.quantity}</td>
-                      <td>{`${item.productId?.price.toLocaleString()} VND`}</td>
+                      <td>{item?.productId?.name}</td>
+                      <td>{item?.quantity}</td>
+                      <td>{`${item?.productId?.price.toLocaleString()} VND`}</td>
                     </tr>
                   ))}
               </tbody>

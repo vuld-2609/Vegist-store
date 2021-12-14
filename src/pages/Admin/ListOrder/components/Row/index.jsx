@@ -22,10 +22,10 @@ function Row({ item, index, arrStatus, handleChangeStatus, handleClickDelete, ha
     <>
       <tr className="table__row">
         <td>{index + 1}</td>
-        <td>{renderPaymentCode(item.id)}</td>
-        <td>{item.userId.fullName}</td>
-        <td>{`${item.total.toLocaleString()} VND`}</td>
-        <td>{moment(item.dateCreate).format('L')}</td>
+        <td>{renderPaymentCode(item?.id)}</td>
+        <td>{item?.userId?.fullName}</td>
+        <td>{`${item?.total.toLocaleString()} VND`}</td>
+        <td>{moment(item?.dateCreate).format('L')}</td>
         <td>
           <div>
             <Select

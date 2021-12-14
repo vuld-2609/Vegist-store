@@ -12,7 +12,7 @@ function PrivateLayout({ component: Component, role, ...props }) {
   const { t, i18n } = useTranslation();
 
   const userInfo = JSON.parse(localStorage.getItem('profile'));
-  if (userInfo && userInfo.email) {
+  if (userInfo && userInfo.phoneNumber) {
     if (userInfo.role !== 'admin') {
       return <Redirect to="/" />;
     }

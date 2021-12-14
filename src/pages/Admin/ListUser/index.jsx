@@ -58,9 +58,10 @@ const ListUser = ({
     Modal.confirm({
       title: 'Confirm',
       content: (
-        <span>
-          Do you want to delete this user <b> {titleCase(data.fullName)}</b> ?
-        </span>
+        <p>
+          Do you want to delete this user{' '}
+          <span style={{ fontWeight: 600 }}>{titleCase(data.fullName)}</span> ?
+        </p>
       ),
       cancelText: 'CANCEL',
       okText: 'OK',
@@ -122,7 +123,7 @@ const ListUser = ({
                     <tr>
                       <td>{index + 1}</td>
                       <td>{titleCase(item.fullName)}</td>
-                      <td>{item.phone}</td>
+                      <td>{item.phoneNumber}</td>
                       <td>{item.email}</td>
                       <td>{titleCase(item.role)}</td>
                       <td>

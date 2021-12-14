@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
 import history from '../../../until/history';
+import { titleCase } from '../../../until/string';
 import './styles.scss';
 
 function ListComment({
@@ -73,8 +74,8 @@ function ListComment({
       title: 'Confirm',
       content: (
         <p>
-          Do you want to delete this comment <span style={{ fontWeight: 600 }}>{`#${title}`}</span>{' '}
-          ?
+          Do you want to delete this comment{' '}
+          <span style={{ fontWeight: 600 }}>{titleCase(title)}</span> ?
         </p>
       ),
       okText: 'OK',
@@ -118,12 +119,12 @@ function ListComment({
                 reviews?.map((item, index) => (
                   <tr className="table__row">
                     <td>{index + 1}</td>
-                    <td>{renderNameProduct(item.productId._id)}</td>
-                    <td>{item.userId.fullName}</td>
-                    <td>{item.title}</td>
-                    <td className="text-clamp text-clamp--2">{item.description}</td>
-                    <td>{item.rate}</td>
-                    <td>{moment(item.dateCreate).format('L')}</td>
+                    <td>{renderNameProduct(item?.productId?._id)}</td>
+                    <td>{item?.userId?.fullName}</td>
+                    <td>{item?.title}</td>
+                    <td className="text-clamp text-clamp--2">{item?.description}</td>
+                    <td>{item?.rate}</td>
+                    <td>{moment(item?.dateCreate).format('L')}</td>
                     <td className="comment__button">
                       <BsEyeFill
                         className="comment__icon comment__icon--reply"
