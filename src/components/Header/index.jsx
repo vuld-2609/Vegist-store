@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Select,Modal } from 'antd';
+import { Select, Modal } from 'antd';
 import { connect } from 'react-redux';
-import { getCartData } from '../../redux/actions';
+import { getCartData, clearCart, clearCountCart } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
 
 import history from '../../until/history';
@@ -14,7 +14,7 @@ import { AiOutlineUserAdd, AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { GiHamburgerMenu, GiExitDoor } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
-import {toastComingSoon} from '../../until/toast'
+import { toastComingSoon } from '../../until/toast';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
@@ -24,7 +24,7 @@ import Search from '../Search';
 
 const { Option } = Select;
 
-const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
+const Header = ({ getCartData, cartData, userDataEdited, clearCountCart }) => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [totalItemInCart, setTotalItemInCart] = useState(0);
@@ -55,14 +55,15 @@ const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
   };
 
   const handleOk = () => {
-    history.push('/login')
-    localStorage.clear()
+    history.push('/login');
+    localStorage.clear();
+    clearCountCart();
     setIsModalVisible(false);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
   // Để về trang Home và xóa ô search
   const handleClickLogo = () => {
     setValue('');
@@ -109,24 +110,24 @@ const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
               {authData ? (
                 <>
                   <div className="header__widget--item">
-                    <GiExitDoor
-                      onClick={showModal}
-                    />
-                    <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                    <GiExitDoor onClick={showModal} />
+                    <Modal
+                      title="Notification"
+                      visible={isModalVisible}
+                      onOk={handleOk}
+                      onCancel={handleCancel}
+                    >
                       <p>Do you want to sign out?</p>
                     </Modal>
                   </div>
-                  <div  onClick={() => history.push('/profile')} className="header__widget--account-content">
+                  <div
+                    onClick={() => history.push('/profile')}
+                    className="header__widget--account-content"
+                  >
                     <div className="user-avatar">
-                     <img src={authData?.avatar} alt="avatar" />
+                      <img src={authData?.avatar} alt="avatar" />
                     </div>
-                    <p
-                     
-                      className="header__widget--account-title"
-                    >
-                      {authData?.fullName}
-                    </p>
-                   
+                    <p className="header__widget--account-title">{authData?.fullName}</p>
                   </div>
                 </>
               ) : (
@@ -171,7 +172,12 @@ const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
       </section>
       <section className="header__navbar">
         <div className="container ">
-          <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} setValue={setValue} />
+          <Navbar
+            showNavbar={showNavbar}
+            setShowNavbar={setShowNavbar}
+            setValue={setValue}
+            authData={authData}
+          />
         </div>
       </section>
       <ToastContainer />
@@ -181,16 +187,17 @@ const Header = ({ getCartData, cartData, userDataEdited,infoUser }) => {
 
 const mapStateToProps = (state) => {
   const { cartData } = state.cartReducer;
-  const { userDataEdited,infoUser } = state.accountReducer;
+  const { userDataEdited, infoUser } = state.accountReducer;
   return {
     userDataEdited,
     cartData,
-    infoUser
+    infoUser,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getCartData: (params) => dispatch(getCartData(params)),
+    clearCountCart: (params) => dispatch(clearCountCart(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

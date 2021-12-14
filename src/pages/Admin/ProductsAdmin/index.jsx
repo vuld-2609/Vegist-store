@@ -105,6 +105,7 @@ const ListUser = ({ getProducts, deleteProduct, productsData, totalProduct }) =>
                   <td>{t('admin.products.Current price')}</td>
                   <td>{t('admin.products.Category')}</td>
                   <td>{t('admin.products.Tag')}</td>
+                  <td>{t('admin.products.Total')}</td>
                   <td>{t('admin.products.Action')}</td>
                 </tr>
               </thead>
@@ -119,6 +120,7 @@ const ListUser = ({ getProducts, deleteProduct, productsData, totalProduct }) =>
                       <td>{Math.ceil(item.price * (1 - item.sale / 100)).toLocaleString()}</td>
                       <td>{item.categoryId.name}</td>
                       <td>{item.tagId.name}</td>
+                      <td>{item.total}</td>
                       <td>
                         <button
                           className="button"

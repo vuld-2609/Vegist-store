@@ -112,11 +112,14 @@ const AddProductAdmin = ({
                   .required(t('validate.name.required')),
                 shortDes: Yup.string().required(t('validate.Short description.required')),
                 categoryId: Yup.string().required(t('validate.category.required')),
-                origin: Yup.string().required(t('validate.origin.required')),
+                total: Yup.string()
+                  .matches(/^[1-9]\d*$/, t('validate.total.interger'))
+                  .required(t('validate.total.required')),
                 tagId: Yup.string().required(t('validate.tag.required')),
                 unit: Yup.string().required(t('validate.tag.required')),
                 price: Yup.string()
                   .required(t('validate.price.required'))
+                  .matches(/^[1-9]\d*$/, t('validate.price.interger'))
                   .matches(/(^(1|2|3|4|5|6|7|8|9)+[0-9]{4,8}$)/, t('validate.price.regex')),
                 ...(location.pathname.indexOf(`edit`) !== -1 && {
                   sale: Yup.string()
@@ -199,45 +202,6 @@ const AddProductAdmin = ({
                       </Col>
                     </Row>
                   </Col>
-                  <Col xs={24}>
-                    <Row align="middle">
-                      <Col md={6}>
-                        <label htmlFor="origin">
-                          {t('admin.products.Origin')}
-                          <FaStarOfLife />
-                        </label>
-                      </Col>
-                      <Col md={18}>
-                        <Field
-                          name="origin"
-                          id="origin"
-                          render={(FieldProps) => (
-                            <Select
-                              {...FieldProps.field}
-                              style={{ width: '100%' }}
-                              className="form__control--select"
-                              placeholder={t('admin.products.Select...')}
-                              onChange={(value) =>
-                                FieldProps.form.setFieldValue(FieldProps.field.name, value)
-                              }
-                            >
-                              <Option value="vi">
-                                <img src={VietNam} className="header__language--img" alt="anh" />
-                                <span>Viet Nam</span>
-                              </Option>
-                              <Option value="en">
-                                <img src={English} className="header__language--img" alt="anh" />
-                                <span>England</span>
-                              </Option>
-                            </Select>
-                          )}
-                        />
-                        <div className="text-danger">
-                          <ErrorMessage name="origin" />
-                        </div>
-                      </Col>
-                    </Row>
-                  </Col>{' '}
                   <Col xs={24}>
                     <Row align="middle">
                       <Col md={6}>
@@ -359,6 +323,15 @@ const AddProductAdmin = ({
                         </div>
                       </Col>
                     </Row>
+                  </Col>
+                  <Col xs={24}>
+                    <CustomField
+                      name="total"
+                      required
+                      type="text"
+                      label={t('admin.products.Total product')}
+                      placeholder={t('admin.products.Enter total product')}
+                    ></CustomField>
                   </Col>
                   <Col xs={24}>
                     <CustomField

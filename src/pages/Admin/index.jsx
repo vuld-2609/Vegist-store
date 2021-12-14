@@ -36,7 +36,7 @@ const Admin = () => {
 
   return (
     <>
-      <div className="admin-navbar" style={{ width: 256 }}>
+      <div className="admin-navbar fadeIn" style={{ width: 256 }}>
         <Menu
           inlineCollapsed={collapsed}
           defaultSelectedKeys={['3']}

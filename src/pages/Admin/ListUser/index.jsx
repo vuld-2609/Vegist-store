@@ -89,7 +89,7 @@ const ListUser = ({
 
   return (
     <>
-      <section className="admin__listUser">
+      <section className="admin__listUser fadeIn">
         <div className="container">
           <div className="admin__listUser--btn">
             <div className="admin__listUser--btn-search">
