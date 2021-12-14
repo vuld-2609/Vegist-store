@@ -45,7 +45,7 @@ const Information = ({ getInfo, infoUser, cartData, createBill }) => {
               lastName: (infoPayment || user).lastName,
               address: (infoPayment || user).address || '',
               zipCode: (infoPayment || user).zipCode || '',
-              phone: (infoPayment || user).phoneNumber || '',
+              phone: infoPayment?.phone || user?.phoneNumber || '',
               check: true,
             }}
             validationSchema={Yup.object({

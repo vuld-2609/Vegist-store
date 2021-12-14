@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getOrderUser, cancelOrderUser, getBillDetailUser } from '../../../redux/actions';
-import { Button, Modal, Select, Input, Pagination, Spin,Typography } from 'antd';
+import { Button, Modal, Select, Input, Pagination, Spin, Typography } from 'antd';
 import history from '../../../until/history';
 
 import './style.scss';
@@ -12,7 +12,7 @@ const { Search } = Input;
 const { Text } = Typography;
 function CartManage(prop) {
   const { getOrderUser, orderUser, cancelOrderUser, billDetailUser, getBillDetailUser, tabValue } =
-  prop;
+    prop;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [current, setCurrent] = useState(1);
   const [searchKey, setSearchKey] = useState('');
@@ -51,10 +51,9 @@ function CartManage(prop) {
   };
 
   const handleCancelPayment = (id) => {
-    isIdProductCancel(id)
+    isIdProductCancel(id);
     setIsModalVisible(true);
   };
-
 
   const handleCancelBill = async () => {
     await cancelOrderUser({ billId: idProductCancel, status: 'Đã hủy' });
@@ -86,7 +85,6 @@ function CartManage(prop) {
   const handleOpenModalCancelBill = () => {
     isOpenDetail(false);
   };
-
 
   const openBillDetail = (id) => {
     // isOpenDetail(true);
@@ -161,7 +159,7 @@ function CartManage(prop) {
                             <td className="action-cart-manage">
                               <Button
                                 disabled={item.status !== 'Đợi xác nhận'}
-                                onClick={()=>handleCancelPayment(item.id)}
+                                onClick={() => handleCancelPayment(item.id)}
                               >
                                 Huỷ
                               </Button>
@@ -266,7 +264,7 @@ function CartManage(prop) {
         onOk={handleCancelBill}
         onCancel={handleCancel}
       >
-        <p>Bạn có chắc muốn huỷ đơn đặt hàng này không ?</p>
+        <p>Are you sure you want to cancel your order ?</p>
       </Modal>
     </>
   );
