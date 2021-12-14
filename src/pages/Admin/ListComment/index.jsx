@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { deleteComment, getCommentAdmin, getProducts } from '../../../redux/actions';
 import history from '../../../until/history';
 import { titleCase } from '../../../until/string';
+import { toastSuccess } from '../../../until/toast';
 import './styles.scss';
 
 function ListComment({
@@ -130,7 +131,10 @@ function ListComment({
                         className="comment__icon comment__icon--reply"
                         onClick={() => history.push(`/product/${item.productId._id}`)}
                       />
-                      <BsReplyAllFill className="comment__icon comment__icon--reply" />
+                      <BsReplyAllFill
+                        className="comment__icon comment__icon--reply"
+                        onClick={() => toastSuccess('Coming soon !')}
+                      />
                       <RiDeleteBin5Fill
                         className="comment__icon comment__icon--delete"
                         onClick={() => handleClickDelete(item.id, item.title)}

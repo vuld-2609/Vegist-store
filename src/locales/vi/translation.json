@@ -116,7 +116,7 @@
       "required": "Thẻ tag không được để trống !"
     },
     "origin": {
-      "required": "Xuất sứ không được để trống !"
+      "required": "Số lượng sản phẩm không được để trống !"
     },
     "size": {
       "regex": "Kích cỡ tối thiểu là 1kg, tối đa 99kg !",
@@ -124,7 +124,8 @@
     },
     "price": {
       "regex": "Đơn giá tối thiểu là 10.000, tối đa là 99.000.000 !",
-      "required": "Đơn giá không được để trống !"
+      "required": "Đơn giá không được để trống !",
+      "interger": "Giá sản phẩm phải là số nguyên dương !"
     },
     "image": {
       "required": "Hãy chọn 4 ảnh !"
@@ -142,6 +143,10 @@
     },
     "discount name": {
       "required": "Mã khuyến mãi không được để trống !"
+    },
+    "total": {
+      "interger": "Tổng sản phẩm phải là một số nguyên dương",
+      "required": "Tổng sản phẩm không được để trống"
     }
   },
   "home": {
@@ -439,12 +444,16 @@
       "Name": "Tên",
       "Discount": "Giảm giá",
       "Current price": "Giá hiện tại",
-      "Action": "Hành động"
+      "Action": "Hành động",
+      "Total product": "Tổng số lượng sản phẩm",
+      "Enter total product": "Nhập tổng sản phẩm",
+      "Total": "Tổng sản phẩm"
     },
     "sales": {
       "title": "Quản lý khuyến mãi"
     },
     "home": "Trang chủ",
+    "Add new": "Thêm mới",
     "Back": "Quay lại",
     "user": {
       "Search a user": "Tìm kiếm người dùng...",
@@ -484,5 +493,6 @@
       "Action": "Hành động",
       "Search": "Tìm kiếm sản phẩm hoặc người dùng..."
     }
-  }
+  },
+  "logout": "Đăng xuất"
 }

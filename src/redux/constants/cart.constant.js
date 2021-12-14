@@ -14,6 +14,8 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const CLEAR_CART_SUCCESS = 'CLEAR_CART_SUCCESS';
 export const CLEAR_CART_FAIL = 'CLEAR_CART_FAIL';
 
+export const CLEAR_COUNT_CART = 'CLEAR_COUNT_CART';
+
 export const GET_CART = 'GET_CART';
 export const GET_CART_SUCCESS = 'GET_CART_SUCCESS';
 export const GET_CART_FAIL = 'GET_CART_FAIL';

@@ -115,7 +115,7 @@
       "required": "Tag can't be blank !"
     },
     "origin": {
-      "required": "Origin can't be blank !"
+      "required": "Total product can't be blank !"
     },
     "size": {
       "regex": "Minimum size is 1kg, maximum 99kg !",
@@ -123,7 +123,8 @@
     },
     "price": {
       "regex": "Minimum price is 10.000, maximum 99.000.000 !",
-      "required": "Price can't be blank !"
+      "required": "Price can't be blank !",
+      "interger": "Price must be a positive integer !"
     },
     "image": {
       "required": "Choose 4 pictures !"
@@ -141,6 +142,10 @@
     },
     "discount name": {
       "required": "Discount code can't be blank !"
+    },
+    "total": {
+      "interger": "\nTotal product must be a positive integer !\n",
+      "required": "Total product can't be blank !"
     }
   },
   "home": {
@@ -435,9 +440,12 @@
       "Enter quantity": "Enter quantity",
       "Key": "Key",
       "Name": "Name",
-      "Discount": "Name",
+      "Discount": "Discount",
       "Current price": "Current price",
-      "Action": "Current price"
+      "Action": "Action",
+      "Total product": "Total product",
+      "Enter total product": "Enter total product",
+      "Total": "Total"
     },
     "sales": {
       "title": "Discount Management"
@@ -448,6 +456,8 @@
       "Search a user": "Search a user...",
       "Email": "EMAIL"
     },
+
+    "Add new": "Add new",
     "order": {
       "Select a status": "Select a status",
       "Search": "Search a payment code or a user...",
@@ -482,5 +492,6 @@
       "Action": "Action",
       "Search": "Search a product or a user..."
     }
-  }
+  },
+  "logout": "Logout"
 }
