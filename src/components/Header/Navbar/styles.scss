@@ -1,6 +1,12 @@
 @import '../../../scss/utilities/mixin';
 @import '../../../scss/utilities/variables';
 
+.header__admin {
+  font-size: 32px;
+  margin-right: 20px;
+  color: $dark-gray;
+}
+
 .navbar {
   @include flex;
   border-top: 1px solid $border-color;
@@ -175,6 +181,10 @@
     &__text {
       padding-left: 1rem;
       color: #848484;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
