@@ -23,7 +23,7 @@ import Payment from './pages/User/Payment/Payment';
 import Success from './pages/User/Success';
 
 import ListUser from './pages/Admin/ListUser';
-import HomeAdmin from './pages/Admin/HomeAdmin';
+import Dashboard from './pages/Admin/Dashboard';
 import ProductsAdmin from './pages/Admin/ProductsAdmin';
 import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
 import ListOrder from './pages/Admin/ListOrder';
@@ -56,7 +56,7 @@ function App() {
           <PaymentLayout exact path="/payment" component={Payment} />
 
           {/* ADMIN */}
-          <PrivateLayout exact path="/admin" component={HomeAdmin} />
+          <PrivateLayout exact path="/admin" component={Dashboard} />
           <PrivateLayout exact path="/admin/listUser" component={ListUser} />
           <PrivateLayout exact path="/admin/listOrder" component={ListOrder} />
           <PrivateLayout exact path="/admin/listOrder/:id" component={OrderDetail} />

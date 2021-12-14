@@ -453,6 +453,7 @@
       "title": "Quản lý khuyến mãi"
     },
     "home": "Trang chủ",
+    "Add new": "Thêm mới",
     "Back": "Quay lại",
     "user": {
       "Search a user": "Tìm kiếm người dùng...",
@@ -492,5 +493,6 @@
       "Action": "Hành động",
       "Search": "Tìm kiếm sản phẩm hoặc người dùng..."
     }
-  }
+  },
+  "logout": "Đăng xuất"
 }
