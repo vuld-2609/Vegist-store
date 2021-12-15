@@ -25,7 +25,20 @@
   "30 Days Returns": "Đổi trả trong 30 ngày",
   "Online Support": "Hỗ trợ trực tuyến",
   "Address": "Địa chỉ",
-  "Contact": "Liên hệ",
+  "Contact": {
+    "title": "Liên hệ",
+    "description": "Có một câu hỏi? Chúng tôi rất thích nghe từ bạn. Gửi tin nhắn cho chúng tôi và chúng tôi sẽ trả lời sớm nhất có thể.",
+    "Drop us message": "Gửi tin nhắn cho chúng tôi",
+    "Name": "Tên",
+    "Email": "Email",
+    "Message": "Thông điệp",
+    "Enter your name": "Nhập tên",
+    "Enter your email address": "Nhập email",
+    "Your message here": "Nhập thông điệp tại đây...",
+    "Get in touch": "Liên lạc",
+    "Get description": "Chúng tôi rất vui khi được nhận liên hệ từ các bạn. Rất mong được hỗ trợ các bạn để các bạn có thể có được những trải nghiệm tuyệt vời.",
+    "SUBMIT": "GỬI"
+  },
   "Cart": "Giỏ hàng",
   "Add card success": "Thêm vào giỏ hàng thành công",
   "notFound": "Không có kết quả tìm kiếm cho từ khóa",
@@ -106,8 +119,12 @@
       "required": "Tên không được để trống !"
     },
     "name": {
-      "max": "Tên sản phẩm được vượt quá 50 kí tự !",
+      "max": "Tên sản phẩm không được vượt quá 40 kí tự !",
       "required": "Tên sản phẩm không được để trống !"
+    },
+    "message": {
+      "max": "Thông điệp không được vượt quá 1000 kí tự",
+      "required": "Message can't be blank !"
     },
     "category": {
       "required": "Dòng sản phẩm không được để trống !"
@@ -379,6 +396,12 @@
     "listComment": {
       "title": "Quản lý bình luận"
     },
+    "listContact": {
+      "title": "Quản lý liên hệ"
+    },
+    "Dashboard": {
+      "title": "Thống kê"
+    },
     "discount": {
       "title": "Quản lý khuyến mãi",
       "StartDate": "Ngày bắt đầu",
@@ -492,6 +515,13 @@
       "Date Time": "Thời gian",
       "Action": "Hành động",
       "Search": "Tìm kiếm sản phẩm hoặc người dùng..."
+    },
+    "contact": {
+      "Full Name": "Họ tên",
+      "Email": "Email",
+      "Message": "Thông điệp",
+      "Date Time": "Thời gian",
+      "Action": "Hành động"
     }
   },
   "logout": "Đăng xuất"

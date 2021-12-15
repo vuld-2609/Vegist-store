@@ -33,6 +33,8 @@ import About from './pages/User/About/index';
 import ListComment from './pages/Admin/ListComment';
 import DiscountManagement from './pages/Admin/DiscountManagement';
 import CreateDiscount from './pages/Admin/DiscountManagement/CreateDiscount';
+import Contact from './pages/User/Contact/Contact';
+import ListContact from './pages/Admin/ListContact/ListContact';
 
 function App() {
   return (
@@ -50,6 +52,7 @@ function App() {
           <DefaultLayout exact path="/success/:id" component={Success} />
           <DefaultLayout exact path="/notfound" component={NotFound} />
           <DefaultLayout exact path="/about" component={About} />
+          <DefaultLayout exact path="/contact" component={Contact} />
 
           <PaymentLayout exact path="/infoPayment" component={Information} />
           <PaymentLayout exact path="/shipping" component={Shipping} />
@@ -62,6 +65,7 @@ function App() {
           <PrivateLayout exact path="/admin/listOrder/:id" component={OrderDetail} />
           <PrivateLayout exact path="/admin/listComment" component={ListComment} />
           <PrivateLayout exact path="/admin/products" component={ProductsAdmin}></PrivateLayout>
+          <PrivateLayout exact path="/admin/listContact" component={ListContact}></PrivateLayout>
           <PrivateLayout
             exact
             path="/admin/products/add"

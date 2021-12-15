@@ -97,8 +97,8 @@ const navbarData = [
   },
   {
     id: 6,
-    name: 'Blogs',
-    path: '/blogs',
+    name: 'Contact Us',
+    path: '/contact',
   },
 
   {
