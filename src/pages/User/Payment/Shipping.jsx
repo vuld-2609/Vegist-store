@@ -23,17 +23,17 @@ const Shipping = ({ getBill, billData }) => {
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Contact')}</h4>
-                  <p>{infoPayment.phone}</p>
+                  <p>{infoPayment?.phone}</p>
                 </div>
                 <button className="button" onClick={() => history.push('/infoPayment')}>
                   {t('payments.shipping.Change')}
                 </button>
               </div>
-              {infoPayment.email && (
+              {infoPayment?.email && (
                 <div className=" shipping__content--item   ">
                   <div className="shipping__info--inner">
                     <h4>{t('Email')}</h4>
-                    <p>{infoPayment.email}</p>
+                    <p>{infoPayment?.email}</p>
                   </div>
                   <button className="button" onClick={() => history.push('/infoPayment')}>
                     {t('payments.shipping.Change')}
@@ -43,7 +43,7 @@ const Shipping = ({ getBill, billData }) => {
               <div className=" shipping__content--item">
                 <div className="shipping__info--inner">
                   <h4>{t('payments.shipping.Ship to')}</h4>
-                  <p>{infoPayment.address}</p>
+                  <p>{infoPayment?.address}</p>
                 </div>
                 <button className="button" onClick={() => history.push('/infoPayment')}>
                   {t('payments.shipping.Change')}
