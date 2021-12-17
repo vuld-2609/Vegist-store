@@ -5,7 +5,7 @@ import { Field, ErrorMessage } from 'formik';
 import { FaStarOfLife } from 'react-icons/fa';
 
 import './styles.scss';
-const CustomField = ({ name, type, placeholder, label, required }) => {
+const CustomField = ({ name, type, placeholder, label, required, disabled }) => {
   const { TextArea } = Input;
   return (
     <Row align="middle">
@@ -25,6 +25,7 @@ const CustomField = ({ name, type, placeholder, label, required }) => {
                 placeholder={placeholder}
                 type={type}
                 className="form__control--input"
+                disabled={disabled}
               />
             ) : (
               <TextArea
@@ -32,12 +33,13 @@ const CustomField = ({ name, type, placeholder, label, required }) => {
                 placeholder={placeholder}
                 type={type}
                 className="form__control--input"
+                disabled={disabled}
               ></TextArea>
             )
           }
         />
         <div className="text-danger">
-          <ErrorMessage name={name} />
+          <ErrorMessage name={name} disabled={disabled} />
         </div>
       </Col>
     </Row>

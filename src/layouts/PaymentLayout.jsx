@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Col, Row } from 'antd';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 import InfoCart from '../components/InfoCart';
 function PaymentLayout({ component: Component, role, ...props }) {
@@ -20,6 +22,7 @@ function PaymentLayout({ component: Component, role, ...props }) {
                 </Col>
               </Row>
             </div>
+            <ToastContainer />
           </div>
         </>
       )}

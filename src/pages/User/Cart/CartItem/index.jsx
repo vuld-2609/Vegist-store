@@ -33,7 +33,7 @@ const CartItem = ({ item, updateCart, deleteCart }) => {
     </div>
   );
 
-  const modalInc = (data) => {
+  const modalInc = (data, value) => {
     confirm({
       title: `${t('cart.You can only order up to 30 products')}`,
       content: <>{contentModal(data)}</>,
@@ -41,9 +41,11 @@ const CartItem = ({ item, updateCart, deleteCart }) => {
       cancelText: `${t('cart.No')}`,
       onOk() {
         setValueInput(30);
+        updateCart({ id: item._id, productId: data._id, quantity: value });
       },
       onCancel() {
         setValueInput(1);
+        updateCart({ id: item._id, productId: data._id, quantity: 1 });
       },
     });
   };
@@ -59,6 +61,8 @@ const CartItem = ({ item, updateCart, deleteCart }) => {
       },
       onCancel() {
         setValueInput(value);
+        updateCart({ id: item._id, productId: data._id, quantity: value });
+
       },
     });
   };
@@ -71,13 +75,11 @@ const CartItem = ({ item, updateCart, deleteCart }) => {
       updateCart({ id: item._id, productId: data._id, quantity: value });
       setValueInput(value);
     } else if (value > 30) {
-      value = value - 1;
+     
       modalInc(data, value);
-      updateCart({ id: item._id, productId: data._id, quantity: value });
     } else if (value <= 0) {
       value = value + 1;
       modalDec(data, value);
-      updateCart({ id: item._id, productId: data._id, quantity: value });
     }
   };
 

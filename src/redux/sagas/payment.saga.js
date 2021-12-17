@@ -2,7 +2,7 @@ import { put, takeEvery } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { all } from 'redux-saga/effects';
 import history from '../../until/history';
-import { toastError,toastSuccess } from '../../until/toast';
+import { toastError, toastSuccess } from '../../until/toast';
 import axiosClient from '../config/axiosClient';
 
 import {
@@ -35,12 +35,12 @@ import {
   GET_BILL_DETAIL_USER,
   GET_BILL_DETAIL_USER_SUCCESS,
   GET_BILL_DETAIL_USER_FAIL,
-  UPDATE_PAYMENTS_SUCCESS
+  UPDATE_PAYMENTS_SUCCESS,
 } from '../constants';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-function* createBill(action) {
+function* createBillSaga(action) {
   try {
     const response = yield axiosClient.post('/user/bill', action.payload);
 
@@ -104,7 +104,6 @@ function* getBillUserSaga(action) {
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
-
     const data = response.data;
 
     yield put({
@@ -120,7 +119,7 @@ function* getBillUserSaga(action) {
       payload: error,
     });
 
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
@@ -223,14 +222,14 @@ function* getOrderDetail(action) {
       payload: error,
     });
 
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
 function* cancelOrderUserSaga(action) {
   try {
-    const { billId,status } = action.payload;
-    const response = yield axiosClient.patch(`user/bill/${billId}`,{status})
+    const { billId, status } = action.payload;
+    const response = yield axiosClient.patch(`user/bill/${billId}`, { status });
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
@@ -239,44 +238,43 @@ function* cancelOrderUserSaga(action) {
     yield put({
       type: CANCEL_ORDER_SUCCESS,
       payload: {
-        data:data
+        data: data,
       },
     });
-    toastSuccess('Huỷ đơn hàng thành công !')
+    toastSuccess('Huỷ đơn hàng thành công !');
   } catch (error) {
     yield put({
       type: CANCEL_ORDER_FAIL,
       payload: error,
     });
 
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
 function* getOrderUserSaga(action) {
   try {
-    const { page,search,status,limit } = action.payload;
+    const { page, search, status, limit } = action.payload;
 
     const response = yield axiosClient({
       method: 'GET',
       url: `user/bill`,
       params: {
-          ...(search && { q: search }),
-          ...(limit && { _limit: limit }),
-          ...(page && { _page: page }),
+        ...(search && { q: search }),
+        ...(limit && { _limit: limit }),
+        ...(page && { _page: page }),
         ...(status && status !== 'all' && { status }),
       },
     });
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
 
-
     const data = response.data;
 
     yield put({
       type: GET_ORDER_USER_SUCCESS,
       payload: {
-        data:data
+        data: data,
       },
     });
   } catch (error) {
@@ -284,7 +282,7 @@ function* getOrderUserSaga(action) {
       type: GET_ORDER_USER_FAIL,
       payload: error,
     });
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
@@ -292,16 +290,16 @@ function* getBillDetailUserSaga(action) {
   try {
     const billId = action.payload;
 
-    const response = yield axiosClient.get(`/user/bill/${billId}`)
+    const response = yield axiosClient.get(`/user/bill/${billId}`);
 
     if (response.status === 'failed' && response.error) throw new Error(response.error.message);
-   
+
     const data = response.data;
 
     yield put({
       type: GET_BILL_DETAIL_USER_SUCCESS,
       payload: {
-        data:data
+        data: data,
       },
     });
   } catch (error) {
@@ -309,12 +307,12 @@ function* getBillDetailUserSaga(action) {
       type: GET_BILL_DETAIL_USER_FAIL,
       payload: error,
     });
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
 export default function* paymentSaga() {
-  yield takeEvery(CREATE_BILL, createBill);
+  yield takeEvery(CREATE_BILL, createBillSaga);
   yield takeEvery(UPDATE_BILL, updateBillSaga);
   yield takeEvery(GET_BILL, getBillUserSaga);
   yield takeEvery(GET_PAYMENTS, getPayments);

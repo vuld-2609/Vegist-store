@@ -5,6 +5,8 @@ import { Redirect, Route } from 'react-router-dom';
 import English from '../assets/images/english.svg';
 import VietNam from '../assets/images/vietnam.svg';
 import Admin from '../pages/Admin';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 const { Option } = Select;
 
@@ -51,6 +53,7 @@ function PrivateLayout({ component: Component, role, ...props }) {
                 <Component {...routerProps} />
               </div>
             </div>
+            <ToastContainer />
           </div>
         </>
       )}

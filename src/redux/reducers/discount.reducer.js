@@ -3,8 +3,8 @@ import {
   GET_DISCOUNT_FAIL,
   CREATE_DISCOUNT_FAIL,
   CREATE_DISCOUNT_SUCCESS,
-  GET_DISCOUNT_DETAIL_FAIL,
-  GET_DISCOUNT_DETAIL_SUCCESS,
+  GET_DISCOUNT_USER_FAIL,
+  GET_DISCOUNT_USER_SUCCESS,
   DELETE_DISCOUNT_FAIL,
   DELETE_DISCOUNT_SUCCESS,
 } from '../constants';
@@ -12,7 +12,8 @@ import {
 const initialState = {
   discountData: [],
   totalDiscount: 0,
-  discountDetailData: {},
+  discountUserData: [],
+  totalDiscountUser: 0,
   addDiscount: {},
 };
 
@@ -21,18 +22,19 @@ export default function discountReducer(state = initialState, action) {
     case GET_DISCOUNT_SUCCESS:
       return {
         ...state,
-        discountData: [...action.payload.discount],
+        discountData: [...action.payload.discountCodes],
         totalDiscount: action.payload.total,
       };
     case GET_DISCOUNT_FAIL: {
       return state;
     }
-    case GET_DISCOUNT_DETAIL_SUCCESS:
+    case GET_DISCOUNT_USER_SUCCESS:
       return {
         ...state,
-        discountDetailData: { ...action.payload },
+        discountUserData: [...action.payload.discountCodes],
+        totalDiscountUser: action.payload.total,
       };
-    case GET_DISCOUNT_DETAIL_FAIL: {
+    case GET_DISCOUNT_USER_FAIL: {
       return state;
     }
     case CREATE_DISCOUNT_SUCCESS: {

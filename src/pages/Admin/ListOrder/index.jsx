@@ -2,7 +2,6 @@ import { Empty, Input, Modal, Pagination, Select } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import { deletePayments, getPayments, updatePayments } from '../../../redux/actions';
 import Row from './components/Row/index';
 import './styles.scss';
@@ -190,7 +189,6 @@ function ListOrder({
           ) : null}
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 }

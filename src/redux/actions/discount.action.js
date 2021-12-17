@@ -1,4 +1,4 @@
-import { GET_DISCOUNT, DELETE_DISCOUNT, CREATE_DISCOUNT, GET_DISCOUNT_DETAIL } from '../constants';
+import { GET_DISCOUNT, DELETE_DISCOUNT, CREATE_DISCOUNT, GET_DISCOUNT_USER } from '../constants';
 
 export function getDiscount(params) {
   return {
@@ -14,9 +14,9 @@ export function createDiscount(params) {
   };
 }
 
-export function getDetailDiscount(params) {
+export function getDiscountUser(params) {
   return {
-    type: GET_DISCOUNT_DETAIL,
+    type: GET_DISCOUNT_USER,
     payload: params,
   };
 }

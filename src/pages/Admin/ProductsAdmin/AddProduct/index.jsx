@@ -104,6 +104,10 @@ const AddProductAdmin = ({
                   location.pathname.indexOf(`edit`) !== -1
                     ? productDetail?.data?.product?.unit
                     : '',
+                total:
+                  location.pathname.indexOf(`edit`) !== -1
+                    ? productDetail?.data?.product?.total
+                    : '',
                 // image: [],
               }}
               validationSchema={Yup.object({

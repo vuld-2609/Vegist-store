@@ -1,17 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Input } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getCartData } from '../../redux/actions';
 import { useLocation } from 'react-router-dom';
+import SearchDiscount from './Search';
+import { getDiscountUser } from '../../redux/actions';
+
 import './styles.scss';
 
-const InfoCart = ({ getCartData, cartData }) => {
+const InfoCart = ({
+  getCartData,
+  cartData,
+  getDiscountUser,
+  discountUserData,
+  totalDiscountUser,
+}) => {
   const location = useLocation();
   const { t } = useTranslation();
+  const [searchKey, setSearchKey] = useState('');
+  const [isShowSearch, setIsShowSearch] = useState(false);
+  const [discount, setDiscount] = useState();
+
   useEffect(() => {
     getCartData();
   }, []);
+
+  useEffect(() => {
+    getDiscountUser({ page: 1, searchKey });
+  }, [searchKey, isShowSearch]);
+
+  useEffect(() => {}, [searchKey]);
 
   const renderCartData = (cartData) => {
     return cartData?.cartDetails?.map((item, index) => {
@@ -40,6 +58,17 @@ const InfoCart = ({ getCartData, cartData }) => {
       total += parseInt(element.productId.price * element.quantity);
     });
     total += total * 0.1;
+
+    if (discount?.sale || discount?.amount) {
+      if (discount?.sale) {
+        total = total * (1 - discount?.sale / 100);
+      } else {
+        total -= discount?.amount;
+      }
+    }
+    const payment = JSON.parse(localStorage.getItem('infoPayment'));
+    localStorage.setItem('infoPayment', JSON.stringify({ ...payment, total: total + 20000 }));
+
     return total;
   };
 
@@ -48,12 +77,15 @@ const InfoCart = ({ getCartData, cartData }) => {
       <div className=" infoCart__container">
         <table className="infoCart__cart">{renderCartData(cartData)}</table>
         <div className="infoCart__discount">
-          <form>
-            <Input className="input" type="text" placeholder={t('infoCart.Discount code')}></Input>
-            <button className="button" type="button">
-              {t('infoCart.Apply')}
-            </button>
-          </form>
+          <SearchDiscount
+            setSearchKey={setSearchKey}
+            searchKey={searchKey}
+            totalDiscountUser={totalDiscountUser}
+            discountUserData={discountUserData}
+            setIsShowSearch={setIsShowSearch}
+            isShowSearch={isShowSearch}
+            setDiscount={setDiscount}
+          />
         </div>
         <div className="infoCart__price">
           <div className="infoCart__price--item">
@@ -68,14 +100,27 @@ const InfoCart = ({ getCartData, cartData }) => {
                 : t('infoCart.Calculated at next step')}
             </p>
           </div>
+          <div className="infoCart__price--item">
+            <h4>{t('infoCart.Discount')}</h4>
+            <p>
+              {(location.pathname === '/shipping' || location.pathname === '/payment') &&
+              discount ? (
+                <span>
+                  {discount?.amount?.toLocaleString() || discount?.sale}
+                  {discount?.amount ? 'VND' : '%'}
+                </span>
+              ) : (
+                0
+              )}
+            </p>
+          </div>
           <div className="infoCart__price--total">
             <h4>{t('infoCart.Total')}</h4>
             <p>
               VND{' '}
               <span>
-                $
                 {(
-                  handleCalculateToTal(cartData?.cartData) +
+                  handleCalculateToTal() +
                   (location.pathname === '/shipping' || location.pathname === '/payment'
                     ? 20000
                     : 0)
@@ -91,15 +136,19 @@ const InfoCart = ({ getCartData, cartData }) => {
 
 const mapStateToProps = (state) => {
   const { cartData } = state.cartReducer;
+  const { discountUserData, totalDiscountUser } = state.discountReducer;
 
   return {
     cartData,
+    discountUserData,
+    totalDiscountUser,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getCartData: (params) => dispatch(getCartData(params)),
+    getDiscountUser: (params) => dispatch(getDiscountUser(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(InfoCart);
