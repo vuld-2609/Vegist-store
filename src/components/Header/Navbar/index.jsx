@@ -92,8 +92,8 @@ const navbarData = [
   },
   {
     id: 5,
-    name: "Faq's",
-    path: "/faq's",
+    name: 'Discount',
+    path: '/discount',
   },
   {
     id: 6,

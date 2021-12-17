@@ -35,6 +35,7 @@ import DiscountManagement from './pages/Admin/DiscountManagement';
 import CreateDiscount from './pages/Admin/DiscountManagement/CreateDiscount';
 import Contact from './pages/User/Contact/Contact';
 import ListContact from './pages/Admin/ListContact/ListContact';
+import Discount from './pages/User/Discount';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <DefaultLayout exact path="/notfound" component={NotFound} />
           <DefaultLayout exact path="/about" component={About} />
           <DefaultLayout exact path="/contact" component={Contact} />
+          <DefaultLayout exact path="/discount" component={Discount} />
 
           <PaymentLayout exact path="/infoPayment" component={Information} />
           <PaymentLayout exact path="/shipping" component={Shipping} />
