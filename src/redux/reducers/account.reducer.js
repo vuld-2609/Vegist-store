@@ -34,6 +34,7 @@ const initialStore = {
   deleteUser: [],
   userEdit: {},
   listUser: {},
+
   listDiscountUser:{
     load:false,
     data:[],
@@ -159,8 +160,8 @@ export default function accountReducer(state = initialStore, action) {
         ...state,
         listDiscountUser:{
           ...state.listDiscountUser,
+          data:data.discountCodes,
           load:false,
-          data
         }
       }
     }

@@ -31,7 +31,7 @@ function CartManage(prop) {
   }, [current, searchKey, filterSelect]);
 
   useEffect(() => {
-    tabValue === '1' &&
+    tabValue !== '2' &&
       getOrderUser({
         page: current,
         limit: 5,

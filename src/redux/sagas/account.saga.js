@@ -266,7 +266,6 @@ function* getDiscountUserSaga(action) {
       throw new Error(error.message);
     }
     
-    // console.log("🚀 ~ file: account.saga.js ~ line 248 ~ function*getDiscountUserSaga ~ data", data)
     yield put({
       type: GET_DISCOUNT_USER_SUCCESS,
       payload: {

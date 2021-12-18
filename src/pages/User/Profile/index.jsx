@@ -18,14 +18,14 @@ function Profile() {
   return (
     <>
       <Tabs onChange={handleChange} tabPosition='left'>
-        <TabPane tab="List Discount" key="1">
-          <ListDiscount />
-        </TabPane>
-        <TabPane tab="Info Manage" key="3">
+        <TabPane tab="Info Manage" key="1">
           <InfoManage tabValue={tabValue}/>
         </TabPane>
         <TabPane tab="Order Manage" key="2">
           <CartManage tabValue={tabValue}/>
+        </TabPane>
+        <TabPane tab="List Discount" key="3">
+          <ListDiscount />
         </TabPane>
     </Tabs>
     </>

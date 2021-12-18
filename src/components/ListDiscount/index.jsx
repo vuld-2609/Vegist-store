@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getDiscountUser } from '../../redux/actions';
-import { Button, Modal, Select, Input, Pagination, Spin, Typography, Row, Col } from 'antd';
+import { Button, Input, Pagination, Spin, Row, Col,message } from 'antd';
 import history from '../../until/history';
 import {
     FieldTimeOutlined
   } from '@ant-design/icons';
 import './style.scss';
 import moment from 'moment';
-function CartManage(prop) {
+function ListDiscount(prop) {
   const { getDiscountUser, tabValue, listDiscountUser } = prop;
-  console.log('🚀 ~ file: index.jsx ~ line 12 ~ CartManage ~ listDiscountUser', listDiscountUser);
   const [current, setCurrent] = useState(1);
   const [searchKey, setSearchKey] = useState('');
   const { Search } = Input;
@@ -22,15 +21,27 @@ function CartManage(prop) {
     getDiscountUser({
       search: searchKey,
       page: current,
-      limit: 5,
+      limit: 10,
     });
-  }, [current, searchKey, tabValue]);
+  }, [current,searchKey]);
+
+  useEffect(() => {
+    tabValue !=='3' && getDiscountUser({
+      search: searchKey,
+      page: current,
+      limit: 10,
+    });
+  }, [tabValue]);
 
   function onSearch(value) {
     setSearchKey(value);
     setCurrent(1);
   }
 
+  const handleCopyCode =(id)=>{
+    navigator.clipboard.writeText(id)
+    message.info('Copied');
+  }
 
   return (
     <>
@@ -51,7 +62,7 @@ function CartManage(prop) {
               <div className="voucher-list">
                 <div></div>
                 <Row gutter={[16, 16]}>
-                    {listDiscountUser ? listDiscountUser?.map((item,index)=>(
+                    {listDiscountUser?.data.length !==0 ? listDiscountUser?.data.map((item,index)=>(
                         <Col sm={24}  md={24} lg={12}>
                             <div className="voucher-list__item">
                                 <div className="voucher-img">
@@ -59,7 +70,7 @@ function CartManage(prop) {
                                 </div>
                                 <div className="voucher-list__item-content">
                                     <div className="content-top">
-                                        <p className="code">[Nạp thẻ và dịch vụ]-Nhập mã SPPTELCO12 Giảm ngay 30000 cho đơn từ 40000</p>
+                                        <p className="code">{`[Mã giảm giá tháng 12]-Nhập mã ${item.codeName} Giảm ngay 30000 cho đơn từ 40000`}</p>
                                         <p className="percent">Còn lại 64%</p>
                                     </div>
                                     <div className="content-bottom">
@@ -67,18 +78,17 @@ function CartManage(prop) {
                                         <FieldTimeOutlined />
                                         Còn 13 ngày 20:3
                                         </div>
-                                        <Button type="primary"> Lấy code</Button>
+                                        <Button onClick={() => handleCopyCode(item.id)} type="primary"> Copy</Button>
                                     </div>
                                 </div>
                             </div>
                         </Col>
-                    )) : <p className="voucher-empty"> Bạn chưa có mã giảm giá nào !</p>
+                    )) : <p className="voucher-empty"> Bạn chưa có mã giảm giá nào ! </p>
                     }
-
                 </Row>
-                <div className="voucher-content">
-                  {listDiscountUser && (
-                    <div className="admin__listUser--pagination">
+              </div>
+                  {listDiscountUser?.data.length !==0 && (
+                    <div className="pagination">
                         <Pagination
                         current={current}
                         onChange={(page) => {
@@ -90,12 +100,10 @@ function CartManage(prop) {
                             setCurrent(page);
                         }}
                         total={listDiscountUser?.total}
-                        defaultPageSize={5}
+                        defaultPageSize={10}
                         />
                     </div>
                     )}
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -105,12 +113,9 @@ function CartManage(prop) {
 }
 
 const mapStateToProps = (state) => {
-  const { orderUser, billDetailUser, listDiscountUser } = state.paymentReducer;
-  console.log("🚀 ~ file: index.jsx ~ line 109 ~ mapStateToProps ~ listDiscountUser", listDiscountUser)
+  const {  listDiscountUser } = state.accountReducer;
 
   return {
-    orderUser,
-    billDetailUser,
     listDiscountUser,
   };
 };
@@ -121,4 +126,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartManage);
+export default connect(mapStateToProps, mapDispatchToProps)(ListDiscount);
