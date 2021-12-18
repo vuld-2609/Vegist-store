@@ -29,6 +29,9 @@ import {
   EDIT_USER_PASSWORD,
   EDIT_USER_PASSWORD_FAIL,
   EDIT_USER_PASSWORD_SUCCESS,
+  GET_DISCOUNT_USER,
+  GET_DISCOUNT_USER_SUCCESS,
+  GET_DISCOUNT_USER_FAIL
 } from '../constants';
 
 function* editUserByAdminSaga(action) {
@@ -237,6 +240,41 @@ function* editPasswordUser(action) {
   }
 }
 
+function* getDiscountUserSaga(action) {
+  try {
+    const {page,limit,search} = action.payload;
+
+    const { status, error, data } = yield axiosClient({
+      url: `/user/discountCodeDetail`,
+      method: 'GET',
+      params: {
+        ...(page && { _page: page }),
+        ...(limit && { _limit: limit }),
+        ...(search && { q: search }),
+      },
+    });
+    
+    if (status === 'failed' && error.message) {
+      throw new Error(error.message);
+    }
+    
+    // console.log("🚀 ~ file: account.saga.js ~ line 248 ~ function*getDiscountUserSaga ~ data", data)
+    yield put({
+      type: GET_DISCOUNT_USER_SUCCESS,
+      payload: {
+        data
+      },
+    });
+
+  } catch (error) {
+    yield put({
+      type: GET_DISCOUNT_USER_FAIL,
+      payload: error,
+    });
+    toastError(error.message);
+  }
+}
+
 export default function* accountSaga() {
   yield takeEvery(CREATE_ACCOUNT, createAccountSaga);
   yield takeEvery(GET_USER_ACCOUNT, loginSaga);
@@ -246,4 +284,5 @@ export default function* accountSaga() {
   yield takeEvery(EDIT_USER_BY_ADMIN, editUserByAdminSaga);
   yield takeEvery(DELETE_USER, deleteUserSaga);
   yield takeEvery(EDIT_USER_PASSWORD, editPasswordUser);
+  yield takeEvery(GET_DISCOUNT_USER, getDiscountUserSaga);
 }

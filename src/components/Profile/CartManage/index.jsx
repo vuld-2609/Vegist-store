@@ -2,22 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getOrderUser, cancelOrderUser, getBillDetailUser } from '../../../redux/actions';
-import { Button, Modal, Select, Input, Pagination, Spin, Typography } from 'antd';
+import { Button, Modal, Select, Input, Pagination, Spin } from 'antd';
 import history from '../../../until/history';
 
 import './style.scss';
 import moment from 'moment';
 const { Option } = Select;
 const { Search } = Input;
-const { Text } = Typography;
 function CartManage(prop) {
-  const { getOrderUser, orderUser, cancelOrderUser, billDetailUser, getBillDetailUser, tabValue } =
+  const { getOrderUser, orderUser, cancelOrderUser, tabValue } =
     prop;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [current, setCurrent] = useState(1);
   const [searchKey, setSearchKey] = useState('');
   const [filterSelect, setFilterSelect] = useState('all');
-  const [openDetail, isOpenDetail] = useState(false);
   const [idProductCancel, isIdProductCancel] = useState();
 
   const { t } = useTranslation();
@@ -78,17 +76,7 @@ function CartManage(prop) {
     setIsModalVisible(false);
   };
 
-  const handleOkBill = (id) => {
-    isOpenDetail(false);
-  };
-
-  const handleOpenModalCancelBill = () => {
-    isOpenDetail(false);
-  };
-
   const openBillDetail = (id) => {
-    // isOpenDetail(true);
-    // getBillDetailUser(id);
     history.push(`/success/${id}`);
   };
 
@@ -164,54 +152,6 @@ function CartManage(prop) {
                                 Huỷ
                               </Button>
                               <Button onClick={() => openBillDetail(item.id)}>Chi tiết</Button>
-                              {/* <Modal
-                                title="Product Detail"
-                                visible={openDetail}
-                                onOk={handleOkBill}
-                                onCancel={handleOpenModalCancelBill}
-                                bodyStyle={{ maxHeight: '70vh',height: '70vh', overflowY: 'auto' }}
-                                width={1000}
-                              >
-                                {billDetailUser.load ? (
-                                  <div className="loading">
-                                    <Spin />
-                                  </div>
-                                ) : (
-                                  <div className="bill-detail">
-                                    <table className="bill-table bill-table--detail">
-                                    <thead>
-                                      <tr>
-                                        <td>STT</td>
-                                        <td>NAME</td>
-                                        <td>PRODUCT</td>
-                                        <td>PRICE</td>
-                                        <td>QUANTITY</td>
-                                        <td>TOTAL</td>
-                                        <td>PAYMENT DATE {moment(billDetailUser?.bill?.dateCreate).format('L')}</td>
-                                        <td>SHIP FEE 20.000 VND</td>
-                                        <td>{`TOTAL PRICE ${(billDetailUser?.bill?.total + 20000).toLocaleString()} VND`}</td>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                    {billDetailUser.data?.map((item,index) => (
-                                      <>
-                                        <tr className="">
-                                          <td>{index +1}</td>
-                                          <td>{item.productId.name}</td>
-                                          <td>
-                                            <img src={item.productId.imgs[0]} alt="" />
-                                          </td>
-                                          <td>{`${item.productId.price.toLocaleString()} VND`}</td>
-                                          <td>{item.quantity}</td>
-                                          <td>{(item.quantity * item.productId.price).toLocaleString()} VND</td>
-                                        </tr>
-                                        </>
-                                    ))}
-                                    </tbody>
-                                    </table>
-                                  </div>
-                                )}
-                              </Modal> */}
                             </td>
                           </tr>
                         ))}
