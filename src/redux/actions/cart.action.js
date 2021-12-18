@@ -1,4 +1,11 @@
-import { ADD_CART, GET_CART, UPDATE_CART, DELETE_CART, CLEAR_CART } from '../constants';
+import {
+  ADD_CART,
+  GET_CART,
+  UPDATE_CART,
+  DELETE_CART,
+  CLEAR_CART,
+  CLEAR_COUNT_CART,
+} from '../constants';
 
 export function addCart(params) {
   return {
@@ -24,6 +31,13 @@ export function deleteCart(params) {
 export function clearCart(params) {
   return {
     type: CLEAR_CART,
+    payload: params,
+  };
+}
+
+export function clearCountCart(params) {
+  return {
+    type: CLEAR_COUNT_CART,
     payload: params,
   };
 }

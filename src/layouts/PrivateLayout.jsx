@@ -35,8 +35,8 @@ function PrivateLayout({ component: Component, role, ...props }) {
                 <Admin {...routerProps} />
               </div>
               <div className="admin__wrapper">
-                <div className="header__language admin__language">
-                  <span>{t('language.name')}: </span>
+                <div className="container header__language admin__language">
+                  <span className="mr-16">{t('language.name')}: </span>
                   <Select onChange={changeLanguage} defaultValue="en">
                     <Option value="en">
                       <img src={English} className="header__language--img" />

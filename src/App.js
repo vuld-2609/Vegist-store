@@ -23,7 +23,7 @@ import Payment from './pages/User/Payment/Payment';
 import Success from './pages/User/Success';
 
 import ListUser from './pages/Admin/ListUser';
-import HomeAdmin from './pages/Admin/HomeAdmin';
+import Dashboard from './pages/Admin/Dashboard';
 import ProductsAdmin from './pages/Admin/ProductsAdmin';
 import AddProductAdmin from './pages/Admin/ProductsAdmin/AddProduct';
 import ListOrder from './pages/Admin/ListOrder';
@@ -33,6 +33,9 @@ import About from './pages/User/About/index';
 import ListComment from './pages/Admin/ListComment';
 import DiscountManagement from './pages/Admin/DiscountManagement';
 import CreateDiscount from './pages/Admin/DiscountManagement/CreateDiscount';
+import Contact from './pages/User/Contact/Contact';
+import ListContact from './pages/Admin/ListContact/ListContact';
+import Discount from './pages/User/Discount';
 
 function App() {
   return (
@@ -50,18 +53,21 @@ function App() {
           <DefaultLayout exact path="/success/:id" component={Success} />
           <DefaultLayout exact path="/notfound" component={NotFound} />
           <DefaultLayout exact path="/about" component={About} />
+          <DefaultLayout exact path="/contact" component={Contact} />
+          <DefaultLayout exact path="/discount" component={Discount} />
 
           <PaymentLayout exact path="/infoPayment" component={Information} />
           <PaymentLayout exact path="/shipping" component={Shipping} />
           <PaymentLayout exact path="/payment" component={Payment} />
 
           {/* ADMIN */}
-          <PrivateLayout exact path="/admin" component={HomeAdmin} />
+          <PrivateLayout exact path="/admin" component={Dashboard} />
           <PrivateLayout exact path="/admin/listUser" component={ListUser} />
           <PrivateLayout exact path="/admin/listOrder" component={ListOrder} />
           <PrivateLayout exact path="/admin/listOrder/:id" component={OrderDetail} />
           <PrivateLayout exact path="/admin/listComment" component={ListComment} />
           <PrivateLayout exact path="/admin/products" component={ProductsAdmin}></PrivateLayout>
+          <PrivateLayout exact path="/admin/listContact" component={ListContact}></PrivateLayout>
           <PrivateLayout
             exact
             path="/admin/products/add"

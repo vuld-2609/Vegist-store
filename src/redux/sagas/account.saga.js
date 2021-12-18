@@ -34,6 +34,8 @@ import {
   GET_DISCOUNT_USER_FAIL
 } from '../constants';
 
+const apiURL = process.env.REACT_APP_API_URL;
+
 function* editUserByAdminSaga(action) {
   try {
     const { id, role, status } = action.payload;
@@ -151,7 +153,7 @@ function* getInfoSaga(action) {
     yield put({
       type: GET_INFO_SUCCESS,
       payload: {
-        data:response.data
+        data: response.data,
       },
     });
   } catch (error) {
@@ -160,7 +162,7 @@ function* getInfoSaga(action) {
       type: GET_INFO_FAIL,
       payload: error,
     });
-    
+
     toastError(error.message);
   }
 }
@@ -168,7 +170,10 @@ function* getInfoSaga(action) {
 function* loginSaga(action) {
   try {
     const { phoneNumber, password } = action.payload;
-    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, { phoneNumber, password });
+    const { status, error, data } = yield axiosClient.post(`/user/auth/login`, {
+      phoneNumber,
+      password,
+    });
 
     if (status === 'failed' && error.message) {
       throw new Error(error.message);
@@ -189,7 +194,7 @@ function* loginSaga(action) {
       type: GET_USER_ACCOUNT_FAIL,
       payload: error,
     });
-    toastError(error.message)
+    toastError(error.message);
   }
 }
 
@@ -205,9 +210,9 @@ function* editProfileSaga(action) {
       type: EDIT_PROFILE_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('profile', JSON.stringify(data.user))
+    localStorage.setItem('profile', JSON.stringify(data.user));
 
-    toastSuccess('Đổi thông tin thành công')
+    toastSuccess('Đổi thông tin thành công');
   } catch (error) {
     yield put({
       type: EDIT_PROFILE_FAIL,
@@ -219,7 +224,10 @@ function* editProfileSaga(action) {
 
 function* editPasswordUser(action) {
   try {
-    const { status, error, data } = yield axiosClient.patch('user/auth/updatePassword', action.payload);
+    const { status, error, data } = yield axiosClient.patch(
+      'user/auth/updatePassword',
+      action.payload
+    );
 
     if (status === 'failed' && error.message) {
       throw new Error(error.message);
@@ -230,7 +238,7 @@ function* editPasswordUser(action) {
       payload: data,
     });
 
-    toastSuccess(data.message)
+    toastSuccess(data.message);
   } catch (error) {
     yield put({
       type: EDIT_USER_PASSWORD_FAIL,

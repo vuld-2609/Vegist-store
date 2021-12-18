@@ -15,9 +15,7 @@ const PaymentBreadcrumb = () => {
         {t('payments.breadcrumb.Cart')}
       </span>
       <FiChevronRight />
-      <span className="payment__breadcrumb--active" onClick={() => history.push('/infoPayment')}>
-        {t('payments.breadcrumb.Information')}
-      </span>
+      <span className="payment__breadcrumb--active">{t('payments.breadcrumb.Information')}</span>
       <FiChevronRight />
       <span
         className={` ${
@@ -25,15 +23,11 @@ const PaymentBreadcrumb = () => {
             ? 'payment__breadcrumb--active'
             : ''
         }`}
-        onClick={() => history.push('/shipping')}
       >
         {t('payments.breadcrumb.Shipping')}
       </span>
       <FiChevronRight />
-      <span
-        className={` ${location.pathname === '/payment' ? 'payment__breadcrumb--active' : ''}`}
-        onClick={() => history.push('/payment')}
-      >
+      <span className={` ${location.pathname === '/payment' ? 'payment__breadcrumb--active' : ''}`}>
         {t('payments.breadcrumb.Payment')}
       </span>
     </div>

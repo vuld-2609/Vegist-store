@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
 import { FaRegCommentDots } from 'react-icons/fa';
-import { RiBillLine } from 'react-icons/ri';
+import { RiBillLine, RiContactsBookLine, RiLogoutBoxRLine } from 'react-icons/ri';
+import { GiJerusalemCross } from 'react-icons/gi';
 import history from '../../until/history';
 import './style.scss';
 
@@ -16,16 +17,12 @@ const Admin = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [authData, setAuthData] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    history.push('/login');
+    history.push('/');
     localStorage.clear();
     setIsModalVisible(false);
   };
@@ -36,7 +33,7 @@ const Admin = () => {
 
   return (
     <>
-      <div className="admin-navbar" style={{ width: 256 }}>
+      <div className="admin-navbar fadeIn" style={{ width: 256 }}>
         <Menu
           inlineCollapsed={collapsed}
           defaultSelectedKeys={['3']}
@@ -44,31 +41,19 @@ const Admin = () => {
           mode="inline"
           theme="dark"
         >
-          <Menu.Item key="1">
-            {authData && (
-              <>
-                <div className="admin__account" onClick={showModal}>
-                  <div className="admin__account--avt">
-                    <img src={authData?.avatar} alt="avatar" />
-                  </div>
-                  <p className="admin__account--name">{authData?.fullName}</p>
-                </div>
-                <Modal
-                  title="Notification"
-                  visible={isModalVisible}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
-                >
-                  <p>Do you want to sign out?</p>
-                </Modal>
-              </>
-            )}
-          </Menu.Item>
+          {authData && (
+            <div className="admin__account">
+              <div className="admin__account--avt">
+                <img src={authData?.avatar} alt="avatar" />
+              </div>
+              <p className="admin__account--name">{authData?.fullName}</p>
+            </div>
+          )}
           <Menu.Item key="2" icon={<AiOutlineHome />} onClick={() => history.push('/')}>
             {t('admin.home')}
           </Menu.Item>
-          <Menu.Item key="3" icon={<PieChartOutlined />}>
-            OPTION 1
+          <Menu.Item onClick={() => history.push('/admin')} key="3" icon={<PieChartOutlined />}>
+            {t('admin.Dashboard.title')}
           </Menu.Item>
           <Menu.Item onClick={() => history.push('/admin/listUser')} key="4" icon={<BiUser />}>
             {t('admin.listUser.title')}
@@ -92,13 +77,26 @@ const Admin = () => {
           </Menu.Item>
           <Menu.Item
             key="8"
-            icon={<ContainerOutlined />}
+            icon={<GiJerusalemCross />}
             onClick={() => history.push('/admin/discount')}
           >
             {t('admin.discount.title')}
           </Menu.Item>
+          <Menu.Item
+            key="9"
+            icon={<RiContactsBookLine />}
+            onClick={() => history.push('/admin/listContact')}
+          >
+            {t('admin.listContact.title')}
+          </Menu.Item>
+          <Menu.Item key="10" icon={<RiLogoutBoxRLine />} onClick={showModal}>
+            {t('logout')}
+          </Menu.Item>
         </Menu>
       </div>
+      <Modal title="Notification" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Do you want to sign out?</p>
+      </Modal>
     </>
   );
 };

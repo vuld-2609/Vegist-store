@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import history from '../../../until/history';
 
 import { BsChevronDown } from 'react-icons/bs';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 import './styles.scss';
 import { setFlagSearchChange } from '../../../redux/actions';
@@ -91,13 +92,13 @@ const navbarData = [
   },
   {
     id: 5,
-    name: "Faq's",
-    path: "/faq's",
+    name: 'Discount',
+    path: '/discount',
   },
   {
     id: 6,
-    name: 'Blogs',
-    path: '/blogs',
+    name: 'Contact Us',
+    path: '/contact',
   },
 
   {
@@ -113,7 +114,7 @@ const navbarData = [
   },
 ];
 
-const Navbar = ({ setShowNavbar, showNavbar, setValue, setFlagSearchChange }) => {
+const Navbar = ({ setShowNavbar, showNavbar, setValue, setFlagSearchChange, authData }) => {
   const location = useLocation();
   const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
@@ -213,13 +214,20 @@ const Navbar = ({ setShowNavbar, showNavbar, setValue, setFlagSearchChange }) =>
       <nav className="navbar">
         <ul className="navbar__list">{renderNavbar(navbarData)}</ul>
         <div className="hot-line">
-          <img
-            src="https://cdn.shopify.com/s/files/1/0412/8151/9765/files/icon_contact_1d544c80-aa06-4dd2-a206-999b26d599fd.png?v=1592395268"
-            alt="hotline"
-          ></img>
-          <div className="hot-line__text">
-            <p>{t('Hotline')}:</p>
-            <p>0123 456 789</p>
+          {authData?.role === 'admin' && (
+            <div className="header__admin" onClick={() => history.push('/admin')}>
+              <MdOutlineAdminPanelSettings />
+            </div>
+          )}
+          <div className="hot-line">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0412/8151/9765/files/icon_contact_1d544c80-aa06-4dd2-a206-999b26d599fd.png?v=1592395268"
+              alt="hotline"
+            ></img>
+            <div className="hot-line__text">
+              <p>{t('Hotline')}:</p>
+              <p>0123 456 789</p>
+            </div>
           </div>
         </div>
       </nav>

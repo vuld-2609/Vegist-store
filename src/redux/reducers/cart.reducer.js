@@ -9,6 +9,7 @@ import {
   CLEAR_CART_SUCCESS,
   GET_CART_FAIL,
   GET_CART_SUCCESS,
+  CLEAR_COUNT_CART,
 } from '../constants';
 
 const initialState = {
@@ -70,6 +71,9 @@ export default function cartReducer(state = initialState, action) {
       };
     case GET_CART_FAIL: {
       return state;
+    }
+    case CLEAR_COUNT_CART: {
+      return { ...state, cartData: {} };
     }
     default:
       return state;

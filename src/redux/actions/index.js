@@ -5,3 +5,4 @@ export * from './productDetail.action';
 export * from './cart.action';
 export * from './payment.action';
 export * from './discount.action';
+export * from './contact.action';
