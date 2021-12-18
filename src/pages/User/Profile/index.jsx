@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 
 import InfoManage from '../../../components/Profile/InfoManage/index'
 import CartManage from '../../../components/Profile/CartManage/index'
+import ListDiscount from '../../../components/ListDiscount/index'
 
 import './style.scss';
 
@@ -22,6 +23,9 @@ function Profile() {
         </TabPane>
         <TabPane tab="Order Manage" key="2">
           <CartManage tabValue={tabValue}/>
+        </TabPane>
+        <TabPane tab="List Discount" key="3">
+          <ListDiscount />
         </TabPane>
     </Tabs>
     </>

@@ -15,7 +15,11 @@ import {
   EDIT_USER_BY_ADMIN_SUCCESS,
   EDIT_USER_PASSWORD_SUCCESS,
   EDIT_USER_PASSWORD_FAIL,
-  EDIT_USER_BY_ADMIN_FAIL
+  EDIT_USER_BY_ADMIN_FAIL,
+  GET_DISCOUNT_USER_SUCCESS,
+  GET_DISCOUNT_USER_FAIL,
+  GET_DISCOUNT_USER,
+
 } from '../constants';
 
 const initialStore = {
@@ -30,7 +34,12 @@ const initialStore = {
   deleteUser: [],
   userEdit: {},
   listUser: {},
-  userEdit: {},
+
+  listDiscountUser:{
+    load:false,
+    data:[],
+    total:''
+  }
 };
 
 export default function accountReducer(state = initialStore, action) {
@@ -134,6 +143,39 @@ export default function accountReducer(state = initialStore, action) {
     case EDIT_USER_PASSWORD_FAIL: {
       return state;
     }
+
+    case GET_DISCOUNT_USER: {
+      return {
+        ...state,
+        listDiscountUser:{
+          load:true,
+        }
+      }
+    }
+
+    case GET_DISCOUNT_USER_SUCCESS: {
+      const {data} = action.payload;
+
+      return {
+        ...state,
+        listDiscountUser:{
+          ...state.listDiscountUser,
+          data:data.discountCodes,
+          load:false,
+        }
+      }
+    }
+
+    case GET_DISCOUNT_USER_FAIL: {
+      return {
+        ...state,
+        listDiscountUser:{
+          ...state.listDiscountUser,
+          load:false,
+        }
+      }
+    }
+
     default: {
       return state;
     }

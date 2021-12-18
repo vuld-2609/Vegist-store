@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { editProfile, getInfo,editUserPassword } from '../../../redux/actions';
 import * as Yup from 'yup';
-import { toastSuccess,toastComingSoon } from '../../../until/toast';
+import { toastSuccess,toastComingSoon,toastError } from '../../../until/toast';
 import './style.scss';
 import history from '../../../until/history';
 const { Panel } = Collapse;
@@ -24,7 +24,7 @@ function InfoManage(prop) {
   }, []);
 
   useEffect(() => {
-    tabValue==='2' && getInfo();
+    tabValue !=='1' && getInfo();
   }, [tabValue]);
 
 
@@ -43,7 +43,7 @@ function InfoManage(prop) {
           password: values.passwordInner,
           newPassword: values.passwordNew,
       })
-      : toastSuccess('Bạn chưa có email !')
+      : toastError('Bạn chưa có email !')
       
       getInfo();
       setIsShowChangePw(false);

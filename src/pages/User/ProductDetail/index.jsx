@@ -41,7 +41,8 @@ const ProductDetail = ({
 }) => {
   const product = productDetail.data?.product;
   const sales =
-    product?.sales > 0 && Math.ceil(product?.price - product?.price * (product?.sales / 100));
+  product?.sale > 0 && Math.ceil(product?.price - product?.price * (product?.sale / 100));
+  console.log("🚀 ~ file: index.jsx ~ line 44 ~ sales", sales)
   const productId = match.params.id;
   const [rateValue, setRateValue] = useState();
   const [valueQuantity, setValueQuantity] = useState(1);
@@ -198,9 +199,9 @@ const ProductDetail = ({
                   <span> {t('productDetail.Availability__stock')}</span>
                 </p>
                 <p className="spanColor">
-                  <span>{`${sales | product?.price.toLocaleString()} USD`} </span>
+                  <span>{`${(sales || product?.price)?.toLocaleString()} VND`} </span>
                   <span className="product-item__price--old">
-                    {product?.sales && `${product?.sales} %`}
+                    {!!product?.sale && `${product?.sale} %`}
                   </span>
                 </p>
                 <p className="gray-color">

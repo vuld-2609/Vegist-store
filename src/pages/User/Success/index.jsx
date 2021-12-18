@@ -44,7 +44,7 @@ const Success = ({ match, getBill, billData }) => {
               </p>
               <div className="success__management">
                 <h3>
-                  {/* {t('success.Order')} #{billData.paymentCode} */}
+                #Vegist-{`${billId.slice(-8).toUpperCase()}`}
                 </h3>
                 <button className="button">{t('success.Order Management')}</button>
               </div>
