@@ -157,7 +157,16 @@
     "discount": {
       "max": "Discount name cannot be longer than 50 characters !",
       "required": "Discount name can't be blank !",
-      "percent": "Discount percentage must be a positive integer between 0 and 100"
+      "percent": "Discount percentage must be a positive integer between 0 and 100",
+      "description": {
+        "required": "Description can't be blank !",
+        "code name": "\nDiscount code containing only characters 0-9, a-z, A-Z"
+      },
+      "code name": "\nThe discount code only contains characters 0-9, A-Z and the first 3 characters are uppercase",
+      "max 20": "Discount name cannot be longer than 20 characters !",
+      "amount": {
+        "required": "Amount can't be blank !"
+      }
     },
     "discount name": {
       "required": "Discount code can't be blank !"
@@ -165,6 +174,10 @@
     "total": {
       "interger": "\nTotal product must be a positive integer !\n",
       "required": "Total product can't be blank !"
+    },
+    "amount": {
+      "interger": "\nAmount must be a positive integer !",
+      "regex": "Minimum amount is 1.000, maximum 99.000.000 !"
     }
   },
   "home": {
@@ -420,7 +433,9 @@
       "Action": "Action",
       "Search": "Search a discount...",
       "Add": "ADD DISCOUNT CODE",
-      "CREATE DISCOUNT CODE": "CREATE DISCOUNT CODE"
+      "CREATE DISCOUNT CODE": "CREATE DISCOUNT CODE",
+      "Discount type": "Discount type",
+      "Amount": "Amount"
     },
     "table": {
       "name": "NAME",
@@ -470,7 +485,10 @@
       "Action": "Action",
       "Total product": "Total product",
       "Enter total product": "Enter total product",
-      "Total": "Total"
+      "Total": "Total",
+      "Enter description": "Enter description",
+      "Description": "Description",
+      "Enter amount": "Enter amount"
     },
     "sales": {
       "title": "Discount Management"
@@ -481,7 +499,6 @@
       "Search a user": "Search a user...",
       "Email": "EMAIL"
     },
-
     "Add new": "Add new",
     "order": {
       "Select a status": "Select a status",

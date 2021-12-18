@@ -23,7 +23,7 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
     getDiscount({
       page: current,
       limit: 10,
-      searchKey: searchKey,
+      searchKey,
     });
   }, [current, searchKey]);
 
@@ -46,8 +46,8 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
       title: 'Confirm',
       content: (
         <p>
-          Do you want to delete this discount name{' '}
-          <span style={{ fontWeight: 600 }}>{data.name}</span> ?
+          Do you want to delete discount name <span style={{ fontWeight: 600 }}>{data.title}</span>{' '}
+          ?
         </p>
       ),
       okText: 'OK',
@@ -101,8 +101,10 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
                   <td>{t('admin.discount.Discount name')}</td>
                   <td>{t('admin.discount.Discount code')}</td>
                   <td>{t('admin.discount.Percent')}</td>
+                  <td>{t('admin.discount.Amount')}</td>
                   <td>{t('admin.discount.Start date')}</td>
                   <td>{t('admin.discount.End date')}</td>
+                  <td>{t('admin.discount.Discount type')}</td>
                   <td>{t('admin.discount.Quantity')}</td>
                   <td>{t('admin.discount.Action')}</td>
                 </tr>
@@ -112,12 +114,14 @@ const DiscountManagement = ({ getDiscount, discountData, totalDiscount, deleteDi
                   discountData.map((item, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.code}</td>
-                      <td>{item.percent}%</td>
-                      <td>{dateTime(item.startDate)}</td>
-                      <td>{dateTime(item.endDate)}</td>
-                      <td>{item.quantity}</td>
+                      <td>{item.title}</td>
+                      <td>{item.codeName}</td>
+                      <td>{item.sale}%</td>
+                      <td>{item.amount}</td>
+                      <td>{dateTime(item.dateCreate || new Date())}</td>
+                      <td>{dateTime(item.endDate || new Date())}</td>
+                      <td>{item.sale ? 'Giảm theo phần trăm' : 'Giảm theo giá trực tiếp'}</td>
+                      <td>{item.total}</td>
                       <td>
                         <button className="button" onClick={() => confirm(item)}>
                           <BsTrashFill />

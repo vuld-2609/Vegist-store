@@ -15,12 +15,23 @@ const Payment = ({ getBill, billData, createBill, getCartData }) => {
   const [billingAddress, setBillingAddress] = useState(1);
   const [infoPayment, setInfoPayment] = useState(JSON.parse(localStorage.getItem('infoPayment')));
 
+  useEffect(() => {
+    const bill = JSON.parse(localStorage.getItem('infoPayment'));
+    delete bill.codeName;
+    return () => {
+      localStorage.setItem('infoPayment', JSON.stringify({ ...bill, total: infoPayment.total }));
+    };
+  }, []);
+
   const handelCreateBill = async () => {
+    const bill = JSON.parse(localStorage.getItem('infoPayment'));
     await createBill({
       payment: 'Trực tiếp',
-      name: infoPayment.name,
-      address: infoPayment.address,
-      phoneNumber: infoPayment.phone,
+      name: bill.name,
+      address: bill.address,
+      phoneNumber: bill.phone,
+      codeName: bill.codeName,
+      total: bill.total,
     });
 
     localStorage.removeItem('infoPayment');

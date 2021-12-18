@@ -7,8 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { titleCase } from '../../../until/string';
 import ModalCreate from './ModalCreate';
 import ModalModify from './ModalModify';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 
 const ListUser = ({
@@ -169,7 +167,6 @@ const ListUser = ({
             )}
           </div>
         </div>
-        <ToastContainer />
       </section>
     </>
   );

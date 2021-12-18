@@ -158,7 +158,16 @@
     "discount": {
       "max": "Tên mã khuyến mãi không được dài hơn 50 ký tự",
       "required": "Tên mã giảm giá không được để trống !",
-      "percent": "Phần trăm giảm giá phải là số nguyên dương từ 0 đến 100"
+      "percent": "Phần trăm giảm giá phải là số nguyên dương từ 0 đến 100",
+      "description": {
+        "required": "Mô tả không được để trống !",
+        "code name": "Giảm giá mã chỉ chứa các kí tự 0-9, a-z, A-Z"
+      },
+      "code name": "Mã giảm giá chỉ chứa các kí tự 0-9, A-Z và 3 kí tự đầu tiên là chữ hoa !",
+      "max 20": "Mã giảm giá không được dài quá 20 kí tự !",
+      "amount": {
+        "required": "Số tiền giảm không được để trống"
+      }
     },
     "discount name": {
       "required": "Mã khuyến mãi không được để trống !"
@@ -166,6 +175,10 @@
     "total": {
       "interger": "Tổng sản phẩm phải là một số nguyên dương",
       "required": "Tổng sản phẩm không được để trống"
+    },
+    "amount": {
+      "interger": "Số tiền giảm phải là số nguyên dương!",
+      "regex": "Số tiền giảm tối thiểu là 1.000, tối đa là 99.000.000 !"
     }
   },
   "home": {
@@ -419,7 +432,9 @@
       "Action": "Hành động",
       "Search": "Tìm kiếm mã giảm giá...",
       "Add": "Thêm mới mã giảm giá",
-      "CREATE DISCOUNT CODE": "Thêm mới mã giảm giá"
+      "CREATE DISCOUNT CODE": "Thêm mới mã giảm giá",
+      "Discount type": "Kiểu giảm giá",
+      "Amount": "Số tiền giảm"
     },
     "table": {
       "name": "Họ tên",
@@ -472,7 +487,10 @@
       "Action": "Hành động",
       "Total product": "Tổng số lượng sản phẩm",
       "Enter total product": "Nhập tổng sản phẩm",
-      "Total": "Tổng sản phẩm"
+      "Total": "Tổng sản phẩm",
+      "Enter description": "Nhập mô tả",
+      "Description": "Mô tả",
+      "Enter amount": "Nhập số tiền giảm"
     },
     "sales": {
       "title": "Quản lý khuyến mãi"
